@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2012 Arrow Group
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>js</role-hint>
+            <implementation>
+                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
+            </implementation>
+            <configuration>
+                <phases>
+                    <clean>
+                        org.apache.maven.plugins:maven-clean-plugin:clean
+                    </clean>
+                    <process-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:resources,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:resolve-dependencies
+                    </process-resources>
+                    <compile>
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-javascript,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-coffeescript,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-less,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-css
+                    </compile>
+                    <process-test-resources>
+                        org.apache.maven.plugins:maven-resources-plugin:testResources
+                    </process-test-resources>
+                    <test-compile>
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:test-compile-javascript,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:test-compile-coffeescript,
+                    </test-compile>
+                    <test>
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:jasmine-test
+                    </test>
+                    <package>
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:aggregate-javascript,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:aggregate-stylesheets
+                    </package>
+                    <install>
+                        org.apache.maven.plugins:maven-install-plugin:install
+                    </install>
+                    <deploy>
+                        org.apache.maven.plugins:maven-deploy-plugin:deploy
+                    </deploy>
+                </phases>
+            </configuration>
+        </component>
+
+        <component>
+            <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+            <role-hint>js</role-hint>
+            <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+            <configuration>
+                <extension>js</extension>
+                <type>js</type>
+                <language>javascript</language>
+            </configuration>
+        </component>
+    </components>
+</component-set>
