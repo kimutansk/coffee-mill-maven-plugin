@@ -30,6 +30,13 @@
 
     <description>A Maven Plugin to build Client-Side Web Applications</description>
     <inceptionYear>2012</inceptionYear>
+    <url>https://github.com/nano-project/coffee-roasting-maven-plugin</url>
+
+    <organization>
+        <name>Arrow-Group</name>
+        <url>http://www.arrow-group.eu/</url>
+    </organization>
+
 
     <licenses>
         <license>
