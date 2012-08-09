@@ -1,0 +1,20 @@
+
+Coffee-Roasting ?
+==================
+
+The ${project.artifactId} is used to creates JavaScript / Web applications. It focuses on JavaScript and Stylesheets.
+ Why using Ap[ache Maven for such kind of code ? Because such development can also benefit from _modularity_,
+ _testing_ and from a strict build process. Actually, they definitely requires it to avoid loosing control on the
+ development.
+
+The goal of the project is to cover the complete lifecycle of such artifacts : compilation, checks, tests,
+aggregation, minification, reporting... Everything required to deliver reusable and robust artifacts.
+
+Features
+--------
+
+* *Dependency Management*: resolves 'js' and 'css' artifacrs
+* *JavaScript* : checks JAvaScript code using JSLint and JSHint, aggregate all files in one
+* *Test*: tests your JavaScript using Jasmine
+* *CoffeeScript*: compiles CoffeeScript code
+* *CSS / LESS*: checks CSS format, compiles LESS file, aggregate all

@@ -50,7 +50,11 @@
         </developer>
     </developers>
 
-   
+    <scm>
+        <connection>scm:git:git@github.com:nano-project/coffee-roasting-maven-plugin.git</connection>
+        <url>https://github.com/nano-project/coffee-roasting-maven-plugin</url>
+        <developerConnection>scm:git:git@github.com:nano-project/coffee-roasting-maven-plugin.git</developerConnection>
+    </scm>
 
     <properties>
         <mavenVersion>2.2.1</mavenVersion>
