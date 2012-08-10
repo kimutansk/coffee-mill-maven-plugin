@@ -1,9 +1,9 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.compile;
 
-import com.sun.tools.javac.resources.compiler;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLint;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintException;

@@ -1,8 +1,9 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import ro.isdc.wro.extensions.processor.support.linter.JsHint;
 import ro.isdc.wro.extensions.processor.support.linter.JsLint;
 import ro.isdc.wro.extensions.processor.support.linter.LinterError;
@@ -20,10 +21,10 @@ import java.util.Collection;
  * </ul>
  * TODO Exclude strict mode.
  *
- * @goal test-compile-javascript
+ * @goal compile-javascript
  *
  */
-public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
+public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
 
     /**
      * Sets to true to disable JSLint
@@ -41,7 +42,7 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (! javaScriptTestDir.exists()) {
+        if (! javaScriptDir.exists()) {
             getLog().debug("The javascript directory does not exist - skipping JavaScript compilation");
             return;
         }
@@ -64,10 +65,10 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
 
 
     private void copyJavascriptFiles() throws MojoFailureException {
-        Collection<File> files = FileUtils.listFiles(javaScriptTestDir, new String[] {"js"}, true);
+        Collection<File> files = FileUtils.listFiles(javaScriptDir, new String[] {"js"}, true);
         for (File file : files) {
             try {
-                FileUtils.copyFileToDirectory(file, getWorkTestDirectory());
+                FileUtils.copyFileToDirectory(file, getWorkDirectory());
             } catch (IOException e) {
                 throw new MojoFailureException("Cannot copy " + file.getAbsolutePath() + " to the work directory", e);
             }
@@ -78,7 +79,7 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
         getLog().info("Checking sources with JsLint");
         JsLint processor = new JsLint();
         int errorCount = 0;
-        Collection<File> files = FileUtils.listFiles(getWorkTestDirectory(), new String[] {"js"}, true);
+        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[] {"js"}, true);
         for (File file : files) {
             getLog().debug("JSLint-ing " + file.getAbsolutePath());
             try {
@@ -110,7 +111,7 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
         getLog().info("Checking sources with JsHint");
         JsHint processor = new JsHint();
         int errorCount = 0;
-        Collection<File> files = FileUtils.listFiles(getWorkTestDirectory(), new String[] {"js"}, true);
+        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[] {"js"}, true);
         for (File file : files) {
             getLog().debug("JSHint-ing " + file.getAbsolutePath());
             try {

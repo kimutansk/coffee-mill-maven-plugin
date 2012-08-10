@@ -1,4 +1,4 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.test;
 
 import com.github.searls.jasmine.*;
 import org.apache.maven.model.Dependency;
@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
 import org.nano.coffee.roasting.InjectionHelper;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSAggregator;
 
 import java.io.File;

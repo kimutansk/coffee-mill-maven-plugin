@@ -1,9 +1,10 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.packaging;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSAggregator;
 import org.nano.coffee.roasting.processors.JavaScriptAggregator;
 

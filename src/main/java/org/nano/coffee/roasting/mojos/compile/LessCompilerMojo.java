@@ -1,9 +1,9 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import ro.isdc.wro.extensions.processor.support.less.LessCss;
 
 import java.io.File;

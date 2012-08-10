@@ -16,7 +16,7 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
      * @required
      * @readonly
      */
-    protected MavenProject project;
+    public MavenProject project;
 
     /**
      * Maven ProjectHelper.
@@ -24,42 +24,42 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
      * @component
      * @readonly
      */
-    protected MavenProjectHelper projectHelper;
+    public MavenProjectHelper projectHelper;
 
     /**
      * Where are JavaScript files.
      *
      * @parameter default-value="src/main/js"
      */
-    protected File javaScriptDir;
+    public File javaScriptDir;
 
     /**
      * Where are CoffeeScript files.
      *
      * @parameter default-value="src/main/coffee"
      */
-    protected File coffeeScriptDir;
+    public File coffeeScriptDir;
 
     /**
      * Where are CoffeeScript files implementing tests.
      *
      * @parameter default-value="src/test/coffee"
      */
-    protected File coffeeScriptTestDir;
+    public File coffeeScriptTestDir;
 
     /**
      * Where are JavaScript files implementing tests.
      *
      * @parameter default-value="src/test/js"
      */
-    protected File javaScriptTestDir;
+    public File javaScriptTestDir;
 
     /**
      * Where are LESS, CSS and SASS/SCSS files.
      *
      * @parameter default-value="src/main/stylesheets"
      */
-    protected File stylesheetsDir;
+    public File stylesheetsDir;
 
 
     public static String TARGET_DIR_NAME = "target";
