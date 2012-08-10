@@ -1,4 +1,4 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.RhinoException;
 import org.mozilla.javascript.ScriptableObject;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
 import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.util.StopWatch;
@@ -18,17 +19,33 @@ import java.util.Collection;
 
 /**
  * Compiles CoffeeScript files.
- *
- * @goal test-compile-coffeescript
+ * CoffeeScript files are generally in the <tt>src/main/coffee</tt> directory. It can be configured using the
+ * <tt>coffeeScriptDir</tt> parameter.
+ * If the directory does not exist, the compilation is skipped.
+ * @goal compile-coffeescript
  */
-public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
+public class CoffeeScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
 
+    /**
+     * Enables / Disables the coffeescript compilation.
+     * Be aware that this property disables the compilation on both main sources and test sources.
+     * @parameter default-value="false"
+     */
+    protected boolean skipCoffeeScriptCompilation;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (! coffeeScriptTestDir.exists()) {
+        if (skipCoffeeScriptCompilation) {
+            getLog().info("CoffeeScript compilation skipped");
             return;
         }
-        Collection<File> files = FileUtils.listFiles(coffeeScriptTestDir, new String[]{"coffee"}, true);
+
+        if (! coffeeScriptDir.exists()) {
+            getLog().info("CoffeeScript compilation skipped - " + coffeeScriptDir.getAbsolutePath() + " does not " +
+                    "exist");
+            return;
+        }
+
+        Collection<File> files = FileUtils.listFiles(coffeeScriptDir, new String[]{"coffee"}, true);
         for (File file : files) {
             compile(file);
         }
@@ -40,7 +57,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
         CoffeeScriptCompiler coffeeScript = new CoffeeScriptCompiler();
         String jsFileName = file.getName().substring(0, file.getName().length() - ".coffee".length()) + ".js";
         try {
-            File out = new File(getWorkTestDirectory(), jsFileName);
+            File out = new File(getWorkDirectory(), jsFileName);
             String output = coffeeScript.compile(FileUtils.readFileToString(file));
             FileUtils.write(out, output);
         } catch (RhinoException jse) {
@@ -54,7 +71,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
     class CoffeeScriptCompiler {
         private String[] options;
         private ScriptableObject scope;
-        private static final String DEFAULT_COFFE_SCRIPT = "coffee-script.min.js";
+        private static final String DEFAULT_COFFEE_SCRIPT = "coffee-script.min.js";
 
         /**
          * Initialize script builder for evaluation.
@@ -63,7 +80,8 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
             try {
                 RhinoScriptBuilder builder = null;
                 if (scope == null) {
-                    builder = RhinoScriptBuilder.newChain().evaluateChain(getCoffeeScriptAsStream(), DEFAULT_COFFE_SCRIPT);
+                    builder = RhinoScriptBuilder.newChain().evaluateChain(getCoffeeScriptAsStream(),
+                            DEFAULT_COFFEE_SCRIPT);
                     scope = builder.getScope();
                 } else {
                     builder = RhinoScriptBuilder.newChain(scope);
@@ -81,7 +99,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
          * @return The stream of the CoffeeScript.
          */
         protected InputStream getCoffeeScriptAsStream() {
-            return CoffeeScript.class.getResourceAsStream(DEFAULT_COFFE_SCRIPT);
+            return CoffeeScript.class.getResourceAsStream(DEFAULT_COFFEE_SCRIPT);
         }
 
         public String compile(final String data) throws JavaScriptException {

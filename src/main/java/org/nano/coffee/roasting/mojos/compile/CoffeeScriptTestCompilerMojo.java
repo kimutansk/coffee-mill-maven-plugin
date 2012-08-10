@@ -1,4 +1,4 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.RhinoException;
 import org.mozilla.javascript.ScriptableObject;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
 import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.util.StopWatch;
@@ -18,17 +19,40 @@ import java.util.Collection;
 
 /**
  * Compiles CoffeeScript files.
+ * CoffeeScript files are generally in the <tt>src/test/coffee</tt> directory. It can be configured using the
+ * <tt>coffeeScriptTestDir</tt> parameter.
+ * If the directory does not exist, the compilation is skipped.
  *
- * @goal compile-coffeescript
+ * @goal test-compile-coffeescript
  */
-public class CoffeeScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
+public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
+
+    /**
+     * Enables / Disables the coffeescript compilation.
+     * Be aware that this property disables the compilation on both main sources and test sources.
+     * @parameter default-value="false"
+     */
+    protected boolean skipCoffeeScriptCompilation;
+
+    /**
+     * Enables / Disables the coffeescript test compilation.
+     * Be aware that this property disables the compilation of test sources only.
+     * @parameter default-value="false"
+     */
+    protected boolean skipCoffeeScriptTestCompilation;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (! coffeeScriptDir.exists()) {
+        if (skipCoffeeScriptCompilation  || skipCoffeeScriptTestCompilation) {
+            getLog().info("CoffeeScript test compilation skipped");
             return;
         }
-        Collection<File> files = FileUtils.listFiles(coffeeScriptDir, new String[]{"coffee"}, true);
+
+        if (! coffeeScriptTestDir.exists()) {
+            return;
+        }
+
+        Collection<File> files = FileUtils.listFiles(coffeeScriptTestDir, new String[]{"coffee"}, true);
         for (File file : files) {
             compile(file);
         }
@@ -40,7 +64,7 @@ public class CoffeeScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
         CoffeeScriptCompiler coffeeScript = new CoffeeScriptCompiler();
         String jsFileName = file.getName().substring(0, file.getName().length() - ".coffee".length()) + ".js";
         try {
-            File out = new File(getWorkDirectory(), jsFileName);
+            File out = new File(getWorkTestDirectory(), jsFileName);
             String output = coffeeScript.compile(FileUtils.readFileToString(file));
             FileUtils.write(out, output);
         } catch (RhinoException jse) {
