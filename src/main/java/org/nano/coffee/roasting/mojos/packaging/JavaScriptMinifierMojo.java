@@ -4,6 +4,7 @@ import com.google.javascript.jscomp.*;
 import com.google.javascript.jscomp.Compiler;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.mozilla.javascript.ErrorReporter;
@@ -12,6 +13,8 @@ import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.JavaScriptAggregator;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,11 +27,14 @@ import java.util.List;
 public class JavaScriptMinifierMojo extends AbstractRoastingCoffeeMojo {
 
     /**
+     * Enables to skip the minification phase.
      * @parameter default-value="false"
      */
     protected boolean skipMinification;
 
     /**
+     * Enables / Disables the attachment of the minified file to the Maven project.
+     * Enabled by default.
      * @parameter default-value="true"
      */
     protected boolean attachMinifiedJavaScript;
@@ -38,6 +44,47 @@ public class JavaScriptMinifierMojo extends AbstractRoastingCoffeeMojo {
      * @parameter default-value="GOOGLE_CLOSURE"
      */
     protected Minifier minifier;
+
+    /**
+     * YUI Option to preserve all semi columns.
+     * Disabled by  default.
+     * This parameter is ignored on the GOOGLE minifier.
+     * @parameter default-value="false"
+     */
+    protected boolean minifierYUIPreserveSemiColumn;
+
+    /**
+     * YUI Option to enable the verbose mode.
+     * Disabled by  default.
+     * This parameter is ignored on the GOOGLE minifier.
+     * @parameter default-value="false"
+     */
+    protected boolean minifierYUIVerbose;
+
+    /**
+     * YUI Options to enable / disable the munge mode.
+     * Enabled by  default.
+     * This parameter is ignored on the GOOGLE minifier.
+     * @parameter default-value="true"
+     */
+    protected boolean minifierYUIMunge;
+
+    /**
+     * YUI Options to disable the optimizations.
+     * Disabled by  default (so optimizations enabled).
+     * This parameter is ignored on the GOOGLE minifier.
+     * @parameter default-value="false"
+     */
+    protected boolean minifierYUIDisableOptimizations;
+
+    /**
+     * Selects the compilation level for Google Closure among SIMPLE_OPTIMIZATIONS,
+     * WHITESPACE_ONLY and ADVANCED_OPTIMIZATIONS.
+     * Be aware that ADVANCED_OPTIMIZATIONS modifies the API.
+     * This option is ignored on the YUI minifier.
+     * @parameter default-value="SIMPLE_OPTIMIZATIONS"
+     */
+    protected CompilationLevel minifierGoogleCompilationLevel;
 
     public enum Minifier {
         GOOGLE_CLOSURE,
@@ -78,12 +125,15 @@ public class JavaScriptMinifierMojo extends AbstractRoastingCoffeeMojo {
         getLog().info("Compressing " + file.getName() + " using Google Closure");
         final com.google.javascript.jscomp.Compiler compiler = new Compiler();
         CompilerOptions options = newCompilerOptions();
+        getLog().info("Compilation Level set to " + minifierGoogleCompilationLevel);
+        minifierGoogleCompilationLevel.setOptionsForCompilationLevel(options);
 
         final JSSourceFile[] input = new JSSourceFile[] {
                 JSSourceFile.fromFile(file)
         };
         JSSourceFile[] externs = new JSSourceFile[] {};
 
+        compiler.initOptions(options);
         final Result result = compiler.compile(externs, input, options);
         if (result.success) {
             try {
@@ -107,13 +157,9 @@ public class JavaScriptMinifierMojo extends AbstractRoastingCoffeeMojo {
             final JavaScriptCompressor compressor = new JavaScriptCompressor(new FileReader(file),
                 reporter);
             FileWriter writer = new FileWriter(output);
-            // TODO Params.
-            boolean verbose = true;
-            boolean munge = true;
-            boolean preserveAllSemiColons = true;
-            boolean disableOptimizations = false;
             int linebreakpos = -1;
-            compressor.compress(writer, linebreakpos, munge, verbose, preserveAllSemiColons, disableOptimizations);
+            compressor.compress(writer, linebreakpos, minifierYUIMunge, minifierYUIVerbose, minifierYUIPreserveSemiColumn,
+                    minifierYUIDisableOptimizations);
             writer.close();
             if (reporter.errorFound) {
                 throw new MojoExecutionException("Error during minification - Check log");
