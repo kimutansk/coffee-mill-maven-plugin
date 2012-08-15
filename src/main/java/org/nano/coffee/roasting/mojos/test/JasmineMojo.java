@@ -1,10 +1,11 @@
 package org.nano.coffee.roasting.mojos.test;
 
 import com.github.searls.jasmine.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.FileUtils;
 import org.nano.coffee.roasting.InjectionHelper;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSAggregator;
@@ -20,10 +21,18 @@ import java.util.List;
  */
 public class JasmineMojo extends AbstractRoastingCoffeeMojo {
 
+    public static final String TEST_JASMINE_XML = "TEST-jasmine.xml";
     /**
      * @parameter default-value="false"
      */
     protected boolean skipJasmineTest;
+
+    /**
+     * The list in order of the javascript file to include.
+     * This list is shared with the javascript aggregation.
+     * @parameter
+     */
+    protected List<String> javascriptAggregation;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -58,9 +67,26 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
         populateJasmineMojo(processTestResourcesMojo);
         processTestResourcesMojo.execute();
 
-        TestMojo testMojo = new TestMojo();
-        populateJasmineMojo(testMojo);
-        testMojo.execute();
+        try {
+            TestMojo testMojo = new TestMojo();
+            populateJasmineMojo(testMojo);
+            testMojo.execute();
+        } finally {
+            // Copy the resulting junit report if exit
+            File report = new File(getJasmineDirectory(), TEST_JASMINE_XML);
+            if (report.isFile()) {
+                try {
+                    String reportContent = FileUtils.readFileToString(report);
+                    reportContent = reportContent.replace("classname=\"jasmine\"", "classname=\"test.jasmine\"");
+                    File surefire = new File(project.getBuild().getDirectory(), "surefire-reports");
+                    surefire.mkdirs();
+                    File newReport = new File(surefire, TEST_JASMINE_XML);
+                    FileUtils.write(newReport, reportContent);
+                } catch (IOException e) {
+                    getLog().error("Cannot write the surefire report", e);
+                }
+            }
+        }
     }
 
     private File getJasmineDirectory() {
@@ -99,7 +125,7 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "specRunnerHtmlFileName",
                 "SpecRunner.html");
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "junitXmlReportFileName",
-                "TEST-jasmine.xml");
+                TEST_JASMINE_XML);
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "mavenProject",
                 project);
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "specRunnerTemplate",
@@ -121,7 +147,7 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
                             .getAbsolutePath() + " not found");
                 } else {
                     try {
-                        FileUtils.copyFile(file, new File(project.getBasedir(), "target/jasmine/" + filename));
+                        FileUtils.copyFileToDirectory(file, getJasmineDirectory());
                     } catch (IOException e) {
                         e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                     }
@@ -131,5 +157,16 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
         }
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "preloadSources",
                 deps);
+
+        // If javaScriptAggregation is set, use it to computes the javascript file order
+        if (javascriptAggregation != null) {
+            InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "sourceIncludes",
+                    javascriptAggregation);
+        }
+
+        // TODO Parameter.
+        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "timeout",
+                300);
+
     }
 }

@@ -29,14 +29,14 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
     /**
      * Sets to true to disable JSLint
      *
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
     protected boolean skipJsLint;
 
     /**
      * Sets to true to disable JSHint
      *
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
     protected boolean skipJsHint;
 
@@ -93,9 +93,18 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
                 errorCount += e.getErrors().size();
                 if (! e.getErrors().isEmpty()) {
                     for (LinterError exp : e.getErrors()) {
+                        if (exp == null) {
+                            continue; // How can this be ever possible ?
+                        }
+                        String message = "";
+                        if (exp.getEvidence() != null) {
+                            message += " - " + exp.getEvidence();
+                        }
+                        if (exp.getReason() != null) {
+                            message += " - " + exp.getReason();
+                        }
                         getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCharacter()
-                                + " - "
-                                + exp.getEvidence() + " - " + exp.getReason());
+                                + message);
                     }
                 }
             }
@@ -122,6 +131,9 @@ public class JavaScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
                 errorCount += e.getErrors().size();
                 if (! e.getErrors().isEmpty()) {
                     for (LinterError exp : e.getErrors()) {
+                        if (exp == null) {
+                            continue;
+                        }
                         getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCharacter()
                                 + " - "
                                 + exp.getEvidence() + " - " + exp.getReason());
