@@ -7,6 +7,8 @@ import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.RhinoException;
 import org.mozilla.javascript.ScriptableObject;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
+import org.nano.coffee.roasting.processors.CoffeeScriptCompilationProcessor;
+import org.nano.coffee.roasting.processors.Processor;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
 import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.util.StopWatch;
@@ -16,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Compiles CoffeeScript files.
@@ -60,88 +64,15 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
     }
 
     private void compile(File file) throws MojoFailureException {
+        Processor coffeescriptProcessor = new CoffeeScriptCompilationProcessor();
+        Map<String, File> options = new HashMap<String, File>();
+        options.put("output", getWorkTestDirectory());
         getLog().info("Compiling " + file.getAbsolutePath());
-        CoffeeScriptCompiler coffeeScript = new CoffeeScriptCompiler();
-        String jsFileName = file.getName().substring(0, file.getName().length() - ".coffee".length()) + ".js";
         try {
-            File out = new File(getWorkTestDirectory(), jsFileName);
-            String output = coffeeScript.compile(FileUtils.readFileToString(file));
-            FileUtils.write(out, output);
-        } catch (RhinoException jse) {
-                throw new MojoFailureException("Compilation Error in " + file.getName() + "@" + jse.lineNumber() +
-                        " - " + jse.details());
-        } catch (IOException e) {
-            throw new MojoFailureException("Cannot compile " + file.getAbsolutePath(), e);
+            coffeescriptProcessor.process(file, options);
+        } catch (Processor.ProcessorException e) {
+            getLog().error("Error during coffeescript processing", e);
         }
     }
 
-    class CoffeeScriptCompiler {
-        private String[] options;
-        private ScriptableObject scope;
-        private static final String DEFAULT_COFFE_SCRIPT = "coffee-script.min.js";
-
-        /**
-         * Initialize script builder for evaluation.
-         */
-        private RhinoScriptBuilder initScriptBuilder() {
-            try {
-                RhinoScriptBuilder builder = null;
-                if (scope == null) {
-                    builder = RhinoScriptBuilder.newChain().evaluateChain(getCoffeeScriptAsStream(), DEFAULT_COFFE_SCRIPT);
-                    scope = builder.getScope();
-                } else {
-                    builder = RhinoScriptBuilder.newChain(scope);
-                }
-                return builder;
-            } catch (final IOException ex) {
-                throw new IllegalStateException("Failed reading init script", ex);
-            }
-        }
-
-        /**
-         * Override this method to use a different version of CoffeeScript. This method is useful for upgrading coffeeScript
-         * processor independently of wro4j.
-         *
-         * @return The stream of the CoffeeScript.
-         */
-        protected InputStream getCoffeeScriptAsStream() {
-            return CoffeeScript.class.getResourceAsStream(DEFAULT_COFFE_SCRIPT);
-        }
-
-        public String compile(final String data) throws JavaScriptException {
-            final StopWatch watch = new StopWatch();
-            watch.start("init");
-            try {
-                final RhinoScriptBuilder builder = initScriptBuilder();
-                watch.stop();
-                watch.start("compile");
-                final String compileScript = String.format("CoffeeScript.compile(%s, %s);", WroUtil.toJSMultiLineString(data),
-                        buildOptions());
-                final String result = (String) builder.evaluate(compileScript, "CoffeeScript.compile");
-                return result;
-            } catch (RhinoException e) {
-                throw e;
-            } finally {
-                watch.stop();
-                getLog().debug(watch.prettyPrint());
-            }
-        }
-
-        /**
-         * @return A javascript representation of the options. The result is a json object.
-         */
-        private String buildOptions() {
-            final StringBuffer sb = new StringBuffer("{");
-            if (options != null) {
-                for (int i = 0; i < options.length; i++) {
-                    sb.append(options[i] + ": true");
-                    if (i < options.length - 1) {
-                        sb.append(",");
-                    }
-                }
-            }
-            sb.append("}");
-            return sb.toString();
-        }
-    }
 }

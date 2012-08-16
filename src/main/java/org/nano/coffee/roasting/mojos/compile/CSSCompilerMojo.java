@@ -4,13 +4,16 @@ import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
-import ro.isdc.wro.extensions.processor.support.csslint.CssLint;
+import org.nano.coffee.roasting.processors.CSSLintProcessor;
+import org.nano.coffee.roasting.processors.Processor;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Copy CSS to the <tt>work</tt> directory and check CSS file using CSSLint.
@@ -53,19 +56,17 @@ public class CSSCompilerMojo extends AbstractRoastingCoffeeMojo {
     }
 
     private void lint() throws MojoFailureException {
+        CSSLintProcessor processor = new CSSLintProcessor();
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", getWorkDirectory());
+        options.put("logger", getLog());
+
         Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
         for (File file : files) {
-            CssLint lint = new CssLint();
             try {
-                lint.validate(FileUtils.readFileToString(file));
-            } catch (IOException e) {
-                throw new MojoFailureException("Can't check " + file.getAbsolutePath(), e);
-            } catch (CssLintException e) {
-                for (CssLintError exp : e.getErrors()) {
-                    getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCol()
-                            + " - "
-                            + exp.getType() + " - " + exp.getMessage() + " (" + exp.getEvidence() + ")");
-                }
+                processor.process(file, options);
+            } catch (Processor.ProcessorException e) {
+                getLog().error("Cannot run the CSS Lint Processor on " + file.getAbsolutePath(), e);
             }
         }
     }
