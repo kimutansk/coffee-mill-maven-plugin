@@ -7,10 +7,13 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSAggregator;
 import org.nano.coffee.roasting.processors.JavaScriptAggregator;
+import org.nano.coffee.roasting.processors.Processor;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Aggregate stylesheets sources:
@@ -36,10 +39,18 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        File output = new File("target", project.getBuild().getFinalName() + ".css");
+        File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".css");
 
-        CSSAggregator aggregator = new CSSAggregator(getWorkDirectory(), output, cssAggregation);
-        aggregator.process();
+        Processor aggregator = new CSSAggregator();
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", output);
+        options.put("work", getWorkDirectory());
+        options.put("names", cssAggregation);
+        try {
+            aggregator.process(null, options);
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("Cannot aggregate CSS files", e);
+        }
 
         if (output.exists()) {
             // Do we already have a main JS artifact ?
@@ -48,6 +59,23 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
             } else {
                 project.getArtifact().setFile(output);
             }
+        }
+
+        if (output.isFile()) {
+            try {
+                FileUtils.copyFileToDirectory(output, new File(project.getBasedir(), project.getBuild().getDirectory()));
+                // Do we already have a main JS artifact ?
+                if (project.getArtifact().getFile().exists()) {
+                    projectHelper.attachArtifact(project, "css", output);
+                } else {
+                    project.getArtifact().setFile(output);
+                }
+            } catch (IOException e) {
+                throw new MojoExecutionException("Cannot copy the aggregated file to the target folder", e);
+            }
+        } else {
+            throw new MojoExecutionException("Cannot copy the aggregated file to the target folder - the output file " +
+                    "does not exist");
         }
 
     }

@@ -13,26 +13,11 @@ import java.util.List;
  */
 public class CSSAggregator extends AggregatorProcessor {
 
-    private File work;
-    private List<String> names;
-    private File output;
-
-    public CSSAggregator(File workDirectory, File output, List<String> names) {
-        this.work = workDirectory;
-        this.names = names;
-        this.output = output;
-    }
-
-    public void process() throws MojoExecutionException {
-        List<File> files = computeFileList(names, work, "css", true);
-        try {
-            aggregate(files, output);
-        } catch (FileNotFoundException e) {
-            throw new MojoExecutionException("Cannot build aggregate file", e);
-        }
-    }
-
     public void separator(OutputStream out) throws IOException {
         out.write('\n');
+    }
+
+    public boolean accept(File file) {
+        return file.isFile()  && file.getName().endsWith(".css");
     }
 }

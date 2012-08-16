@@ -3,12 +3,14 @@ package org.nano.coffee.roasting.processors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.nano.coffee.roasting.utils.OptionsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Common facet of aggregator.
@@ -18,7 +20,7 @@ public abstract class AggregatorProcessor implements Processor {
     public static Logger logger = LoggerFactory.getLogger(AggregatorProcessor.class);
 
     public List<File> computeFileList(List<String> names, File directory, String extension,
-                                      boolean failedOnMissingFile) throws MojoExecutionException {
+                                      boolean failedOnMissingFile) throws ProcessorException {
         List<File> result = new ArrayList<File>();
 
         if (names == null || names.isEmpty()) {
@@ -31,7 +33,7 @@ public abstract class AggregatorProcessor implements Processor {
             }
         } else {
             if (!directory.exists()) {
-                throw new MojoExecutionException("Aggregation failed : " + directory.getAbsolutePath() + " does not exist");
+                throw new ProcessorException("Aggregation failed : " + directory.getAbsolutePath() + " does not exist");
             }
 
             for (String name : names) {
@@ -40,7 +42,7 @@ public abstract class AggregatorProcessor implements Processor {
                     file = new File(directory, name + ".js");
                     if (!file.exists())
                         if (failedOnMissingFile) {
-                            throw new MojoExecutionException("Aggregation failed : " + name + " file missing in " + directory
+                            throw new ProcessorException("Aggregation failed : " + name + " file missing in " + directory
                                     .getAbsolutePath());
                         } else {
                             logger.warn("Issue detected during aggregation : " + name + " missing");
@@ -54,7 +56,7 @@ public abstract class AggregatorProcessor implements Processor {
         return result;
     }
 
-    public void aggregate(List<File> files, File to) throws FileNotFoundException, MojoExecutionException {
+    public void aggregate(List<File> files, File to) throws FileNotFoundException, ProcessorException {
         if (files.isEmpty()) {
             return;
         }
@@ -74,7 +76,7 @@ public abstract class AggregatorProcessor implements Processor {
                     separator(out);
                 } catch (IOException e) {
                     logger.error("Aggregation failed : Cannot build aggregate file - " + e.getMessage());
-                    throw new MojoExecutionException("Aggregation failed : cannot build aggregate file", e);
+                    throw new ProcessorException("Aggregation failed : cannot build aggregate file", e);
                 } finally {
                     IOUtils.closeQuietly(in);
                 }
@@ -82,6 +84,22 @@ public abstract class AggregatorProcessor implements Processor {
         } finally {
             IOUtils.closeQuietly(out);
         }
+    }
+
+    public void process(File input, Map<String, ?> options) throws ProcessorException {
+       File output = OptionsHelper.getFile(options, "output");
+       File work = OptionsHelper.getDirectory(options, "work", false);
+       List<String> names = (List<String>) options.get("names");
+        try {
+            List<File> files = computeFileList(names, work, "js", true);
+            aggregate(files, output);
+        } catch (FileNotFoundException e) {
+            throw new ProcessorException("Cannot build aggregate file", e);
+        }
+    }
+
+    public void tearDown() {
+        // Nothing to do.
     }
 
     public abstract void separator(OutputStream out) throws IOException;
