@@ -39,6 +39,12 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
 
+        // Do we have css files ?
+        if (FileUtils.listFiles(getWorkDirectory(), new String[] {"css"}, true).size() == 0) {
+            getLog().info("Skipping Stylessheets aggregation - no files");
+            return;
+        }
+
         File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".css");
 
         Processor aggregator = new CSSAggregator();
@@ -46,24 +52,16 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
         options.put("output", output);
         options.put("work", getWorkDirectory());
         options.put("names", cssAggregation);
+        options.put("extension", "css");
         try {
             aggregator.process(null, options);
         } catch (Processor.ProcessorException e) {
             throw new MojoExecutionException("Cannot aggregate CSS files", e);
         }
 
-        if (output.exists()) {
-            // Do we already have a main JS artifact ?
-            if (project.getArtifact().getFile().exists()) {
-                projectHelper.attachArtifact(project, "css", output);
-            } else {
-                project.getArtifact().setFile(output);
-            }
-        }
-
         if (output.isFile()) {
             try {
-                FileUtils.copyFileToDirectory(output, new File(project.getBasedir(), project.getBuild().getDirectory()));
+                FileUtils.copyFileToDirectory(output, getTarget());
                 // Do we already have a main JS artifact ?
                 if (project.getArtifact().getFile().exists()) {
                     projectHelper.attachArtifact(project, "css", output);

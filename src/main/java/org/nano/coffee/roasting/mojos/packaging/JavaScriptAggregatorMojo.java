@@ -38,6 +38,12 @@ public class JavaScriptAggregatorMojo extends AbstractRoastingCoffeeMojo {
     protected List<String> javascriptAggregation;
 
     public void execute() throws MojoExecutionException {
+        // Do we have js files ?
+        if (FileUtils.listFiles(getWorkDirectory(), new String[] {"js"}, true).size() == 0) {
+            getLog().info("Skipping JavaScript aggregation - no files");
+            return;
+        }
+
         File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".js");
 
         JavaScriptAggregator aggregator = new JavaScriptAggregator();
@@ -45,6 +51,7 @@ public class JavaScriptAggregatorMojo extends AbstractRoastingCoffeeMojo {
         options.put("output", output);
         options.put("work", getWorkDirectory());
         options.put("names", javascriptAggregation);
+        options.put("extension", "js");
         try {
             aggregator.process(null, options);
         } catch (Processor.ProcessorException e) {
@@ -53,8 +60,10 @@ public class JavaScriptAggregatorMojo extends AbstractRoastingCoffeeMojo {
 
         if (output.isFile()) {
             try {
-                FileUtils.copyFileToDirectory(output, new File(project.getBasedir(), project.getBuild().getDirectory()));
-                project.getArtifact().setFile(output);
+                File artifact = new File(getTarget(), project.getBuild().getFinalName() + ".js");
+                getLog().info("Copying " + output.getAbsolutePath() + " to the " + artifact.getAbsolutePath());
+                FileUtils.copyFile(output, artifact, true);
+                project.getArtifact().setFile(artifact);
             } catch (IOException e) {
                 throw new MojoExecutionException("Cannot copy the aggregated file to the target folder", e);
             }

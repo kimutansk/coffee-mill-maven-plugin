@@ -84,7 +84,7 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
 
 
     public File getTarget() {
-        return new File(project.getBasedir(), project.getBuild().getDirectory());
+        return new File(project.getBuild().getDirectory());
     }
 
     public File getWorkDirectory() {

@@ -39,7 +39,7 @@ public abstract class AggregatorProcessor implements Processor {
             for (String name : names) {
                 File file = new File(directory, name);
                 if (!file.exists()) {
-                    file = new File(directory, name + ".js");
+                    file = new File(directory, name + extension);
                     if (!file.exists())
                         if (failedOnMissingFile) {
                             throw new ProcessorException("Aggregation failed : " + name + " file missing in " + directory
@@ -61,7 +61,7 @@ public abstract class AggregatorProcessor implements Processor {
             return;
         }
 
-        logger.info("Aggregating  " + files.size() + " into " + to.getAbsolutePath());
+        logger.info("Aggregating  " + files.size() + " files into " + to.getAbsolutePath());
         to.getParentFile().mkdirs();
         FileOutputStream out = new FileOutputStream(to);
         try {
@@ -89,9 +89,10 @@ public abstract class AggregatorProcessor implements Processor {
     public void process(File input, Map<String, ?> options) throws ProcessorException {
        File output = OptionsHelper.getFile(options, "output");
        File work = OptionsHelper.getDirectory(options, "work", false);
+       String extension = OptionsHelper.getString(options, "extension");
        List<String> names = (List<String>) options.get("names");
         try {
-            List<File> files = computeFileList(names, work, "js", true);
+            List<File> files = computeFileList(names, work, extension, true);
             aggregate(files, output);
         } catch (FileNotFoundException e) {
             throw new ProcessorException("Cannot build aggregate file", e);
