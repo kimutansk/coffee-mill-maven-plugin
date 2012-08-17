@@ -61,22 +61,43 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
      */
     public File stylesheetsDir;
 
+    /**
+     * Where are the output files written.
+     *
+     * @parameter default-value="target/work"
+     */
+    public File workDir;
 
-    public static String TARGET_DIR_NAME = "target";
+    /**
+     * Where are the output test files written.
+     *
+     * @parameter default-value="target/work-test"
+     */
+    public File workTestDir;
+
+    /**
+     * Where are the dependencies copies.
+     *
+     * @parameter default-value="target/libs"
+     */
+    public File libDir;
+
 
     public File getTarget() {
-        return new File(project.getBasedir(), TARGET_DIR_NAME);
+        return new File(project.getBasedir(), project.getBuild().getDirectory());
     }
 
     public File getWorkDirectory() {
-        File work = new File(getTarget(), "work");
-        work.mkdirs();
-        return work;
+        workDir.mkdirs();
+        return workDir;
     }
 
     public File getWorkTestDirectory() {
-        File work = new File(getTarget(), "work-test");
-        work.mkdirs();
-        return work;
+        workTestDir.mkdirs();
+        return workTestDir;
+    }
+
+    public File getLibDirectory() {
+        return libDir;
     }
 }

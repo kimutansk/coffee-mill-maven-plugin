@@ -9,6 +9,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.InjectionHelper;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSAggregator;
+import org.nano.coffee.roasting.utils.JasmineUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class JasmineMojo extends AbstractRoastingCoffeeMojo {
 
-    public static final String TEST_JASMINE_XML = "TEST-jasmine.xml";
+
     /**
      * @parameter default-value="false"
      */
@@ -51,122 +52,25 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
         // Prepare execution
         // Copy target/work to target/jasmine/src
         try {
-            FileUtils.copyDirectory(getWorkDirectory(), getJasmineSourceDirectory());
+            FileUtils.copyDirectory(getWorkDirectory(), JasmineUtils.getJasmineSourceDirectory(project));
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot prepare Jasmine execution", e);
         }
 
         // Copy target/work-test to target/jasmine/spec
         try {
-            FileUtils.copyDirectory(getWorkTestDirectory(), getJasmineSpecDirectory());
+            FileUtils.copyDirectory(getWorkTestDirectory(), JasmineUtils.getJasmineSpecDirectory(project));
         } catch (IOException e) {
             throw new MojoExecutionException("Cannot prepare Jasmine execution", e);
         }
 
-        ProcessTestResourcesMojo processTestResourcesMojo = new ProcessTestResourcesMojo();
-        populateJasmineMojo(processTestResourcesMojo);
-        processTestResourcesMojo.execute();
-
         try {
             TestMojo testMojo = new TestMojo();
-            populateJasmineMojo(testMojo);
+            JasmineUtils.prepareJasmineMojo(this, testMojo, javascriptAggregation);
             testMojo.execute();
         } finally {
-            // Copy the resulting junit report if exit
-            File report = new File(getJasmineDirectory(), TEST_JASMINE_XML);
-            if (report.isFile()) {
-                try {
-                    String reportContent = FileUtils.readFileToString(report);
-                    reportContent = reportContent.replace("classname=\"jasmine\"", "classname=\"test.jasmine\"");
-                    File surefire = new File(project.getBuild().getDirectory(), "surefire-reports");
-                    surefire.mkdirs();
-                    File newReport = new File(surefire, TEST_JASMINE_XML);
-                    FileUtils.write(newReport, reportContent);
-                } catch (IOException e) {
-                    getLog().error("Cannot write the surefire report", e);
-                }
-            }
+            File report = new File(JasmineUtils.getJasmineDirectory(project), JasmineUtils.TEST_JASMINE_XML);
+            JasmineUtils.copyJunitReport(this, report, "jasmine.test");
         }
-    }
-
-    private File getJasmineDirectory() {
-        return new File(project.getBuild().getDirectory(), "jasmine");
-    }
-
-    private File getJasmineSourceDirectory() {
-        return new File(getJasmineDirectory(), "src");
-    }
-
-    private File getJasmineSpecDirectory() {
-        return new File(getJasmineDirectory(), "spec");
-    }
-
-
-    private void populateJasmineMojo(AbstractJasmineMojo mojo) {
-        mojo.setLog(getLog());
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "jsSrcDir",
-                new File(project.getBasedir(), "src/main/coffee")); //TODO This should be configurable.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "jsTestSrcDir",
-                new File(project.getBasedir(), "src/test/js")); //TODO This should be configurable.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "webDriverClassName",
-                "org.openqa.selenium.htmlunit.HtmlUnitDriver"); //TODO This should be configurable.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "browserVersion",
-                "FIREFOX_3"); //TODO This should be configurable.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "format",
-                "documentation"); //TODO This should be configurable.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "jasmineTargetDir",
-                new File(project.getBuild().getDirectory(), "jasmine"));
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "specDirectoryName",
-                "spec");
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "srcDirectoryName",
-                "src");
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "manualSpecRunnerHtmlFileName",
-                "ManualSpecRunner.html");
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "specRunnerHtmlFileName",
-                "SpecRunner.html");
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "junitXmlReportFileName",
-                TEST_JASMINE_XML);
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "mavenProject",
-                project);
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "specRunnerTemplate",
-                "DEFAULT");
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "haltOnFailure",
-                true);
-
-        List<String> deps = new ArrayList<String>();
-        for (Dependency dep : (Collection<Dependency>) project.getDependencies()) {
-            if ("js".equals(dep.getType())) {
-                String filename = dep.getArtifactId() + "-" + dep.getVersion() + ".js";
-                if (dep.getClassifier() != null) {
-                    filename = dep.getArtifactId() + "-" + dep.getVersion() + "-" + dep.getClassifier() + ".js";
-                }
-                File file = new File(project.getBasedir(), "target/web/" + filename);
-
-                if (! file.exists()) {
-                    getLog().error("Cannot preload " + dep.getArtifactId() + ":" + dep.getVersion() + " : " + file
-                            .getAbsolutePath() + " not found");
-                } else {
-                    try {
-                        FileUtils.copyFileToDirectory(file, getJasmineDirectory());
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                    deps.add(filename);
-                }
-            }
-        }
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "preloadSources",
-                deps);
-
-        // If javaScriptAggregation is set, use it to computes the javascript file order
-        if (javascriptAggregation != null) {
-            InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "sourceIncludes",
-                    javascriptAggregation);
-        }
-
-        // TODO Parameter.
-        InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "timeout",
-                300);
-
     }
 }

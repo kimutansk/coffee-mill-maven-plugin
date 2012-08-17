@@ -17,6 +17,8 @@ import java.util.Map;
 
 /**
  * This mojo watches the file change in the source directories and process them automatically.
+ * To work correctly, launch <tt>mvn clean test</tt> first. This will resolve and prepare all required file.
+ * Then <tt>mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:watch</tt> will starts the <i>watch</i> mode.
  * @goal watch
  */
 public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListener {
@@ -71,7 +73,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
      */
     protected Server server;
 
-    public final String MESSAGE = "You're running the watch mode. All modified file will be processed " +
+    public String MESSAGE = "You're running the watch mode. All modified file will be processed " +
             "automatically. \n" +
             "If the jetty server is enabled, they will also be served from http://localhost:" +
             watchJettyServerPort + "/. \n" +
@@ -139,7 +141,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     private void addHandlersToServer() {
         HandlerList list = new HandlerList();
         list.addHandler(new DirectoryHandler(getWorkDirectory()));
-        list.addHandler(new DirectoryHandler(new File(getTarget(), "web")));
+        list.addHandler(new DirectoryHandler(getLibDirectory()));
         list.addHandler(new DirectoryHandler(getWorkTestDirectory()));
         list.addHandler(new JasmineHandler(this));
         server.setHandler(list);

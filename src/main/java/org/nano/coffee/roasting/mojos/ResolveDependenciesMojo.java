@@ -76,20 +76,8 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
      */
     protected List<ArtifactRepository> remoteRepos;
 
-    /**
-     * Where are the dependencies copied.
-     *
-     * @parameter default-value="target/web" alias
-     */
-    private File webDir;
-
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (!webDir.exists()) {
-            webDir.mkdirs();
-            getLog().debug(webDir.getAbsolutePath() + " created");
-        }
-
         getLog().info("Resolving JavaScript / CSS and Web dependencies");
         CopyJSDependenciesMojo js = new CopyJSDependenciesMojo();
         js.execute();
@@ -111,7 +99,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
             setArtifactMetadataSource(artifactMetadataSource);
             setLocal(local);
             setRemoteRepos(remoteRepos);
-            setOutputDirectory(webDir);
+            setOutputDirectory(getLibDirectory());
             setUseRepositoryLayout(false);
             setLog(getLog());
             setCopyPom(false);
@@ -136,7 +124,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
             setArtifactMetadataSource(artifactMetadataSource);
             setLocal(local);
             setRemoteRepos(remoteRepos);
-            setOutputDirectory(webDir);
+            setOutputDirectory(getLibDirectory());
             setUseRepositoryLayout(false);
             setLog(getLog());
             setCopyPom(false);
@@ -161,7 +149,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
             setArtifactMetadataSource(artifactMetadataSource);
             setLocal(local);
             setRemoteRepos(remoteRepos);
-            setOutputDirectory(webDir);
+            setOutputDirectory(getLibDirectory());
             setUseRepositoryLayout(false);
             setLog(getLog());
             setCopyPom(false);
