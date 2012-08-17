@@ -5,12 +5,10 @@ import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
-import org.nano.coffee.roasting.processors.CSSAggregator;
-import org.nano.coffee.roasting.processors.CoffeeScriptCompilationProcessor;
-import org.nano.coffee.roasting.processors.JavaScriptAggregator;
-import org.nano.coffee.roasting.processors.Processor;
+import org.nano.coffee.roasting.processors.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -61,7 +59,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     /**
      * @parameter
      */
-    protected List<String> javascriptAggregation;
+    List<String> javascriptAggregation;
 
     /**
      * @parameter
@@ -97,10 +95,10 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
 
         if (watchRunServer) {
             try {
+
                 server = new Server();
                 addConnectorToServer();
-                addWorkHandlerToServer();
-                //addJasmineRunnerToServer();
+                addHandlersToServer();
                 startServer();
             } catch (Exception e){
                 throw new MojoExecutionException("Cannot run the jetty server", e);
@@ -115,6 +113,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     private void buildProcessorsList() {
         processors = new HashMap<String, Processor>();
         processors.put("coffeescript", new CoffeeScriptCompilationProcessor());
+        processors.put("jscopy", new JavaScriptFileCopyProcessor());
         processors.put("jsaggregator", new JavaScriptAggregator());
         processors.put("cssaggregator", new CSSAggregator());
 
@@ -137,8 +136,13 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         server.addConnector(connector);
     }
 
-    private void addWorkHandlerToServer() {
-        server.setHandler(new DirectoryHandler(getWorkDirectory()));
+    private void addHandlersToServer() {
+        HandlerList list = new HandlerList();
+        list.addHandler(new DirectoryHandler(getWorkDirectory()));
+        list.addHandler(new DirectoryHandler(new File(getTarget(), "web")));
+        list.addHandler(new DirectoryHandler(getWorkTestDirectory()));
+        list.addHandler(new JasmineHandler(this));
+        server.setHandler(list);
     }
 
     private void startServer() throws Exception {
@@ -181,6 +185,20 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
                 doJSAggregation();
             }
         }
+
+        if (file.getName().getExtension().equals("js")) {
+            File out = new File(getWorkDirectory(), file.getName().getBaseName());
+            if (out.isFile()) {
+                out.delete();
+            }
+            File out2 = new File(getWorkTestDirectory(), file.getName().getBaseName());
+            if (out2.isFile()) {
+                out2.delete();
+            }
+            if (watchDoAggregate) {
+                doJSAggregation();
+            }
+        }
     }
 
     public void fileChanged(FileChangeEvent event) throws Exception {
@@ -201,11 +219,23 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
             return;
         }
 
-        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")) {
+        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")  && isMainFile(theFile)) {
             doCoffeeScriptCompilation(theFile);
             if (watchDoAggregate) {
                 doJSAggregation();
             }
+        }
+
+        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")  && isTestFile(theFile)) {
+            doTestCoffeeScriptCompilation(theFile);
+        }
+
+        if (file.getName().getExtension().equals("js")  && isMainFile(theFile)) {
+            doMainJavaScriptCopy(theFile);
+        }
+
+        if (file.getName().getExtension().equals("js")  && isTestFile(theFile)) {
+            doTestJavaScriptCopy(theFile);
         }
 
         if (watchDoAggregate  && file.getName().getExtension().equals("js")) {
@@ -221,6 +251,16 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     private void doCoffeeScriptCompilation(File file) {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("output", getWorkDirectory());
+        try {
+            processors.get("coffeescript").process(file, options);
+        } catch (Processor.ProcessorException e) {
+            getLog().error("CoffeeScript compilation failed", e);
+        }
+    }
+
+    private void doTestCoffeeScriptCompilation(File file) {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", getWorkTestDirectory());
         try {
             processors.get("coffeescript").process(file, options);
         } catch (Processor.ProcessorException e) {
@@ -254,6 +294,38 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         } catch (Processor.ProcessorException e) {
             getLog().error("CSS aggregation failed", e);
         }
+    }
+
+    private void doMainJavaScriptCopy(File file) {
+        File output = getWorkDirectory();
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", output);
+
+        try {
+            processors.get("jscopy").process(file, options);
+        } catch (Processor.ProcessorException e) {
+            getLog().error("JavaScript copy failed", e);
+        }
+    }
+
+    private void doTestJavaScriptCopy(File file) {
+        File output = getWorkTestDirectory();
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", output);
+
+        try {
+            processors.get("jscopy").process(file, options);
+        } catch (Processor.ProcessorException e) {
+            getLog().error("JavaScript copy failed", e);
+        }
+    }
+
+    private boolean isMainFile(File file) {
+        return file.getAbsolutePath().contains("src/main");
+    }
+
+    private boolean isTestFile(File file) {
+        return file.getAbsolutePath().contains("src/test");
     }
 
 

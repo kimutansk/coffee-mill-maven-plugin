@@ -19,6 +19,8 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryHandler extends ResourceHandler {
+    private String prefix;
+
     public DirectoryHandler(File workDirectory) {
         setResourceBase(workDirectory.getAbsolutePath());
     }
