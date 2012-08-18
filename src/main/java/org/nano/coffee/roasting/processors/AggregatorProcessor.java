@@ -67,12 +67,14 @@ public abstract class AggregatorProcessor implements Processor {
         if (file.isFile()) { return file; }
 
         // 3) Search in the libDir as prefix
-        File[] files = libDir.listFiles(new FilenameFilter() {
-            public boolean accept(File file, String s) {
-                return s.startsWith(name);
-            }
-        });
-        if (files.length > 0) { return files[0]; }
+        if (libDir != null  && libDir.exists()) {
+            File[] files = libDir.listFiles(new FilenameFilter() {
+                public boolean accept(File file, String s) {
+                    return s.startsWith(name);
+                }
+            });
+            if (files.length > 0) { return files[0]; }
+        }
 
         return null;
     }
