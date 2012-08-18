@@ -275,6 +275,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("output", output);
         options.put("work", getWorkDirectory());
+        options.put("libs", getLibDirectory());
         options.put("names", javascriptAggregation);
 
         try {
