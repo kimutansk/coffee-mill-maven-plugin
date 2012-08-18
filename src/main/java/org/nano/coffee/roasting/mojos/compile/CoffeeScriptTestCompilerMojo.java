@@ -63,7 +63,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
         getLog().info(files.size() + " CoffeeScript file(s) compiled");
     }
 
-    private void compile(File file) throws MojoFailureException {
+    private void compile(File file) throws MojoExecutionException {
         Processor coffeescriptProcessor = new CoffeeScriptCompilationProcessor();
         Map<String, File> options = new HashMap<String, File>();
         options.put("output", getWorkTestDirectory());
@@ -72,6 +72,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
             coffeescriptProcessor.process(file, options);
         } catch (Processor.ProcessorException e) {
             getLog().error("Error during coffeescript processing", e);
+            throw new MojoExecutionException("Error during coffeescript processing", e);
         }
     }
 
