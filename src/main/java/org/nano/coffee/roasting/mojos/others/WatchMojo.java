@@ -1,5 +1,6 @@
 package org.nano.coffee.roasting.mojos.others;
 
+import com.google.common.base.Strings;
 import org.apache.commons.vfs2.*;
 import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -72,13 +73,6 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
      * The Jetty Server
      */
     protected Server server;
-
-    public String MESSAGE = "You're running the watch mode. All modified file will be processed " +
-            "automatically. \n" +
-            "If the jetty server is enabled, they will also be served from http://localhost:" +
-            watchJettyServerPort + "/. \n" +
-            "The jasmine runner is available from http://localhost:" + watchJettyServerPort + "/jasmine. \n" +
-            "To leave the watch mode, just hit CTRL+C.\n";
     /**
      * The processors
      */
@@ -93,6 +87,12 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
             throw new MojoExecutionException("Cannot set the file monitor on the source folder", e);
         }
 
+        String MESSAGE = "You're running the watch mode. All modified files will be processed " +
+                "automatically. \n" +
+                "If the jetty server is enabled, they will also be served from http://localhost:" +
+                watchJettyServerPort + "/. \n" +
+                "The jasmine runner is available from http://localhost:" + watchJettyServerPort + "/jasmine. \n" +
+                "To leave the watch mode, just hit CTRL+C.\n";
         getLog().info(MESSAGE);
 
         if (watchRunServer) {
@@ -114,6 +114,7 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
 
     private void buildProcessorsList() {
         processors = new HashMap<String, Processor>();
+        processors.put("assetscopy", new AssetCopyProcessor());
         processors.put("coffeescript", new CoffeeScriptCompilationProcessor());
         processors.put("jscopy", new JavaScriptFileCopyProcessor());
         processors.put("jsaggregator", new JavaScriptAggregator());
@@ -221,6 +222,8 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
             return;
         }
 
+        doAssetCopy(theFile);
+
         if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")  && isMainFile(theFile)) {
             doCoffeeScriptCompilation(theFile);
             if (watchDoAggregate) {
@@ -249,6 +252,18 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         }
 
     }
+
+    private void doAssetCopy(File file) {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("output", getWorkDirectory());
+        options.put("assets", assetsDir);
+        try {
+            processors.get("assetscopy").process(file, options);
+        } catch (Processor.ProcessorException e) {
+            getLog().error("Asset Copy failed", e);
+        }
+    }
+
 
     private void doCoffeeScriptCompilation(File file) {
         Map<String, Object> options = new HashMap<String, Object>();
