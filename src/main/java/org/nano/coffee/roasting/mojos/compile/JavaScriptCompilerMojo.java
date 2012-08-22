@@ -1,6 +1,10 @@
 package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
@@ -62,15 +66,19 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
 
     }
 
-
     private void copyJavascriptFiles() throws MojoFailureException {
-        Collection<File> files = FileUtils.listFiles(javaScriptDir, new String[] {"js"}, true);
-        for (File file : files) {
-            try {
-                FileUtils.copyFileToDirectory(file, getWorkDirectory());
-            } catch (IOException e) {
-                throw new MojoFailureException("Cannot copy " + file.getAbsolutePath() + " to the work directory", e);
-            }
+        // Create a filter for ".js" files
+        IOFileFilter jsSuffixFilter = FileFilterUtils.suffixFileFilter(".js");
+        IOFileFilter jsFiles = FileFilterUtils.and(FileFileFilter.FILE, jsSuffixFilter);
+
+        // Create a filter for either directories or ".js" files
+        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, jsFiles);
+
+        // Copy using the filter
+        try {
+            FileUtils.copyDirectory(javaScriptDir, getWorkDirectory(), filter);
+        } catch (IOException e) {
+            throw new MojoFailureException("", e);
         }
     }
 
