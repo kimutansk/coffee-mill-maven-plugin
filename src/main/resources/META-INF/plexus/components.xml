@@ -29,7 +29,8 @@
                     </clean>
                     <process-resources>
                         org.apache.maven.plugins:maven-resources-plugin:resources,
-                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:resolve-dependencies
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:resolve-dependencies,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:copy-assets
                     </process-resources>
                     <compile>
                         org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-javascript,
