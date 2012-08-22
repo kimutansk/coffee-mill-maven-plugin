@@ -19,7 +19,6 @@ import java.util.Collection;
  *     <li>Check the code using JSLint</li>
  *     <li>Check the code using JSHint</li>
  * </ul>
- * TODO Exclude strict mode.
  *
  * @goal compile-javascript
  *
