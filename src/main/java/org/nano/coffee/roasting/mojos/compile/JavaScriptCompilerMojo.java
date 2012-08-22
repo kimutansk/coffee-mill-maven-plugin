@@ -93,6 +93,9 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
                 errorCount += e.getErrors().size();
                 if (! e.getErrors().isEmpty()) {
                     for (LinterError exp : e.getErrors()) {
+                        if (exp == null) {
+                            continue;
+                        }
                         getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCharacter()
                                 + " - "
                                 + exp.getEvidence() + " - " + exp.getReason());
@@ -122,6 +125,9 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
                 errorCount += e.getErrors().size();
                 if (! e.getErrors().isEmpty()) {
                     for (LinterError exp : e.getErrors()) {
+                        if (exp == null) {
+                            continue;
+                        }
                         getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCharacter()
                                 + " - "
                                 + exp.getEvidence() + " - " + exp.getReason());
