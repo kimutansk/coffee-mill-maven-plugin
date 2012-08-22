@@ -64,14 +64,14 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
     /**
      * Where are the output files written.
      *
-     * @parameter default-value="target/work"
+     * @parameter default-value="target/www"
      */
     public File workDir;
 
     /**
      * Where are the output test files written.
      *
-     * @parameter default-value="target/work-test"
+     * @parameter default-value="target/www-test"
      */
     public File workTestDir;
 
