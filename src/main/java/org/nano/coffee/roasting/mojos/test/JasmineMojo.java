@@ -64,6 +64,12 @@ public class JasmineMojo extends AbstractRoastingCoffeeMojo {
             throw new MojoExecutionException("Cannot prepare Jasmine execution", e);
         }
 
+        // Skip the execution if the WorkTest directory is empty
+        if (getWorkTestDirectory().list().length == 0) {
+            getLog().debug("Skipping Jasmine Tests - no spec found in the directory");
+            return;
+        }
+
         try {
             TestMojo testMojo = new TestMojo();
             JasmineUtils.prepareJasmineMojo(this, testMojo, javascriptAggregation);
