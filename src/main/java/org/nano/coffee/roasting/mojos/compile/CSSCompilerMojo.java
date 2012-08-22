@@ -1,6 +1,10 @@
 package org.nano.coffee.roasting.mojos.compile;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.FileFileFilter;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
@@ -44,15 +48,19 @@ public class CSSCompilerMojo extends AbstractRoastingCoffeeMojo {
     }
 
     private void copyCSSFiles() throws MojoFailureException {
-        Collection<File> files = FileUtils.listFiles(stylesheetsDir, new String[]{"css"}, true);
-        for (File file : files) {
-            try {
-                FileUtils.copyFileToDirectory(file, getWorkDirectory());
-            } catch (IOException e) {
-                throw new MojoFailureException("Cannot copy " + file.getAbsolutePath() + " to the work directory", e);
-            }
+        // Create a filter for ".css" files
+        IOFileFilter cssSuffixFilter = FileFilterUtils.suffixFileFilter(".css");
+        IOFileFilter cssFiles = FileFilterUtils.and(FileFileFilter.FILE, cssSuffixFilter);
+
+        // Create a filter for either directories or ".css" files
+        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, cssFiles);
+
+        // Copy using the filter
+        try {
+            FileUtils.copyDirectory(stylesheetsDir, getWorkDirectory(), filter);
+        } catch (IOException e) {
+            throw new MojoFailureException("", e);
         }
-        getLog().info(files.size() + " file copied to the " + getWorkDirectory().getAbsolutePath());
     }
 
     private void lint() throws MojoFailureException {
