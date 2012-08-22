@@ -1,11 +1,13 @@
 package org.nano.coffee.roasting.mojos;
 
 
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 
 import java.io.File;
+import java.util.List;
 
 public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
 
@@ -53,6 +55,13 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
      * @parameter default-value="src/test/js"
      */
     public File javaScriptTestDir;
+
+    /**
+     * Where are the assets.
+     *
+     * @parameter default-value="src/main/www"
+     */
+    public File assetsDir;
 
     /**
      * Where are LESS, CSS and SASS/SCSS files.
