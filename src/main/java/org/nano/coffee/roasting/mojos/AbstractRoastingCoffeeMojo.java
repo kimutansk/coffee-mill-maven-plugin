@@ -29,6 +29,18 @@ public abstract class AbstractRoastingCoffeeMojo extends AbstractMojo {
     public MavenProjectHelper projectHelper;
 
     /**
+     * Directory containing the build files.
+     * @parameter expression="${project.build.directory}"
+     */
+    public File buildDirectory;
+
+    /**
+     * Base directory of the project.
+     * @parameter expression="${basedir}"
+     */
+    public File baseDirectory;
+
+    /**
      * Where are JavaScript files.
      *
      * @parameter default-value="src/main/js"
