@@ -51,7 +51,8 @@
                     <package>
                         org.nano.coffee-roasting:coffee-roasting-maven-plugin:aggregate-javascript,
                         org.nano.coffee-roasting:coffee-roasting-maven-plugin:aggregate-stylesheets,
-                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:minify-javascript
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:minify-javascript,
+                        org.nano.coffee-roasting:coffee-roasting-maven-plugin:build-zip
                     </package>
                     <integration-test>
                         org.nano.coffee-roasting:coffee-roasting-maven-plugin:jasmine-it-test
