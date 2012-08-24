@@ -9,6 +9,7 @@ import org.mozilla.javascript.ScriptableObject;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CoffeeScriptCompilationProcessor;
 import org.nano.coffee.roasting.processors.Processor;
+import org.nano.coffee.roasting.utils.OptionsHelper;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
 import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.util.StopWatch;
@@ -56,23 +57,12 @@ public class CoffeeScriptTestCompilerMojo extends AbstractRoastingCoffeeMojo {
             return;
         }
 
-        Collection<File> files = FileUtils.listFiles(coffeeScriptTestDir, new String[]{"coffee"}, true);
-        for (File file : files) {
-            compile(file);
-        }
-        getLog().info(files.size() + " CoffeeScript file(s) compiled");
-    }
-
-    private void compile(File file) throws MojoExecutionException {
-        Processor coffeescriptProcessor = new CoffeeScriptCompilationProcessor();
-        Map<String, File> options = new HashMap<String, File>();
-        options.put("output", getWorkTestDirectory());
-        getLog().info("Compiling " + file.getAbsolutePath());
+        CoffeeScriptCompilationProcessor processor = new CoffeeScriptCompilationProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
         try {
-            coffeescriptProcessor.process(file, options);
+            processor.processAll();
         } catch (Processor.ProcessorException e) {
-            getLog().error("Error during coffeescript processing", e);
-            throw new MojoExecutionException("Error during coffeescript processing", e);
+            throw new MojoExecutionException("", e);
         }
     }
 

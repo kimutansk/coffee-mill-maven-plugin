@@ -1,6 +1,5 @@
 package org.nano.coffee.roasting.mojos.others;
 
-import com.google.common.base.Strings;
 import org.apache.commons.vfs2.*;
 import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -10,8 +9,10 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.*;
+import org.nano.coffee.roasting.utils.OptionsHelper;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,11 +77,12 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     /**
      * The processors
      */
-    protected HashMap<String, Processor> processors;
+    protected List<Processor> processors;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        buildProcessorsList();
+
+        computeProcessors();
         try {
             setupMonitor();
         } catch (FileSystemException e) {
@@ -95,9 +97,16 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
                 "To leave the watch mode, just hit CTRL+C.\n";
         getLog().info(MESSAGE);
 
+        for (Processor processor : processors) {
+            try {
+                processor.processAll();
+            } catch (Processor.ProcessorException e) {
+                getLog().error("", e);
+            }
+        }
+
         if (watchRunServer) {
             try {
-
                 server = new Server();
                 addConnectorToServer();
                 addHandlersToServer();
@@ -112,15 +121,64 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         }
     }
 
-    private void buildProcessorsList() {
-        processors = new HashMap<String, Processor>();
-        processors.put("assetscopy", new AssetCopyProcessor());
-        processors.put("coffeescript", new CoffeeScriptCompilationProcessor());
-        processors.put("jscopy", new JavaScriptFileCopyProcessor());
-        processors.put("jsaggregator", new JavaScriptAggregator());
-        processors.put("cssaggregator", new CSSAggregator());
+    private List<Processor> computeProcessors() {
+        processors = new ArrayList<Processor>();
+        // Always added
 
+        // Asset Copy
+        Processor processor = new CopyAssetProcessor();
+        processor.configure(this, null);
+        processors.add(processor);
+
+        // Copy JS Main + Test
+        processor = new JavaScriptFileCopyProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", false).build());
+        processors.add(processor);
+        processor = new JavaScriptFileCopyProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+        processors.add(processor);
+
+        // Copy CSS
+        processor = new CSSFileCopyProcessor();
+        processor.configure(this, null);
+        processors.add(processor);
+
+        // CoffeeScript
+        if (watchCoffeeScript) {
+            processor = new CoffeeScriptCompilationProcessor();
+            processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", false).build());
+            processors.add(processor);
+
+            processor = new CoffeeScriptCompilationProcessor();
+            processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+            processors.add(processor);
+        }
+
+        // JS and CSS Aggregation
+        if (watchDoAggregate) {
+            processor = new JavaScriptAggregator();
+            Map<String, Object> options = new HashMap<String, Object>();
+            File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".js");
+            options.put("output", output);
+            options.put("names", javascriptAggregation);
+            options.put("extension", "js");
+            processor.configure(this, options);
+            processors.add(processor);
+
+            processor = new CSSAggregator();
+            output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".css");
+            options = new HashMap<String, Object>();
+            options.put("output", output);
+            options.put("names", cssAggregation);
+            options.put("extension", "css");
+            processor.configure(this, options);
+            processors.add(processor);
+        }
+
+        return processors;
     }
+
+
     private void setupMonitor() throws FileSystemException {
         File src = new File(project.getBasedir(), "src");
         getLog().info("Set up file monitor on " + src);
@@ -156,50 +214,23 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     public void fileCreated(FileChangeEvent event) throws Exception {
         getLog().info("New file found " + event.getFile().getName().getBaseName());
 
-        if (event.getFile().getType() == FileType.FOLDER) {
-            getLog().info(event.getFile().getName() + " is a directory");
-        } else {
-            processNewOrUpdatedFile(event.getFile());
+        String path = event.getFile().getName().getPath();
+        File theFile = new File(path);
+        for (Processor processor : processors) {
+            if (processor.accept(theFile)) {
+                processor.fileCreated(theFile);
+            }
         }
     }
-
 
     public void fileDeleted(FileChangeEvent event) throws Exception {
         getLog().info("File " + event.getFile().getName().getBaseName() + " deleted");
 
-        if (event.getFile().getType() == FileType.FOLDER) {
-            getLog().info(event.getFile().getName() + " is a directory");
-        } else {
-            processDeletedFile(event.getFile());
-        }
-    }
-
-    private void processDeletedFile(FileObject file) {
-        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")) {
-            // Delete generated JS file
-            String jsFileName = file.getName().getBaseName().substring(0, file.getName().getBaseName().length() - ".coffee".length
-                    ())
-                    + ".js";
-            File out = new File(getWorkDirectory(), jsFileName);
-            if (out.isFile()) {
-                out.delete();
-            }
-            if (watchDoAggregate) {
-                doJSAggregation();
-            }
-        }
-
-        if (file.getName().getExtension().equals("js")) {
-            File out = new File(getWorkDirectory(), file.getName().getBaseName());
-            if (out.isFile()) {
-                out.delete();
-            }
-            File out2 = new File(getWorkTestDirectory(), file.getName().getBaseName());
-            if (out2.isFile()) {
-                out2.delete();
-            }
-            if (watchDoAggregate) {
-                doJSAggregation();
+        String path = event.getFile().getName().getPath();
+        File theFile = new File(path);
+        for (Processor processor : processors) {
+            if (processor.accept(theFile)) {
+                processor.fileDeleted(theFile);
             }
         }
     }
@@ -207,144 +238,12 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     public void fileChanged(FileChangeEvent event) throws Exception {
         getLog().info("File changed: " + event.getFile().getName().getBaseName());
 
-        if (event.getFile().getType() == FileType.FOLDER) {
-            getLog().info(event.getFile().getName() + " is a directory");
-        } else {
-            processNewOrUpdatedFile(event.getFile());
-        }
-    }
-
-    private void processNewOrUpdatedFile(FileObject file) {
-        String path = file.getName().getPath();
+        String path = event.getFile().getName().getPath();
         File theFile = new File(path);
-        if (! theFile.isFile()) {
-            getLog().error("Something terrible happen, the " + file.getName().getPath() + " is not a file...");
-            return;
-        }
-
-        doAssetCopy(theFile);
-
-        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")  && isMainFile(theFile)) {
-            doCoffeeScriptCompilation(theFile);
-            if (watchDoAggregate) {
-                doJSAggregation();
+        for (Processor processor : processors) {
+            if (processor.accept(theFile)) {
+                processor.fileUpdated(theFile);
             }
         }
-
-        if (watchCoffeeScript  && file.getName().getExtension().equals("coffee")  && isTestFile(theFile)) {
-            doTestCoffeeScriptCompilation(theFile);
-        }
-
-        if (file.getName().getExtension().equals("js")  && isMainFile(theFile)) {
-            doMainJavaScriptCopy(theFile);
-        }
-
-        if (file.getName().getExtension().equals("js")  && isTestFile(theFile)) {
-            doTestJavaScriptCopy(theFile);
-        }
-
-        if (watchDoAggregate  && file.getName().getExtension().equals("js")) {
-            doJSAggregation();
-        }
-
-        if (watchDoAggregate  && file.getName().getExtension().equals("css")) {
-            doCSSAggregation();
-        }
-
     }
-
-    private void doAssetCopy(File file) {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", getWorkDirectory());
-        options.put("assets", assetsDir);
-        try {
-            processors.get("assetscopy").process(file, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("Asset Copy failed", e);
-        }
-    }
-
-
-    private void doCoffeeScriptCompilation(File file) {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", getWorkDirectory());
-        try {
-            processors.get("coffeescript").process(file, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("CoffeeScript compilation failed", e);
-        }
-    }
-
-    private void doTestCoffeeScriptCompilation(File file) {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", getWorkTestDirectory());
-        try {
-            processors.get("coffeescript").process(file, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("CoffeeScript compilation failed", e);
-        }
-    }
-
-    private void doJSAggregation() {
-        File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".js");
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", output);
-        options.put("work", getWorkDirectory());
-        options.put("libs", getLibDirectory());
-        options.put("names", javascriptAggregation);
-
-        try {
-            processors.get("jsaggregator").process(null, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("JavaScript aggregation failed", e);
-        }
-    }
-
-    private void doCSSAggregation() {
-        File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".css");
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", output);
-        options.put("work", getWorkDirectory());
-        options.put("names", cssAggregation);
-
-        try {
-            processors.get("cssaggregator").process(null, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("CSS aggregation failed", e);
-        }
-    }
-
-    private void doMainJavaScriptCopy(File file) {
-        File output = getWorkDirectory();
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", output);
-
-        try {
-            processors.get("jscopy").process(file, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("JavaScript copy failed", e);
-        }
-    }
-
-    private void doTestJavaScriptCopy(File file) {
-        File output = getWorkTestDirectory();
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", output);
-
-        try {
-            processors.get("jscopy").process(file, options);
-        } catch (Processor.ProcessorException e) {
-            getLog().error("JavaScript copy failed", e);
-        }
-    }
-
-    private boolean isMainFile(File file) {
-        return file.getAbsolutePath().contains("src/main");
-    }
-
-    private boolean isTestFile(File file) {
-        return file.getAbsolutePath().contains("src/test");
-    }
-
-
 }

@@ -8,8 +8,11 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
+import org.nano.coffee.roasting.processors.CSSFileCopyProcessor;
 import org.nano.coffee.roasting.processors.CSSLintProcessor;
+import org.nano.coffee.roasting.processors.JavaScriptFileCopyProcessor;
 import org.nano.coffee.roasting.processors.Processor;
+import org.nano.coffee.roasting.utils.OptionsHelper;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintException;
 
@@ -40,39 +43,27 @@ public class CSSCompilerMojo extends AbstractRoastingCoffeeMojo {
             return;
         }
 
-        copyCSSFiles();
+        CSSFileCopyProcessor processor = new CSSFileCopyProcessor();
+        processor.configure(this, null);
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("Cannot copy CSS files", e);
+        }
 
         if (! skipCSSLint) {
             lint();
         }
     }
 
-    private void copyCSSFiles() throws MojoFailureException {
-        // Create a filter for ".css" files
-        IOFileFilter cssSuffixFilter = FileFilterUtils.suffixFileFilter(".css");
-        IOFileFilter cssFiles = FileFilterUtils.and(FileFileFilter.FILE, cssSuffixFilter);
-
-        // Create a filter for either directories or ".css" files
-        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, cssFiles);
-
-        // Copy using the filter
-        try {
-            FileUtils.copyDirectory(stylesheetsDir, getWorkDirectory(), filter);
-        } catch (IOException e) {
-            throw new MojoFailureException("", e);
-        }
-    }
-
     private void lint() throws MojoFailureException {
         CSSLintProcessor processor = new CSSLintProcessor();
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("output", getWorkDirectory());
-        options.put("logger", getLog());
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
 
         Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
         for (File file : files) {
             try {
-                processor.process(file, options);
+                processor.processAll();
             } catch (Processor.ProcessorException e) {
                 getLog().error("Cannot run the CSS Lint Processor on " + file.getAbsolutePath(), e);
             }

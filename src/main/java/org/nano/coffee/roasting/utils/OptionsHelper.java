@@ -3,6 +3,7 @@ package org.nano.coffee.roasting.utils;
 import org.apache.maven.plugin.logging.Log;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,5 +63,27 @@ public class OptionsHelper {
             return (Log) value;
         }
         return null;
+    }
+
+    public static boolean getBoolean(Map<String, Object> options, String name, boolean defaultValue) {
+        Object value = options.get(name);
+        if (value == null  || ! (value instanceof Boolean)) {
+            return defaultValue;
+        } else {
+            return (Boolean) value;
+        }
+    }
+
+    public static class OptionsBuilder {
+        Map<String, Object> options = new HashMap<String, Object>();
+
+        public OptionsBuilder set(String key, Object object) {
+            options.put(key, object);
+            return this;
+        }
+
+        public Map<String, Object> build() {
+            return options;
+        }
     }
 }

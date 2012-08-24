@@ -1,6 +1,7 @@
 package org.nano.coffee.roasting.processors;
 
 import org.apache.commons.io.FileUtils;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.utils.OptionsHelper;
 
 import java.io.File;
@@ -8,41 +9,31 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Just copy JavaScript files to an output directory.
+ * A processor copying assets to the work directory.
  */
-public class CopyAssetProcessor implements Processor {
+public class CopyAssetProcessor extends DefaultProcessor {
 
 
-    public void process(File input, Map<String, ?> options) throws ProcessorException {
-        File assets = OptionsHelper.getDirectory(options, "assets", false);
-        if (assets == null) {
-            throw new ProcessorException("Cannot copy file - assets parameter missing");
-        }
+    private File assetsDir;
+    private File workDir;
 
-        File output = OptionsHelper.getDirectory(options, "output", true);
-        if (output == null) {
-            throw new ProcessorException("Cannot copy file - output parameter missing");
+    public void configure(AbstractRoastingCoffeeMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
+        this.assetsDir = mojo.assetsDir;
+        this.workDir = mojo.getWorkDirectory();
+    }
+
+    public void processAll() throws ProcessorException {
+        if (! assetsDir.exists()) {
+            return;
         }
 
         try {
-            String path = input.getAbsolutePath();
-            if (! path.contains(assets.getAbsolutePath())) {
-                return;
-            }
-            String relativePath = path.substring(assets.getAbsolutePath().length());
-            File f = new File(output, relativePath);
-            if (f.getParentFile() != null) {
-                f.getParentFile().mkdirs();
-                FileUtils.copyFileToDirectory(input,  f.getParentFile());
-            } else {
-                throw new ProcessorException("Cannot copy file - parent directory not accessible for "
-                        + input.getAbsolutePath());
-            }
-
+            getLog().info("Copying " + assetsDir.getAbsolutePath() + " to " + workDir.getAbsolutePath());
+            FileUtils.copyDirectory(assetsDir, workDir);
         } catch (IOException e) {
-            throw new ProcessorException("Cannot copy file " + input.getName(), e);
+            throw new ProcessorException("Cannot copy assets to the work directory", e);
         }
-
     }
 
     public void tearDown() {
@@ -50,12 +41,28 @@ public class CopyAssetProcessor implements Processor {
     }
 
     /**
-     * Accept all but will manage only file from the asset folder.
-     * @param file
-     * @return
+     * Accepts files from the asset folder
      */
     public boolean accept(File file) {
-        return true;
+        return isFileContainedInDirectory(file, assetsDir);
+    }
+
+    public void fileCreated(File file) throws ProcessorException {
+        getLog().info("Copying " + file.getName() + " to " + workDir.getAbsolutePath());
+        copyFileToDir(file, assetsDir, workDir);
+    }
+
+    public void fileUpdated(File file) throws ProcessorException {
+        getLog().info("Copying " + file.getName() + " to " + workDir.getAbsolutePath());
+        copyFileToDir(file, assetsDir, workDir);
+    }
+
+    public void fileDeleted(File file) {
+        File target = computeRelativeFile(file, assetsDir, workDir);
+        if (target.isFile()) {
+            getLog().info("Deleting " + target.getAbsolutePath());
+            target.delete();
+        }
     }
 
 }

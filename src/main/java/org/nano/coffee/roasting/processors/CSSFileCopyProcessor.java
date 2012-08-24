@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Just copy JavaScript files to an output directory.
+ * Just copy CSS files to an output directory.
  */
 public class CSSFileCopyProcessor extends DefaultProcessor {
 
@@ -21,49 +21,33 @@ public class CSSFileCopyProcessor extends DefaultProcessor {
     private File source;
     private File destination;
 
-    public void process(File input, Map<String, ?> options) throws ProcessorException {
-        File output = OptionsHelper.getDirectory(options, "output", true);
-        if (output == null) {
-            throw new ProcessorException("Cannot copy file - output parameter missing");
-        }
-
-        try {
-            FileUtils.copyFileToDirectory(input, output);
-        } catch (IOException e) {
-            throw new ProcessorException("Cannot copy file " + input.getName(), e);
-        }
-    }
-
     @Override
     public void configure(AbstractRoastingCoffeeMojo mojo, Map<String, Object> options) {
         super.configure(mojo, options);
-        if (OptionsHelper.getBoolean(options, "test", false)) {
-            this.source = mojo.javaScriptDir;
-            this.destination = mojo.getWorkDirectory();
-        } else {
-            this.source = mojo.javaScriptTestDir;
-            this.destination = mojo.getWorkTestDirectory();
-        }
+        this.source = mojo.stylesheetsDir;
+        this.destination = mojo.getWorkDirectory();
     }
 
     public void processAll() throws ProcessorException {
-        copyJavascriptFiles();
+        if (source.exists()) {
+            copyCSSFiles();
+        }
     }
 
-    private void copyJavascriptFiles() throws ProcessorException {
+    private void copyCSSFiles() throws ProcessorException {
         getLog().info("Copying " + source.getAbsolutePath() + " to " + destination.getAbsolutePath());
-        // Create a filter for ".js" files
-        IOFileFilter jsSuffixFilter = FileFilterUtils.suffixFileFilter(".js");
-        IOFileFilter jsFiles = FileFilterUtils.and(FileFileFilter.FILE, jsSuffixFilter);
+        // Create a filter for ".css" files
+        IOFileFilter cssSuffixFilter = FileFilterUtils.suffixFileFilter(".css");
+        IOFileFilter csssFiles = FileFilterUtils.and(FileFileFilter.FILE, cssSuffixFilter);
 
-        // Create a filter for either directories or ".js" files
-        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, jsFiles);
+        // Create a filter for either directories or ".css" files
+        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, csssFiles);
 
         // Copy using the filter
         try {
             FileUtils.copyDirectory(source, destination, filter);
         } catch (IOException e) {
-            throw new ProcessorException("Cannot copy JavaScript files", e);
+            throw new ProcessorException("Cannot copy CSS files", e);
         }
     }
 

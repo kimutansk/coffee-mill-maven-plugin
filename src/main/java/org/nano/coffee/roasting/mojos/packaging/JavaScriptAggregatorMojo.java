@@ -49,12 +49,11 @@ public class JavaScriptAggregatorMojo extends AbstractRoastingCoffeeMojo {
         JavaScriptAggregator aggregator = new JavaScriptAggregator();
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("output", output);
-        options.put("work", getWorkDirectory());
-        options.put("libs", getLibDirectory());
         options.put("names", javascriptAggregation);
         options.put("extension", "js");
+        aggregator.configure(this, options);
         try {
-            aggregator.process(null, options);
+            aggregator.processAll();
         } catch (Processor.ProcessorException e) {
             throw new MojoExecutionException("Cannot aggregate JavaScript files", e);
         }

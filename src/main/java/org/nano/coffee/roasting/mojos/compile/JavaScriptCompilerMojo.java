@@ -8,6 +8,9 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
+import org.nano.coffee.roasting.processors.JavaScriptFileCopyProcessor;
+import org.nano.coffee.roasting.processors.Processor;
+import org.nano.coffee.roasting.utils.OptionsHelper;
 import ro.isdc.wro.extensions.processor.support.linter.JsHint;
 import ro.isdc.wro.extensions.processor.support.linter.JsLint;
 import ro.isdc.wro.extensions.processor.support.linter.LinterError;
@@ -50,7 +53,13 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
             return;
         }
 
-        copyJavascriptFiles();
+        JavaScriptFileCopyProcessor processor = new JavaScriptFileCopyProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", false).build());
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("Cannot copy JavaScript files", e);
+        }
 
         if (! skipJsLint) {
             doJsLint();
@@ -64,22 +73,6 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
             getLog().debug("JS Hint skipped");
         }
 
-    }
-
-    private void copyJavascriptFiles() throws MojoFailureException {
-        // Create a filter for ".js" files
-        IOFileFilter jsSuffixFilter = FileFilterUtils.suffixFileFilter(".js");
-        IOFileFilter jsFiles = FileFilterUtils.and(FileFileFilter.FILE, jsSuffixFilter);
-
-        // Create a filter for either directories or ".js" files
-        IOFileFilter filter = FileFilterUtils.or(DirectoryFileFilter.DIRECTORY, jsFiles);
-
-        // Copy using the filter
-        try {
-            FileUtils.copyDirectory(javaScriptDir, getWorkDirectory(), filter);
-        } catch (IOException e) {
-            throw new MojoFailureException("", e);
-        }
     }
 
     private void doJsLint() {

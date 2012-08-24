@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.utils.OptionsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +18,12 @@ import java.util.Map;
 /**
  * Common facet of aggregator.
  */
-public abstract class AggregatorProcessor implements Processor {
+public abstract class AggregatorProcessor extends DefaultProcessor {
 
-    public static Logger logger = LoggerFactory.getLogger(AggregatorProcessor.class);
+
+    private File output;
+    private String extension;
+    private List<String> names;
 
     public List<File> computeFileList(List<String> names, File workDir, File libDir, String extension,
                                       boolean failedOnMissingFile) throws ProcessorException {
@@ -30,7 +34,7 @@ public abstract class AggregatorProcessor implements Processor {
                 result.addAll(FileUtils.listFiles(workDir, new String[]{extension}, true));
             } else {
                 // Else we just skip.
-                logger.debug("Aggregation skipped - no files to aggregate");
+                getLog().debug("Aggregation skipped - no files to aggregate");
                 return result;
             }
         } else {
@@ -45,7 +49,7 @@ public abstract class AggregatorProcessor implements Processor {
                         throw new ProcessorException("Aggregation failed : " + name + " file missing in " + workDir
                             .getAbsolutePath());
                     } else {
-                        logger.warn("Issue detected during aggregation : " + name + " missing");
+                        getLog().warn("Issue detected during aggregation : " + name + " missing");
                     }
                 } else {
                     // The file exists.
@@ -84,7 +88,7 @@ public abstract class AggregatorProcessor implements Processor {
             return;
         }
 
-        logger.info("Aggregating  " + files.size() + " files into " + to.getAbsolutePath());
+        getLog().info("Aggregating  " + files.size() + " files into " + to.getAbsolutePath());
         to.getParentFile().mkdirs();
         FileOutputStream out = new FileOutputStream(to);
         try {
@@ -92,13 +96,13 @@ public abstract class AggregatorProcessor implements Processor {
                 if (file.getPath().equals(to.getPath())) {
                     continue;
                 }
-                logger.debug("Copying " + file.getAbsolutePath() + " to " + to.getName());
+                getLog().debug("Copying " + file.getAbsolutePath() + " to " + to.getName());
                 FileInputStream in = new FileInputStream(file);
                 try {
                     IOUtils.copy(in, out);
                     separator(out);
                 } catch (IOException e) {
-                    logger.error("Aggregation failed : Cannot build aggregate file - " + e.getMessage());
+                    getLog().error("Aggregation failed : Cannot build aggregate file - " + e.getMessage());
                     throw new ProcessorException("Aggregation failed : cannot build aggregate file", e);
                 } finally {
                     IOUtils.closeQuietly(in);
@@ -109,18 +113,49 @@ public abstract class AggregatorProcessor implements Processor {
         }
     }
 
-    public void process(File input, Map<String, ?> options) throws ProcessorException {
-       File output = OptionsHelper.getFile(options, "output");
-       File work = OptionsHelper.getDirectory(options, "work", false);
-       File libs = OptionsHelper.getDirectory(options, "libs", false);
-       String extension = OptionsHelper.getString(options, "extension");
-       List<String> names = (List<String>) options.get("names");
+    @Override
+    public void configure(AbstractRoastingCoffeeMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
+        this.extension = OptionsHelper.getString(options, "extension");
+        this.output = OptionsHelper.getFile(options, "output");
+        this.names = (List<String>) options.get("names");
+    }
+
+    @Override
+    public boolean accept(File file) {
+        return isFileContainedInDirectory(file, mojo.getWorkDirectory()) && file.isFile()  && file.getName().endsWith
+                (extension);
+    }
+
+    public void aggregate() throws ProcessorException {
         try {
-            List<File> files = computeFileList(names, work, libs, extension, true);
+            List<File> files = computeFileList(names, mojo.getWorkDirectory(), mojo.getLibDirectory(), extension, true);
             aggregate(files, output);
         } catch (FileNotFoundException e) {
-            throw new ProcessorException("Cannot build aggregate file", e);
+            throw new ProcessorException("Cannot build aggregate file " + output.getAbsolutePath(), e);
         }
+    }
+
+    @Override
+    public void processAll() throws ProcessorException {
+        if (mojo.getWorkDirectory().exists()) {
+            aggregate();
+        }
+    }
+
+    @Override
+    public void fileCreated(File file) throws ProcessorException {
+        aggregate();
+    }
+
+    @Override
+    public void fileUpdated(File file) throws ProcessorException {
+        aggregate();
+    }
+
+    @Override
+    public void fileDeleted(File file) throws ProcessorException {
+        aggregate();
     }
 
     public void tearDown() {

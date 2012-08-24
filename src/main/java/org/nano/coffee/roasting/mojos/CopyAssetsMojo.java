@@ -8,6 +8,8 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
+import org.nano.coffee.roasting.processors.CopyAssetProcessor;
+import org.nano.coffee.roasting.processors.Processor;
 import ro.isdc.wro.extensions.processor.support.linter.JsHint;
 import ro.isdc.wro.extensions.processor.support.linter.JsLint;
 import ro.isdc.wro.extensions.processor.support.linter.LinterError;
@@ -25,19 +27,13 @@ import java.util.Collection;
  */
 public class CopyAssetsMojo extends AbstractRoastingCoffeeMojo {
 
-
     public void execute() throws MojoExecutionException, MojoFailureException {
-        copyAssets();
-    }
-
-    private void copyAssets() throws MojoFailureException {
-        // Copy using the filter
+        CopyAssetProcessor processor = new CopyAssetProcessor();
+        processor.configure(this, null);
         try {
-            FileUtils.copyDirectory(assetsDir, getWorkDirectory());
-            System.out.println("BOOH");
-        } catch (IOException e) {
-            throw new MojoFailureException("", e);
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("", e);
         }
     }
-
 }

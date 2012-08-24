@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.RhinoException;
 import org.mozilla.javascript.ScriptableObject;
+import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.utils.OptionsHelper;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
 import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
@@ -15,26 +16,65 @@ import ro.isdc.wro.util.WroUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Map;
 
 /**
  * Processor handling CoffeeScript to JavaScript compilation.
  * It handles <tt>.coffee</tt> files.
  */
-public class CoffeeScriptCompilationProcessor implements Processor {
+public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
 
 
-    public void process(File input, Map<String, ?> options) throws ProcessorException {
-        File output = OptionsHelper.getDirectory(options, "output", true);
-        if (output == null) {
-            throw new ProcessorException("Output Parameter missing or invalid");
+    private File source;
+    private File destination;
+
+    public void tearDown() {
+        // Do nothing.
+    }
+
+    @Override
+    public void configure(AbstractRoastingCoffeeMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
+        if (OptionsHelper.getBoolean(options, "test", false)) {
+            this.source = mojo.coffeeScriptTestDir;
+            this.destination = mojo.getWorkTestDirectory();
+        } else {
+            this.source = mojo.coffeeScriptDir;
+            this.destination = mojo.getWorkDirectory();
         }
+    }
 
+    public boolean accept(File file) {
+        return isFileContainedInDirectory(file, source)  && file.getName().endsWith(".coffee")  && file.isFile();
+    }
+
+
+    @Override
+    public void processAll() throws ProcessorException {
+        if (! source.exists()) {
+            return;
+        }
+        Collection<File> files = FileUtils.listFiles(source, new String[]{"coffee"}, true);
+        for (File file : files) {
+            if (file.isFile()) {
+                compile(file);
+            }
+        }
+    }
+
+    private File getOutputJSFile(File input) {
         String jsFileName = input.getName().substring(0, input.getName().length() - ".coffee".length()) + ".js";
+        String path = input.getParentFile().getAbsolutePath().substring(source.getAbsolutePath().length());
+        File theFile = new File(destination, path + "/" + jsFileName);
+        return theFile;
+    }
 
+    private void compile(File file) throws ProcessorException {
+        File out = getOutputJSFile(file);
+        getLog().info("Compiling " + file.getAbsolutePath() + " to " + out.getAbsolutePath());
         try {
-            final String data = FileUtils.readFileToString(input);
-            final File out = new File(output, jsFileName);
+            final String data = FileUtils.readFileToString(file);
             final RhinoScriptBuilder builder = initScriptBuilder();
             final String compileScript = String.format("CoffeeScript.compile(%s, %s);",
                     WroUtil.toJSMultiLineString(data), // TODO Extract method in a helper class.
@@ -42,20 +82,29 @@ public class CoffeeScriptCompilationProcessor implements Processor {
             final String result = (String) builder.evaluate(compileScript, "CoffeeScript.compile");
             FileUtils.write(out, result);
         } catch (RhinoException jse) {
-            throw new ProcessorException("Compilation Error in " + input.getName() + "@" + jse.lineNumber() +
+            throw new ProcessorException("Compilation Error in " + file.getName() + "@" + jse.lineNumber() +
                     " - " + jse.details());
         } catch (IOException e) {
-            throw new ProcessorException("Cannot compile " + input.getAbsolutePath(), e);
+            throw new ProcessorException("Cannot compile " + file.getAbsolutePath(), e);
         }
-
     }
 
-    public void tearDown() {
-        // Do nothing.
+    @Override
+    public void fileCreated(File file) throws ProcessorException {
+        compile(file);
     }
 
-    public boolean accept(File file) {
-        return file.getName().endsWith(".coffee")  && file.isFile();
+    @Override
+    public void fileUpdated(File file) throws ProcessorException {
+        compile(file);
+    }
+
+    @Override
+    public void fileDeleted(File file) {
+        File theFile = getOutputJSFile(file);
+        if (theFile.exists()) {
+            theFile.delete();
+        }
     }
 
     private static final String DEFAULT_COFFEE_SCRIPT = "coffee-script.min.js";

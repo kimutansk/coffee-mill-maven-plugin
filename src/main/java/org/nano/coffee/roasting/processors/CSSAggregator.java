@@ -16,8 +16,4 @@ public class CSSAggregator extends AggregatorProcessor {
     public void separator(OutputStream out) throws IOException {
         out.write('\n');
     }
-
-    public boolean accept(File file) {
-        return file.isFile()  && file.getName().endsWith(".css");
-    }
 }

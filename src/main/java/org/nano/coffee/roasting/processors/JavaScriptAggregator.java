@@ -16,8 +16,4 @@ public class JavaScriptAggregator extends AggregatorProcessor {
         out.write(';');
         out.write('\n');
     }
-
-    public boolean accept(File file) {
-        return file.isFile()  && file.getName().endsWith(".js");
-    }
 }

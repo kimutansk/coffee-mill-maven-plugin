@@ -50,12 +50,10 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
         Processor aggregator = new CSSAggregator();
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("output", output);
-        options.put("work", getWorkDirectory());
         options.put("names", cssAggregation);
         options.put("extension", "css");
-        options.put("libs", getLibDirectory());
         try {
-            aggregator.process(null, options);
+            aggregator.processAll();
         } catch (Processor.ProcessorException e) {
             throw new MojoExecutionException("Cannot aggregate CSS files", e);
         }
