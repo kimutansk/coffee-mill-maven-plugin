@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Just copy JavaScript files to an output directory.
  */
-public class AssetCopyProcessor implements Processor {
+public class CopyAssetProcessor implements Processor {
 
 
     public void process(File input, Map<String, ?> options) throws ProcessorException {
