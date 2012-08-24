@@ -24,14 +24,11 @@ public class InjectionHelper {
                 theField.set(obj, value);
             } catch (NoSuchFieldException e1) {
                 LOGGER.error("Internal error - Cannot inject " + field + " in " + clazz.getName(), e);
-                return;
             } catch (IllegalAccessException e1) {
                 LOGGER.error("Internal error - Cannot inject " + field + " in " + clazz.getName(), e);
-                return;
             }
         } catch (IllegalAccessException e) {
             LOGGER.error("Internal error - Cannot inject " + field + " in " + clazz.getName(), e);
-            return;
         }
 
     }
