@@ -113,30 +113,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
         }
     }
 
-    private class CopyCSSDependenciesMojo extends CopyDependenciesMojo {
-
-        public CopyCSSDependenciesMojo() {
-            super();
-            project = ResolveDependenciesMojo.this.project;
-            setFactory(factory);
-            setResolver(resolver);
-            setArtifactCollector(artifactCollector);
-            setArtifactMetadataSource(artifactMetadataSource);
-            setLocal(local);
-            setRemoteRepos(remoteRepos);
-            setOutputDirectory(getLibDirectory());
-            setUseRepositoryLayout(false);
-            setLog(getLog());
-            setCopyPom(false);
-            silent = false;
-            overWriteIfNewer = true;
-            overWriteSnapshots = true;
-            overWriteReleases = false;
-            excludeTransitive = false;
-            excludeScope = "provided";
-            includeTypes = "css";
-        }
-    }
+    // TODO Unpack zip dependencies ?
 
     private class CopyWebDependenciesMojo extends UnpackDependenciesMojo {
 
