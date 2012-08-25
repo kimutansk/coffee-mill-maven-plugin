@@ -60,11 +60,11 @@ public class JasmineITMojo extends AbstractRoastingCoffeeMojo {
         // Copy the right library to target/it-jasmine/src
         try {
             if (runJasmineTestOnAggregatedVersion) {
-                File lib = new File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + ".js");
+                File lib = new File(getTarget(), project.getBuild().getFinalName() + ".js");
                 FileUtils.copyFileToDirectory(lib, JasmineUtils.getJasmineITSourceDirectory(project));
             }
             if (runJasmineTestOnMinifiedVersion) {
-                File lib = new File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + "-min.js");
+                File lib = new File(getTarget(), project.getBuild().getFinalName() + "-min.js");
                 FileUtils.copyFileToDirectory(lib, JasmineUtils.getJasmineITSourceDirectory(project));
             }
         } catch (IOException e) {
