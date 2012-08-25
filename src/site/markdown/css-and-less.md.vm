@@ -1,0 +1,47 @@
+Working with Stylesheets
+========================
+
+the plugin supports plain CSS files and LESS files. [LESS](http://lesscss.org) extends CSS with dynamic behavior such
+as variables, mixins, operations and functions. LESS runs on both the client-side (Chrome, Safari,
+Firefox) and server-side, with Node.js and Rhino.
+
+Validating CSS files
+--------------------
+
+CSS is simple, but there are some rules. The plugin validates CSS files with CSSLint. It does basic syntax checking
+as well as applying a set of rules to the code that look for problematic patterns or signs of inefficiency.
+
+Stylesheets are placed in the `src/main/stylesheets`  directory. The validation happens automatically during the
+_compile_ phase, but you can launch it using:
+
+    mvn ${project.groupId}:${project.artifactId}:compile-css
+
+Compiling Less files
+----------------------
+
+Less files are also in `src/main/stylesheets`. They are compiled during the _compile_ phase,
+but you can launch the compilation with:
+
+    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-less
+
+Aggregating CSS files
+---------------------
+
+CSS files and the output of the Less files can be aggregated within one file. Like for JavaScript,
+the order may matter, so you can configure it using the `cssAggregation` parameter. If not set the files are
+aggregated using the alphabetical order.
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <cssAggregation>
+                <file>style.css</file>
+                <file>my-site.css</file> <!-- Generated form my-site.less -->
+            </cssAggregation>
+        </configuration>
+    </plugin>
+
+The resulting aggregated file is attached to the project using the `css` extension.

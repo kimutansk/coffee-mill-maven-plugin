@@ -1,0 +1,229 @@
+Working with JavaScript and CoffeeScript
+========================================
+
+Validating JavaScript files
+---------------------------
+
+JavaScript files from `src/main/js` are validated against JSLint and JSHint. This step is automatically luanch during
+the _compile_ phase, however you can launch it using:
+
+    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-javascript
+
+Unlike for _main_ sources, _test_ sources from `src/test/js` are **not** validated.
+
+Compiling CoffeeScript
+----------------------
+
+The plugin is able to compile CoffeeScript sources from the `src/main/coffee` to JavaScript. The output files are in
+the `target/www` directory.
+
+CoffeeScript compilation is part of the _js_ packaging lifecycle. However you can launch the compilation with:
+
+    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-coffeescript
+
+The plugin also support compile _test_ sources with:
+
+    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:test-compile-coffeescript
+
+Testing JavaScript and CoffeeScript code
+---------------------------------------
+
+The plugin supports Jasmine tests. [Jasmine](http://pivotal.github.com/jasmine/) is a behavior-driven development
+framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a
+DOM. And it has a clean, obvious syntax so that you can easily write tests:
+
+    describe("A suite", function() {
+        it("contains spec with an expectation", function() {
+            expect(true).toBe(true);
+        });
+    });
+
+Jasmine specs are placed in the `src/test/js` folder (they can also be in `src\test\coffee` if the tests are written
+using CoffeeScript).
+
+During the _test_ phase, all specs are executed againt your CoffeeScript and JavaScript code.
+
+The JavaScript files are loaded in the following order:
+    * Maven dependencies using the _js_ type are preloaded.
+    * JavaScript / CoffeeScript files are loaded using the order defined in the `javascriptAggregation` parameter. If
+not defined, the sources are loaded in the alphabetical order.
+    * The specifications are loaded
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>SyndicationService</file>
+                <file>FeedEntry</file>
+                <file>FeedReader</file>
+            </javascriptAggregation>
+        </configuration>
+    </plugin>
+
+
+Test can be run using `mvn test`.
+
+Aggregating JavaScript files
+----------------------------
+
+JavaScript files and CoffeeScript files can be aggregated into one file. Dependencies can also be included too.
+Generally, the order is important, so has to be specified using the `javascriptAggregation` parameter.
+
+Dependencies are included using their `artifactId`:
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+        </configuration>
+    </plugin>
+
+Minification
+------------
+
+Once aggregated, the file can be minified using either Google Closure (default) and YUI Compressor.
+
+** Using Google Closure **
+
+Google Closure is used by default. So `mvn package` produces the minified artifact. With the following configuration:
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+        </configuration>
+    </plugin>
+
+You can configure the `compilation level` among: _SIMPLE_OPTIMIZATIONS_ (default),
+_WHITESPACE_ONLY_ and _ADVANCED_OPTIMIZATIONS_. Be aware that _ADVANCED_OPTIMIZATIONS_ may modify the API.
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+            <minifierGoogleCompilationLevel>ADVANCED_OPTIMIZATIONS</minifierGoogleCompilationLevel>
+        </configuration>
+    </plugin>
+
+** Using Yahoo Compressor **
+
+To use Yahoo Compressor, you need to set `minifier` to `YUI_COMPRESSOR`:
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+            <minifier>YUI_COMPRESSOR</minifier>
+        </configuration>
+    </plugin>
+
+You can configure the minification with:
+
+* `minifierYUIPreserveSemiColumn` : to preserve the semi-column (`false` by default)
+* `minifierYUIMunge` : to enable munge (`true` by default)
+* `minifierYUIDisableOptimizations` : to disable the optimizations (`false` by default, so optimizations are enabled)
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+            <minifier>YUI_COMPRESSOR</minifier>
+            <minifierYUIPreserveSemiColumn>true</minifierYUIPreserveSemiColumn>
+            <minifierYUIMunge>true</minifierYUIMunge>
+            <minifierYUIDisableOptimizations>true</minifierYUIDisableOptimizations>
+        </configuration>
+    </plugin>
+
+Integration Tests
+-----------------
+
+After aggregation and minification, it is recommended to check that the resulting JavaScript file is still behaving
+consistently.
+
+You can run the test on the aggregated version and/or the minified version. Integration tests (Jasmine's specs) are
+placed in the `src/integration-test/js` directory. However this can be changed to re-execute the tests from
+`src/test/js`:
+
+    <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+            <javascriptAggregation>
+                <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                <file>FeedReaderImpl.js</file>
+            </javascriptAggregation>
+            <javaScriptIntegrationTestDir>src/test/js</javaScriptIntegrationTestDir>
+        </configuration>
+    </plugin>
+
+By default, it runs the integration tests on the aggregated version and on the minified version:
+
+    [INFO] --- coffee-roasting-maven-plugin:1.0.0-SNAPSHOT:jasmine-it-test (default-jasmine-it-test) @ syndication-service-jfeed ---
+    [INFO] Running integration tests on aggregated version
+    [INFO] Executing Jasmine Specs
+    [INFO]
+    -------------------------------------------------------
+    J A S M I N E   S P E C S
+    -------------------------------------------------------
+    [INFO]
+    Direct Binding Test Suite
+    should get news from lemonde.fr
+    should get news from Google using RSS
+    should get news from Google using ATOM
+
+    Results: 3 specs, 0 failures
+
+    [INFO] Running integration tests on minified version
+    [INFO] Executing Jasmine Specs
+    [INFO]
+    -------------------------------------------------------
+    J A S M I N E   S P E C S
+    -------------------------------------------------------
+    [INFO]
+    Direct Binding Test Suite
+    should get news from lemonde.fr
+    should get news from Google using RSS
+    should get news from Google using ATOM
+
+    Results: 3 specs, 0 failures
+
+To disable one of the version set:
+
+* `runJasmineTestOnAggregatedVersion` : set to `false` to disable the integration tests on the aggregated version
+* `runJasmineTestOnMinifiedVersion` : set to `false` to disable the integation tests on the minified version
+

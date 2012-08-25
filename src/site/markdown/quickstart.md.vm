@@ -1,0 +1,103 @@
+# Quickstart
+
+Structure
+---------
+
+The default structure of the project is the following:
+
+    - src
+       |- main
+           |- js <------------ JavaScript files
+           |- coffee <-------- CoffeeScript files
+           |- www <----------- HTML files and other files
+           |- resources <----- Regular resources
+           |- stylesheets <--- CSS and Less
+       |- test
+           |- js <------------ Jasmine specs
+           |- coffee <-------- Jasmine specs developed in CoffeeScript
+    - pom.xml
+
+Pom File
+--------
+
+To use the plugin you must set the `packaging` to **js**. The following pom shows the minumal configuration:
+
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+        <groupId>YOUR_GROUP_ID</groupId>
+        <artifactId>YOUR_ARTIFACT_ID</artifactId>
+        <version>YOUR_VERSION</version>
+        <packaging>js</packaging>
+
+
+        <dependencies>
+            <!-- here goes your dependencies. The plugin will download dependency of type js  -->
+        </dependencies>
+
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>${project.artifactId}</artifactId>
+                    <version>${project.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <!-- here goes the plugin configuration -->
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </project>
+
+Output
+------
+
+The plugin works on two output folder: `target/www` and `target/www-test`. In addition,
+JavaScript dependencies are copied in `target/libs`.
+
+The plugin creates the following artifacts:
+
+* the aggregated JS file
+* the minified JS file
+* the aggregated CSS file
+* the zip of the `target/www` and `target/libs` directories.
+
+By default they are all attached to the project.
+
+Adding JavaScript dependencies
+------------------------------
+
+You can add JavaScript dependencies to the project by specifying the `type` to `js`:
+
+        <dependency>
+            <groupId>org.nano.coffee-roasting</groupId>
+            <artifactId>syndication-service</artifactId>
+            <type>js</type>
+            <classifier>min</classifier>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nano</groupId>
+            <artifactId>h-ubu</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+        <dependency>
+            <groupId>com.jquery</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.7.2</version>
+            <classifier>min</classifier>
+            <type>js</type>
+        </dependency>
+        <dependency>
+            <groupId>com.hovinne</groupId>
+            <artifactId>jfeed</artifactId>
+            <version>20110925</version>
+            <type>js</type>
+        </dependency>
+
+As shown, minified dependencies are selected using the `classifier` set to `min`.
+
+Be aware that the order is important. Those dependencies will be loaded in the defined order during the test phases.

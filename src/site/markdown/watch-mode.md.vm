@@ -1,0 +1,32 @@
+# I'm watching you
+
+The _watch_ mode is a way to launch the coffee-roasting plugin to monitor your files and process them automatically.
+Everytime you change a file, it will process it. For example, changing a coffeescript file compiles it and builds
+aggregated JavaScript file.
+
+In addition, the _watch_ mode starts it's own HTTP Server, providing the Jasmine runner,
+and all CSS and JavaScript files.
+
+Starting the watch mode
+-------------------------
+
+To start the _watch_ mode, just launch:
+
+    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:watch
+
+It's recommended to run `mvn process-resources` first to resolve all dependencies.
+
+For more configuration, check the _watch_ mode mojo.
+
+Watch mode server
+-------------------
+
+The server started by the watch mode serve:
+
+* all content of the _target/www_ folder in _/_
+* all dependencies are published in _/_
+* the Jasmine runner is available on _/jasmine_
+
+So to run the Jasmine test, just open: http://localhost:8234/jasmine.
+If you have an `index.html` page, access it with: http://localhost:8234/index.html
+

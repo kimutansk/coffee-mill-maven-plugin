@@ -2,19 +2,33 @@
 Coffee-Roasting ?
 ==================
 
-The ${project.artifactId} is used to creates JavaScript / Web applications. It focuses on JavaScript and Stylesheets.
- Why using Ap[ache Maven for such kind of code ? Because such development can also benefit from _modularity_,
- _testing_ and from a strict build process. Actually, they definitely requires it to avoid loosing control on the
- development.
+${project.artifactId} is a Maven plugin focusing on modern web development and especially on the client side
+technologies. A lot of technologies have emerged to make client-side development a bit easier.
 
-The goal of the project is to cover the complete lifecycle of such artifacts : compilation, checks, tests,
+Why using Apache Maven for such kind of code ? Because such development can also benefit from _modularity_,
+ _testing_ and from a somewhat strict build process. Actually, they definitely requires it to keep project
+ development on rails.
+
+The goal of the project is to cover the complete lifecycle of such artifacts : compilation, validation, tests,
 aggregation, minification, reporting... Everything required to deliver reusable and robust artifacts.
 
 Features
 --------
 
-* *Dependency Management*: resolves 'js' and 'css' artifacrs
-* *JavaScript* : checks JAvaScript code using JSLint and JSHint, aggregate all files in one
-* *Test*: tests your JavaScript using Jasmine
-* *CoffeeScript*: compiles CoffeeScript code
-* *CSS / LESS*: checks CSS format, compiles LESS file, aggregate all
+* Build aggregated and minified JavaScript components
+* Make your component more robust with unit and integration tests using Jasmine
+* Build modular JavaScript application by depending on your other components
+* Use CoffeeScript without thinking about compilation
+* Valide your CSS files, compile LESS files
+* Don't launch Maven continuously, the _watch_ mode monitor your files and process them
+
+License
+-------
+This plugin is licensed under the Apache License 2.0. The project is now founded by Arrow-Group.
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+# Lifecycle
+
+Building projects with the _js_ packaging orchestrates a sequence of actions on your code. This page describes the
+lifecycle.
+
+The process-resources phase
+---------------------------
+
+* _maven-resources-plugin:ressources_ : the regular resource processing
+* _resolve-dependencies_ : resolve _js_ dependencies and copy them within the _target/libs_ folder
+* _copy-assets_ : copy the files form the asset folder (_src/main/www_ by default) to _target/www_
+
+The compile phase
+-----------------
+
+* _compile-javascript_ : copy JavaScript files from _src/main/js_ to the _target/www_ folder. Validate them using
+JSHint and JSLint.
+* _compile-coffeescript_ : compile CoffeeScript files (_.coffee_), from _src/main/coffee_ to the _target/www_ folder
+* _compile-less_ : compile Less files (_.less_), from _src/main/stylesheets_ to the _target/www_ folder
+* _compile-css_ : copy CSS files from _src/main/stylesheets_ to the _target/www_ folder. Validate them using
+CSSHint.
+
+The process-test-resourcces phase
+---------------------------------
+
+Nothing in particular happing. The _maven-resources-plugin:testRessources_ mojo is executed.
+
+The test-compile phase
+----------------------
+
+* _test-compile-javascript_ : copy JavaScript files from _src/test/js_ to the _target/www-test_ folder. Validate them
+using
+JSHint and JSLint.
+* _test-compile-coffeescript_ : compile CoffeeScript files (_.coffee_), from _src/test/coffee_ to the
+_target/www-test_
+folder
+
+The test phase
+-------------
+
+* _jasmine-test_ : execute Jasmine specs (from _src/test/js_).
+
+The package phase
+----------------
+
+* _aggregate-javascript_ : aggregate the JavaScript and CoffeeScript code (and JS dependencies if configured). The
+resulting file is the main project artifact
+* _aggregate-stylesheets_ : aggregate the CSS and Less files. The resulting file is attached to the project using the
+ _css_ extension.
+* _minify-javascript_: minify the aggregated JavaScript file using YUI Compressor or Google Closure. The resulting
+file is attached ot the project using the _min_ classifier.
+* _build-zip_ : create a zip from the _target/www_ and _target/libs_ directory. The zip file is attached to the
+project using the _dist_ classifier and the _zip_ extension.
+
+The integration-test phase
+--------------------------
+
+* _jasmine-it-test_ : execute the Jasmine integration-test on the aggregated version and/or the minified version
+
+The install and deploy phase
+---------------------------
+
+Nothing in particular. Using the default Maven processing.
+
+
+
