@@ -123,8 +123,10 @@ public abstract class AggregatorProcessor extends DefaultProcessor {
 
     @Override
     public boolean accept(File file) {
-        return isFileContainedInDirectory(file, mojo.getWorkDirectory()) && file.isFile()  && file.getName().endsWith
-                (extension);
+        return !file.getAbsoluteFile().equals(output.getAbsoluteFile()) // Not the output
+                && isFileContainedInDirectory(file, mojo.getWorkDirectory()) // from the work dir
+                && file.isFile()
+                && file.getName().endsWith(extension); // from the right type
     }
 
     public void aggregate() throws ProcessorException {

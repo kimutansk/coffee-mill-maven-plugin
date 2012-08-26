@@ -143,6 +143,13 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
         processor.configure(this, null);
         processors.add(processor);
 
+        // Less
+        if (watchLess) {
+            processor = new LessCompilationProcessor();
+            processor.configure(this, null);
+            processors.add(processor);
+        }
+
         // CoffeeScript
         if (watchCoffeeScript) {
             processor = new CoffeeScriptCompilationProcessor();
@@ -180,14 +187,14 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
 
 
     private void setupMonitor() throws FileSystemException {
-        File src = new File(project.getBasedir(), "src");
-        getLog().info("Set up file monitor on " + src);
+        File baseDir = project.getBasedir();
+        getLog().info("Set up file monitor on " + baseDir);
         FileSystemManager fsManager = VFS.getManager();
-        FileObject listendir = fsManager.resolveFile(src.getAbsolutePath());
+        FileObject dir = fsManager.resolveFile(baseDir.getAbsolutePath());
 
         DefaultFileMonitor fm = new DefaultFileMonitor(this);
         fm.setRecursive(true);
-        fm.addFile(listendir);
+        fm.addFile(dir);
         fm.start();
     }
 
@@ -213,37 +220,52 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
 
     public void fileCreated(FileChangeEvent event) throws Exception {
         getLog().info("New file found " + event.getFile().getName().getBaseName());
-
+        boolean processed = false;
         String path = event.getFile().getName().getPath();
         File theFile = new File(path);
         for (Processor processor : processors) {
             if (processor.accept(theFile)) {
+                processed = true;
                 processor.fileCreated(theFile);
             }
+        }
+
+        if (! processed) {
+            getLog().info("Nothing to do for " + event.getFile().getName().getBaseName());
         }
     }
 
     public void fileDeleted(FileChangeEvent event) throws Exception {
         getLog().info("File " + event.getFile().getName().getBaseName() + " deleted");
-
+        boolean processed = false;
         String path = event.getFile().getName().getPath();
         File theFile = new File(path);
         for (Processor processor : processors) {
             if (processor.accept(theFile)) {
+                processed = true;
                 processor.fileDeleted(theFile);
             }
+        }
+
+        if (! processed) {
+            getLog().info("Nothing to do for " + event.getFile().getName().getBaseName());
         }
     }
 
     public void fileChanged(FileChangeEvent event) throws Exception {
         getLog().info("File changed: " + event.getFile().getName().getBaseName());
-
+        boolean processed = false;
         String path = event.getFile().getName().getPath();
         File theFile = new File(path);
         for (Processor processor : processors) {
             if (processor.accept(theFile)) {
+                processed = true;
                 processor.fileUpdated(theFile);
             }
+        }
+
+        if (! processed) {
+            getLog().info("Nothing to do for " + event.getFile().getName().getBaseName());
         }
     }
 }
