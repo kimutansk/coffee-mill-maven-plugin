@@ -86,5 +86,4 @@ public class CoffeeScriptCompilationProcessorTest {
         assertThat(mojo.workDir.list()).isNull();
         assertThat(mojo.workTestDir.list()).isNull();
     }
-
 }
