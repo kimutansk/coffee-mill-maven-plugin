@@ -103,7 +103,7 @@ public class JavaScriptMinifierMojo extends AbstractRoastingCoffeeMojo {
                     "is not a JavaScript file");
         }
 
-        File output = new File("target", project.getBuild().getFinalName() + "-min.js");
+        File output = new File(getTarget(), project.getBuild().getFinalName() + "-min.js");
 
         if (Minifier.GOOGLE_CLOSURE.equals(minifier)) {
             doGoogleCompression(project.getArtifact().getFile(), output);
