@@ -8,6 +8,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
+import org.nano.coffee.roasting.processors.JSHintProcessor;
 import org.nano.coffee.roasting.processors.JavaScriptFileCopyProcessor;
 import org.nano.coffee.roasting.processors.Processor;
 import org.nano.coffee.roasting.utils.OptionsHelper;
@@ -110,35 +111,14 @@ public class JavaScriptCompilerMojo extends AbstractRoastingCoffeeMojo {
         }
     }
 
-    private void doJsHint() {
+    private void doJsHint() throws MojoExecutionException {
         getLog().info("Checking sources with JsHint");
-        JsHint processor = new JsHint();
-        int errorCount = 0;
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[] {"js"}, true);
-        for (File file : files) {
-            getLog().debug("JSHint-ing " + file.getAbsolutePath());
-            try {
-                processor.validate(FileUtils.readFileToString(file));
-            } catch (IOException e) {
-                getLog().error("Can't analyze " + file.getAbsolutePath() + " with JSHint",e);
-            } catch (LinterException e) {
-                errorCount += e.getErrors().size();
-                if (! e.getErrors().isEmpty()) {
-                    for (LinterError exp : e.getErrors()) {
-                        if (exp == null) {
-                            continue;
-                        }
-                        getLog().warn("In " + file.getName() + " at " + exp.getLine() + ":" + exp.getCharacter()
-                                + " - "
-                                + exp.getEvidence() + " - " + exp.getReason());
-                    }
-                }
-            }
-        }
-        if (errorCount == 0) {
-            getLog().info("Well Done ! No warning found during the JSHint analysis");
-        } else {
-            getLog().info(errorCount + " warning(s) found during the JSHint analysis");
+        JSHintProcessor processor = new JSHintProcessor();
+        processor.configure(this, null);
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("", e);
         }
     }
 }
