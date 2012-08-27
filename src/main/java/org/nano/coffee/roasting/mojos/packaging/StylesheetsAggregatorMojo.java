@@ -52,6 +52,7 @@ public class StylesheetsAggregatorMojo extends AbstractRoastingCoffeeMojo {
         options.put("output", output);
         options.put("names", cssAggregation);
         options.put("extension", "css");
+        aggregator.configure(this, options);
         try {
             aggregator.processAll();
         } catch (Processor.ProcessorException e) {
