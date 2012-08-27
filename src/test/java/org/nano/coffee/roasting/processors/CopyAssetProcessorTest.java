@@ -3,8 +3,7 @@ package org.nano.coffee.roasting.processors;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
-import org.nano.coffee.roasting.mojos.CopyAssetsMojo;
-import org.nano.coffee.roasting.mojos.compile.CoffeeScriptCompilerMojo;
+import org.nano.coffee.roasting.mojos.processResources.CopyAssetsMojo;
 
 import java.io.File;
 

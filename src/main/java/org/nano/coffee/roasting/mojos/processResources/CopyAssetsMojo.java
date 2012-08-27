@@ -1,4 +1,4 @@
-package org.nano.coffee.roasting.mojos;
+package org.nano.coffee.roasting.mojos.processResources;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
