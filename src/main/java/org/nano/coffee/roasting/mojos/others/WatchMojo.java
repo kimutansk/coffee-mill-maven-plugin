@@ -182,6 +182,22 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
             processors.add(processor);
         }
 
+        // CSSLint, JSLint and JSHint validation
+        if (watchValidateJS) {
+            processor = new JSHintProcessor();
+            processor.configure(this, null);
+            processors.add(processor);
+
+            processor = new JSHintProcessor();
+            processor.configure(this, null);
+            processors.add(processor);
+        }
+        if (watchValidateCSS) {
+            processor = new CSSLintProcessor();
+            processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
+            processors.add(processor);
+        }
+
         return processors;
     }
 
