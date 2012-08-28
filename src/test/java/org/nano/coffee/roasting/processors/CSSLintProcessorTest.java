@@ -11,7 +11,7 @@ import java.util.Map;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * Tests the behavior of the JSHintProcessor
+ * Tests the behavior of the CSSLint Processor
  */
 public class CSSLintProcessorTest {
 
