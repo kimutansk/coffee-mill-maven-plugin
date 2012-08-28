@@ -41,17 +41,14 @@ public class CSSLintProcessor extends DefaultProcessor {
             data = WroUtil.toJSMultiLineString(data);
             final RhinoScriptBuilder builder = initScriptBuilder();
             String script = String.format("var result = CSSLint.verify(%s,%s)", data,
-                    "{}"); // No option
+                    "CSSLint.getRules()"); // All rules.
             builder.evaluate(script, "CSSLint.verify").toString();
-            builder.evaluate("var r = JSON.stringify(result)", "-");
-            System.out.println(builder.evaluate("r", "result").toString());
 
-            script = String.format("var result = CSSLint.verify(%s,%s).messages", data,
-                    "{}"); // No option
-            builder.evaluate(script, "CSSLint.verify").toString();
-            final boolean valid = Boolean.parseBoolean(builder.evaluate("result.length == 0", "checkNoErrors").toString());
+            final boolean valid = Boolean.parseBoolean(builder.evaluate("result.messages.length == 0",
+                    "checkNoErrors").toString());
             if (!valid) {
-                final String json = builder.addJSON().evaluate("JSON.stringify(result)", "CssLint messages").toString();
+                final String json = builder.addJSON().evaluate("JSON.stringify(result.messages)",
+                        "CssLint messages").toString();
                 final Type type = new TypeToken<List<CssLintError>>() {
                 }.getType();
                 final List<CssLintError> errors = new Gson().fromJson(json, type);

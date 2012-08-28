@@ -1,0 +1,309 @@
+.mainPage-portrait, .pageActu-portrait {
+    width: 480px;
+    height: 682px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.mainToolbar-portrait {
+    width: 480px;
+    height: 80px;
+    top: 682px;
+    left: 0;
+    background-color: #9EB4CF;
+    position: absolute;
+}
+
+.tlbItem-portrait {
+    position: relative;
+    width: 120px;
+    height: 80px;
+    float: left;
+    left: 0px;
+}
+
+.tlbItem-portrait-content {
+    position: absolute;
+    width: 96px;
+    height: 80px;
+    left: 0;
+    top: 0;
+}
+
+.topToolbar-portrait {
+    position: relative;
+    width: 480px;
+    height: 80px;
+    background-color: #000000;
+}
+
+.topTlb-item-portrait {
+    position: relative;
+    float: left;
+    width: 80px;
+    height: 80px;
+}
+
+.topTlb-item-portrait-content {
+    position: absolute;
+    width: 75px;
+    height: 62px;
+    top: 9px;
+    left: 2.5px;
+}
+
+.topTlb-title-portrait {
+    position: relative;
+    float: left;
+    width: 400px;
+    height: 80px;
+}
+
+.topTlb-title-portrait-content {
+    position: absolute;
+    width: 400px;
+    height: 25px;
+    top: 27.5px;
+    left: 0;
+}
+
+.topTlb-title-portrait-text {
+    color: #FFA74E;
+    font-size: 25px;
+}
+
+.RSSfeed-portrait {
+    position: relative;
+    width: 480px;
+    height: 602px;
+}
+
+/** square **/
+
+.mainPage-square, .pageActu-square {
+    width: 480px;
+    height: 480px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.mainToolbar-square {
+    width: 200px;
+    height: 80px;
+    top: 0;
+    left: 0;
+    background-color: #9EB4CF;
+    position: absolute;
+    z-index: 2;
+}
+
+.tlbText-square {
+    position: relative;
+    width: 125px;
+    height: 80px;
+    float: left;
+    left: 0;
+}
+
+.tlbArrow-square {
+    position: relative;
+    width: 75px;
+    height: 80px;
+    float: left;
+    left: 0;
+}
+
+.tlbText-square-content {
+    position: absolute;
+    width: 125px;
+    height: 80px;
+    left: 0;
+    top: 0;
+}
+
+.tlbArrow-square-content {
+    position: absolute;
+    width: 38px;
+    height: 40px;
+    left: 18.5px;
+    top: 20px;
+}
+
+.tlbText-square-text {
+    display: table-cell;
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+}
+
+.mainMenuLst-square {
+    width: 200px;
+    height: 160px;
+    top: 80px;
+    left: 0;
+    position: absolute;
+    background-color: #9EB4CF;
+    border-top: 1px solid white;
+}
+
+.tlbItem-square {
+    width: 200px;
+    height: 40px;
+    position: relative;
+}
+
+.tlbItem-square-content {
+    width: 48px;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.topToolbar-square {
+    position: absolute;
+    width: 280px;
+    height: 80px;
+    background-color: #000000;
+    top: 0;
+    left: 200px;
+}
+
+.topTlb-item-square {
+    position: relative;
+    float: right;
+    width: 80px;
+    height: 80px;
+}
+
+.topTlb-item-square-content {
+    position: absolute;
+    width: 75px;
+    height: 62px;
+    top: 9px;
+    left: 2.5px;
+}
+
+.topTlb-title-square {
+    position: relative;
+    float: right;
+    width: 200px;
+    height: 80px;
+}
+
+.topTlb-title-square-content {
+    position: absolute;
+    width: 200px;
+    height: 25px;
+    top: 27.5px;
+    left: 0;
+}
+
+.topTlb-title-square-text {
+    color: #FFA74E;
+    font-size: 25px;
+    text-align: center;
+}
+
+.RSSfeed-square {
+    position: absolute;
+    width: 480px;
+    height: 400px;
+    left: 0;
+    top: 80px;
+}
+
+/** landscape **/
+
+.mainPage-landscape {
+    width: 682px;
+    height: 480px;
+    top: 0;
+    left: 80px;
+    position: absolute;
+}
+
+.mainToolbar-landscape {
+    width: 80px;
+    height: 480px;
+    top: 0;
+    left: 0;
+    background-color: #9EB4CF;
+    position: absolute;
+}
+
+.tlbItem-landscape {
+    position: relative;
+    width: 80px;
+    height: 120px;
+}
+
+.tlbItem-landscape-content {
+    position: absolute;
+    width: 72px;
+    height: 60px;
+    left: 4px;
+    top: 30px;
+}
+
+.pageActu-landscape {
+    width: 682px;
+    height: 480px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.topToolbar-landscape {
+    position: relative;
+    width: 682px;
+    height: 80px;
+    background-color: #000000;
+    z-index: 3;
+}
+
+.topTlb-item-landscape {
+    position: relative;
+    float: right;
+    width: 80px;
+    height: 80px;
+}
+
+.topTlb-item-landscape-content {
+    position: absolute;
+    width: 75px;
+    height: 62px;
+    top: 9px;
+    left: 2.5px;
+}
+
+.topTlb-title-landscape {
+    position: relative;
+    float: right;
+    width: 602px;
+    height: 80px;
+}
+
+.topTlb-title-landscape-content {
+    position: absolute;
+    width: 602px;
+    height: 25px;
+    top: 27.5px;
+    left: 0;
+}
+
+.topTlb-title-landscape-text {
+    color: #FFA74E;
+    font-size: 25px;
+    text-align: center;
+}
+
+.RSSfeed-landscape {
+    position: relative;
+    width: 682px;
+    height: 400px;
+}
