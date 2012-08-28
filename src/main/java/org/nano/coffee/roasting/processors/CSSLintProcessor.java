@@ -23,10 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Processor validating CSS files using jslint.
@@ -37,11 +34,19 @@ public class CSSLintProcessor extends DefaultProcessor {
     private File source;
 
 
-    public void validate(File file) throws CssLintException, ProcessorException {
+    public List<ProcessorWarning> validate(File file) throws ProcessorException {
+        List warnings = new ArrayList<ProcessorWarning>();
         try {
             String data = FileUtils.readFileToString(file);
+            data = WroUtil.toJSMultiLineString(data);
             final RhinoScriptBuilder builder = initScriptBuilder();
-            String script = String.format("var result = CSSLint.verify(%s,%s).messages", data,
+            String script = String.format("var result = CSSLint.verify(%s,%s)", data,
+                    "{}"); // No option
+            builder.evaluate(script, "CSSLint.verify").toString();
+            builder.evaluate("var r = JSON.stringify(result)", "-");
+            System.out.println(builder.evaluate("r", "result").toString());
+
+            script = String.format("var result = CSSLint.verify(%s,%s).messages", data,
                     "{}"); // No option
             builder.evaluate(script, "CSSLint.verify").toString();
             final boolean valid = Boolean.parseBoolean(builder.evaluate("result.length == 0", "checkNoErrors").toString());
@@ -51,8 +56,12 @@ public class CSSLintProcessor extends DefaultProcessor {
                 }.getType();
                 final List<CssLintError> errors = new Gson().fromJson(json, type);
                 getLog().debug("Errors: " + errors);
-                throw new CssLintException().setErrors(errors); // TODO Change exception.
+                for (CssLintError error : errors) {
+                    warnings.add(new ProcessorWarning(file, error.getLine(), error.getCol(), error.getEvidence(),
+                            error.getType() + " : " + error.getMessage()));
+                }
             }
+            return warnings;
         } catch (final RhinoException e) {
             throw new ProcessorException(RhinoUtils.createExceptionMessage(e), e);    // TODO Extract Rhino Utils.
         } catch (IOException e) {
@@ -90,20 +99,10 @@ public class CSSLintProcessor extends DefaultProcessor {
         Collection<File> files = FileUtils.listFiles(source, new String[]{"css"}, true);
         for (File file : files) {
             if (file.isFile()) {
-                try {
-                    validate(file);
-                } catch (CssLintException e) {
-                    if (!e.getErrors().isEmpty()) {
-                        for (CssLintError exp : e.getErrors()) {
-                            if (exp == null) {
-                                continue;
-                            }
-                            getLog().warn("In " + file.getName() + " at " + exp.getLine() + " - " + exp.getType()
-                                    + " - "
-                                    + exp.getEvidence() + " - " + exp.getRule().getName() + " (" + exp.getRule()
-                                    .getDesc() + ")");
-                        }
-                    }
+                List<ProcessorWarning> warnings = validate(file);
+                for (ProcessorWarning warning : warnings) {
+                    getLog().warn("In " + file.getName() + " @" + warning.line + ":" + warning.character + " -> " +
+                            warning.evidence + " - " + warning.reason);
                 }
             }
         }
@@ -111,20 +110,10 @@ public class CSSLintProcessor extends DefaultProcessor {
 
     @Override
     public void fileCreated(File file) throws ProcessorException {
-        try {
-            validate(file);
-        } catch (CssLintException e) {
-            if (!e.getErrors().isEmpty()) {
-                for (CssLintError exp : e.getErrors()) {
-                    if (exp == null) {
-                        continue;
-                    }
-                    getLog().warn("In " + file.getName() + " at " + exp.getLine() + " - " + exp.getType()
-                            + " - "
-                            + exp.getEvidence() + " - " + exp.getRule().getName() + " (" + exp.getRule()
-                            .getDesc() + ")");
-                }
-            }
+        List<ProcessorWarning> warnings = validate(file);
+        for (ProcessorWarning warning : warnings) {
+            getLog().warn("In " + file.getName() + " @" + warning.line + ":" + warning.character + " -> " +
+                    warning.evidence + " - " + warning.reason);
         }
     }
 
