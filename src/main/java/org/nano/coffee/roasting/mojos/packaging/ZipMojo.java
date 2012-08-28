@@ -38,8 +38,12 @@ public class ZipMojo extends AbstractRoastingCoffeeMojo {
         String finalName = project.getBuild().getFinalName() + ".zip";
         File output = new File(buildDirectory, finalName );
         try {
-            zipArchiver.addDirectory( getWorkDirectory(), "" );
-            zipArchiver.addDirectory( getLibDirectory(), "" );
+            if (getWorkDirectory().isDirectory()) {
+                zipArchiver.addDirectory( getWorkDirectory(), "" );
+            }
+            if (getLibDirectory().isDirectory()) {
+                zipArchiver.addDirectory( getLibDirectory(), "" );
+            }
             zipArchiver.setDestFile( output );
             zipArchiver.createArchive();
 
