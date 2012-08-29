@@ -55,9 +55,9 @@ public class JasmineUtils {
         List<String> deps = new ArrayList<String>();
         for (Dependency dep : (Collection<Dependency>) project.getDependencies()) {
             if ("js".equals(dep.getType())) {
-                String filename = dep.getArtifactId() + "-" + dep.getVersion() + ".js";
-                if (dep.getClassifier() != null) {
-                    filename = dep.getArtifactId() + "-" + dep.getVersion() + "-" + dep.getClassifier() + ".js";
+                String filename = dep.getArtifactId() + ".js";
+                if (dep.getClassifier() != null  && ! dep.getClassifier().equals("min")) {
+                    filename = dep.getArtifactId() + "-" + dep.getClassifier() + ".js";
                 }
                 File file = new File(roasting.getLibDirectory(), filename);
 
@@ -78,7 +78,7 @@ public class JasmineUtils {
         InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "preloadSources",
                 deps);
 
-        // If javaScriptAggregation is set, use it to computes the javascript file order
+        // If javaScriptAggregation is set, use the right order.
         if (aggregation != null) {
             InjectionHelper.inject(mojo, AbstractJasmineMojo.class, "sourceIncludes",
                     aggregation);
@@ -103,9 +103,9 @@ public class JasmineUtils {
         List<String> deps = new ArrayList<String>();
         for (Dependency dep : (Collection<Dependency>) roasting.project.getDependencies()) {
             if ("js".equals(dep.getType())) {
-                String filename = dep.getArtifactId() + "-" + dep.getVersion() + ".js";
-                if (dep.getClassifier() != null) {
-                    filename = dep.getArtifactId() + "-" + dep.getVersion() + "-" + dep.getClassifier() + ".js";
+                String filename = dep.getArtifactId() + ".js";
+                if (dep.getClassifier() != null  && ! dep.getClassifier().equals("min")) {
+                    filename = dep.getArtifactId() + "-" + dep.getClassifier() + ".js";
                 }
                 File file = new File(roasting.getLibDirectory(), filename);
 

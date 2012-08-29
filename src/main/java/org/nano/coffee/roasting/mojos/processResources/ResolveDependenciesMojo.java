@@ -1,6 +1,7 @@
 package org.nano.coffee.roasting.mojos.processResources;
 
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -12,6 +13,8 @@ import org.apache.maven.plugin.dependency.CopyDependenciesMojo;
 import org.apache.maven.plugin.dependency.UnpackDependenciesMojo;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 
+import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -82,8 +85,20 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
         CopyJSDependenciesMojo css = new CopyJSDependenciesMojo();
         css.execute();
 
+        stripMinClassifier();
+
         CopyWebDependenciesMojo web = new CopyWebDependenciesMojo();
         web.execute();
+    }
+
+    private void stripMinClassifier() {
+        Collection<File> files = FileUtils.listFiles(getLibDirectory(), new String[] {"js"}, true);
+        for (File file : files) {
+            if (file.getName().endsWith("-min.js")) {
+                File newFile = new File(file.getParent(), file.getName().replace("-min.js", ".js"));
+                file.renameTo(newFile);
+            }
+        }
     }
 
     private class CopyJSDependenciesMojo extends CopyDependenciesMojo {
@@ -101,6 +116,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
             setUseRepositoryLayout(false);
             setLog(getLog());
             setCopyPom(false);
+            stripVersion = true;
             silent = false;
             overWriteIfNewer = true;
             overWriteSnapshots = true;
