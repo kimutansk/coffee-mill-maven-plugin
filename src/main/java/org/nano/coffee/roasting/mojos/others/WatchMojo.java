@@ -41,12 +41,12 @@ public class WatchMojo extends AbstractRoastingCoffeeMojo implements FileListene
     protected boolean watchDoAggregate;
 
     /**
-     * @parameter default-value="true"
+     * @parameter default-value="false"
      */
     protected boolean watchValidateJS;
 
     /**
-     * @parameter default-value="true"
+     * @parameter default-value="false"
      */
     protected boolean watchValidateCSS;
 
