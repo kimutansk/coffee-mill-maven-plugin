@@ -5,14 +5,12 @@ import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.reporting.MavenReportException;
 import org.nano.coffee.roasting.mojos.AbstractReportingRoastingCoffeeMojo;
 import org.nano.coffee.roasting.processors.CSSLintProcessor;
+import org.nano.coffee.roasting.processors.JSHintProcessor;
 import org.nano.coffee.roasting.processors.Processor;
 import org.nano.coffee.roasting.utils.OptionsHelper;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Builds the CSSLint Report.
@@ -23,22 +21,8 @@ import java.util.Locale;
 public class CSSLintReportMojo extends AbstractReportingRoastingCoffeeMojo {
 
     @Override
-    protected void executeReport(Locale locale) throws MavenReportException {
-        // Collect files
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
-        // Execute csslint
-        CSSLintProcessor processor = new CSSLintProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
-
+    public void writeIntroduction() {
         Sink sink = getSink();
-        sink.head();
-        sink.title();
-        sink.text("CSSLint Report");
-        sink.title_();
-        sink.head_();
-
-        sink.body();
-
         sink.section1();
         sink.sectionTitle1();
         sink.text("CSSLint");
@@ -53,44 +37,18 @@ public class CSSLintReportMojo extends AbstractReportingRoastingCoffeeMojo {
                 "Sullivan. It was released in June 2011 at the Velocity conference.\n" +
                 "A lint tool performs static analysis of source code and flags patterns that might be errors or " +
                 "otherwise cause problems for the developer.");
+    }
 
+    @Override
+    public Map<File, List<Processor.ProcessorWarning>> validate() throws Processor.ProcessorException {
+        Map<File, List<Processor.ProcessorWarning>> results = new TreeMap<File, List<Processor.ProcessorWarning>>();
+        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
+        CSSLintProcessor processor = new CSSLintProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
         for (File file : files) {
-            List<Processor.ProcessorWarning> warnings = new ArrayList<Processor.ProcessorWarning>();
-            try {
-                warnings = processor.validate(file);
-            } catch (Processor.ProcessorException e) {
-                getLog().error("Processor exception while CSSLinting " + file.getName(), e);
-            }
-
-            sink.section2();
-            sink.sectionTitle2();
-            sink.text(file.getName());
-            sink.sectionTitle2_();
-            if (warnings.size() == 0) {
-                sink.list();
-                sink.listItem();
-                sink.text("No warnings detected");
-                sink.listItem_();
-                sink.list_();
-            } else {
-                for (Processor.ProcessorWarning warning : warnings) {
-                    sink.list();
-                    sink.listItem();
-                    sink.text(warning.line + ":" + warning.character + " -> " + warning.reason + " (" + warning
-                            .evidence + ")");
-                    sink.listItem_();
-                    sink.list_();
-                }
-            }
-            sink.section2_();
+            results.put(file, processor.validate(file));
         }
-
-
-        sink.body_();
-
-        sink.flush();
-
-        sink.close();
+        return results;
     }
 
     public String getOutputName() {

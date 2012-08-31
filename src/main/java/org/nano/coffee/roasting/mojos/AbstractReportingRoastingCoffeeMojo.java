@@ -17,11 +17,14 @@ import org.apache.maven.reporting.MavenReportException;
 import org.apache.maven.reporting.sink.SinkFactory;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.WriterFactory;
+import org.nano.coffee.roasting.processors.Processor;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public abstract class AbstractReportingRoastingCoffeeMojo extends AbstractRoastingCoffeeMojo implements MavenReport {
 
@@ -247,8 +250,6 @@ public abstract class AbstractReportingRoastingCoffeeMojo extends AbstractRoasti
         closeReport();
     }
 
-    protected abstract void executeReport(Locale locale) throws MavenReportException;
-
     protected void closeReport() {
         getSink().close();
     }
@@ -291,4 +292,101 @@ public abstract class AbstractReportingRoastingCoffeeMojo extends AbstractRoasti
     public boolean isExternalReport() {
         return false;
     }
+
+    public abstract void writeIntroduction();
+
+    public abstract Map<File, List<Processor.ProcessorWarning>> validate() throws Processor.ProcessorException;
+
+    public void executeReport(Locale locale) throws MavenReportException {
+        Map<File, List<Processor.ProcessorWarning>> results = null;
+        try {
+            results = validate();
+        } catch (Processor.ProcessorException e) {
+            throw new MavenReportException("Can't build report", e);
+        }
+
+        Sink sink = getSink();
+        sink.head();
+        sink.title();
+        sink.text(getName(locale));
+        sink.title_();
+        sink.head_();
+
+        sink.body();
+
+        writeIntroduction();
+
+        sink.section2();
+        sink.sectionTitle2();
+        sink.text("Summary");
+        sink.sectionTitle2_();
+        sink.table();
+        sink.tableRow();
+        sink.tableHeaderCell();
+        sink.text("File");
+        sink.tableHeaderCell_();
+        sink.tableHeaderCell();
+        sink.text("Warnings");
+        sink.tableHeaderCell_();
+        sink.tableRow_();
+
+        for (Map.Entry<File, List<Processor.ProcessorWarning>> entry : results.entrySet()) {
+            sink.tableRow();
+            sink.tableCell();
+            sink.link(entry.getKey().getName());
+            sink.text(entry.getKey().getName());
+            sink.link_();
+            sink.tableCell_();
+            sink.tableCell();
+            sink.text("" + entry.getValue().size());
+            sink.tableCell_();
+            sink.tableRow_();
+        }
+        sink.table_();
+        sink.section2_();
+
+
+        for (Map.Entry<File, List<Processor.ProcessorWarning>> entry : results.entrySet()) {
+            if (entry.getValue().size() > 0) {
+                sink.section2();
+                sink.sectionTitle2();
+                sink.text(entry.getKey().getName());
+                sink.sectionTitle2_();
+
+                sink.table();
+                sink.tableRow();
+                sink.tableHeaderCell();
+                sink.text("Position");
+                sink.tableHeaderCell_();
+                sink.tableHeaderCell();
+                sink.text("Reason");
+                sink.tableHeaderCell_();
+                sink.tableHeaderCell();
+                sink.text("Evidence");
+                sink.tableHeaderCell_();
+                sink.tableRow_();
+
+                for (Processor.ProcessorWarning warning : entry.getValue()) {
+                    sink.tableRow();
+                    sink.tableCell();
+                    sink.text(warning.line + ":" + warning.character);
+                    sink.tableCell_();
+                    sink.tableCell();
+                    sink.text(warning.evidence);
+                    sink.tableCell_();
+                    sink.tableCell();
+                    sink.text(warning.reason);
+                    sink.tableCell_();
+                    sink.tableRow_();
+                }
+                sink.table_();
+                sink.section2_();
+            }
+        }
+        sink.body_();
+        sink.flush();
+        sink.close();
+
+    }
+
 }
