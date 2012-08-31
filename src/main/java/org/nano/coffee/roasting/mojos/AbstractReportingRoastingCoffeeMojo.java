@@ -331,9 +331,13 @@ public abstract class AbstractReportingRoastingCoffeeMojo extends AbstractRoasti
         sink.tableRow_();
 
         for (Map.Entry<File, List<Processor.ProcessorWarning>> entry : results.entrySet()) {
+            // Exclude aggregated files
+            if (entry.getKey().getName().startsWith(project.getBuild().getFinalName())) {
+                continue;
+            }
             sink.tableRow();
             sink.tableCell();
-            sink.link(entry.getKey().getName());
+            sink.link("#" + entry.getKey().getName());
             sink.text(entry.getKey().getName());
             sink.link_();
             sink.tableCell_();
@@ -347,6 +351,11 @@ public abstract class AbstractReportingRoastingCoffeeMojo extends AbstractRoasti
 
 
         for (Map.Entry<File, List<Processor.ProcessorWarning>> entry : results.entrySet()) {
+            // Exclude aggregated file
+            if (entry.getKey().getName().startsWith(project.getBuild().getFinalName())) {
+                continue;
+            }
+
             if (entry.getValue().size() > 0) {
                 sink.section2();
                 sink.sectionTitle2();

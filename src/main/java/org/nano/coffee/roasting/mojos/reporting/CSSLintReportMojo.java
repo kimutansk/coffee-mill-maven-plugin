@@ -33,7 +33,7 @@ public class CSSLintReportMojo extends AbstractReportingRoastingCoffeeMojo {
         sink.link( "http://csslint.net" );
         sink.text( "CSSLint" );
         sink.link_();
-        sink.text(" CSS Lint is an open source CSS code quality tool originally written by Nicholas C. Zakas and Nicole " +
+        sink.text(" is an open source CSS code quality tool originally written by Nicholas C. Zakas and Nicole " +
                 "Sullivan. It was released in June 2011 at the Velocity conference.\n" +
                 "A lint tool performs static analysis of source code and flags patterns that might be errors or " +
                 "otherwise cause problems for the developer.");

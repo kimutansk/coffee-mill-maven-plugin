@@ -30,7 +30,7 @@ public class JSLintReportMojo extends AbstractReportingRoastingCoffeeMojo {
         sink.link( "http://www.jslint.com" );
         sink.text( "JSLint" );
         sink.link_();
-        sink.text(" JSLint is a JavaScript program that looks for problems in JavaScript programs. It is a code quality" +
+        sink.text(" is a JavaScript program that looks for problems in JavaScript programs. It is a code quality" +
                 " tool, and it gonna hurt you...\n" + "JSLint takes a JavaScript source and scans it. If it finds a " +
                 "problem, it returns a message describing the problem and an approximate location within the source. " +
                 "The problem is not necessarily a syntax error, although it often is. JSLint looks at some style " +
