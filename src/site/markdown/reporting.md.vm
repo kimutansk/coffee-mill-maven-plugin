@@ -1,13 +1,14 @@
 # Reporting
 
-The plugin provides 4 reports:
+The plugin provides 4+1 reports:
 
 * jslint
 * jshint
 * csslint
 * jsdoc 3
+* jasmine test reports using the surefire-report-plugin
 
-# Generating the reports
+## Generating the reports
 In your _pom_ file add the `maven-site-plugin`:
 
     <plugin>
@@ -40,3 +41,15 @@ Then generate the report with:
     mvn clean install site
 
 The jsdoc report requires to have **jsdoc 3** available from your _PATH_.
+
+## Jasmine Test report
+
+To collect the Jasmine report test, add the following plugin in the `<reportPlugins/>` section of the
+maven-site-plugin configuration:
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.5</version>
+    </plugin>
+
