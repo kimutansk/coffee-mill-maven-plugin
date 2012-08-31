@@ -101,3 +101,6 @@ You can add JavaScript dependencies to the project by specifying the `type` to `
 As shown, minified dependencies are selected using the `classifier` set to `min`.
 
 Be aware that the order is important. Those dependencies will be loaded in the defined order during the test phases.
+
+Dependencies are copied within `target/libs`. The version and the _min_ classifier are stripped,
+so your code does not need to know the current version and whether the library is minified or not.

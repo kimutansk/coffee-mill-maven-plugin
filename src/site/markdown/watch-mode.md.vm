@@ -30,3 +30,6 @@ The server started by the watch mode serve:
 So to run the Jasmine test, just open: http://localhost:8234/jasmine.
 If you have an `index.html` page, access it with: http://localhost:8234/index.html
 
+Don't forget that dependencies files don't have their version and _min_ classifier. So,
+a dependency on `com.jquery:jquery:1.7.:min:js` can be loaded from `http://localhost:1234/jquery.js`.
+
