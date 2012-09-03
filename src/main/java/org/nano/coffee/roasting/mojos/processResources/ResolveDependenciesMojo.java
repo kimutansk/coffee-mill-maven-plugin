@@ -80,6 +80,7 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info("Resolving JavaScript / CSS and Web dependencies");
+
         CopyJSDependenciesMojo js = new CopyJSDependenciesMojo();
         js.execute();
         CopyJSDependenciesMojo css = new CopyJSDependenciesMojo();
@@ -92,6 +93,11 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
     }
 
     private void stripMinClassifier() {
+        if (! getLibDirectory().isDirectory()) {
+            // Nothing to do.
+            return;
+        }
+
         Collection<File> files = FileUtils.listFiles(getLibDirectory(), new String[] {"js"}, true);
         for (File file : files) {
             if (file.getName().endsWith("-min.js")) {
