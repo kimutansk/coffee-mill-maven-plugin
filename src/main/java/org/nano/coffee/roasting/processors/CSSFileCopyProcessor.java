@@ -56,7 +56,7 @@ public class CSSFileCopyProcessor extends DefaultProcessor {
     }
 
     public boolean accept(File file) {
-        return isFileContainedInDirectory(file, source)  && file.isFile()  &&  file.getName().endsWith(".js");
+        return isFileContainedInDirectory(file, source)  && file.isFile()  &&  file.getName().endsWith(".css");
     }
 
     public void fileCreated(File file) throws ProcessorException {
