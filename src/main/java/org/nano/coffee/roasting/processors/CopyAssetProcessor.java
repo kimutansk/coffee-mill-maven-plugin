@@ -2,16 +2,12 @@ package org.nano.coffee.roasting.processors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
-import org.apache.commons.io.filefilter.OrFileFilter;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
-import org.nano.coffee.roasting.utils.OptionsHelper;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**
