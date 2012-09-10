@@ -24,6 +24,18 @@ public class CopyAssetProcessorTest {
     }
 
     @Test
+    public void testIgnoredFileDuringCopy() throws MojoExecutionException, MojoFailureException {
+        CopyAssetsMojo mojo = new CopyAssetsMojo();
+        mojo.assetsDir = new File("src/test/resources/assets");
+        mojo.workDir = new File("target/test/testAssetCopy-www");
+        mojo.execute();
+
+        assertThat(new File(mojo.workDir, "project.pj").isFile()).isFalse();
+        assertThat(new File(mojo.workDir, "BitKeeper").isDirectory()).isFalse();
+        assertThat(new File(mojo.workDir, "BitKeeper/example").exists()).isFalse();
+    }
+
+    @Test
     public void testAssetCopyWhenAssetDoesNotExist() throws MojoExecutionException, MojoFailureException {
         CopyAssetsMojo mojo = new CopyAssetsMojo();
         mojo.assetsDir = new File("src/test/resources/assets_donotexist");

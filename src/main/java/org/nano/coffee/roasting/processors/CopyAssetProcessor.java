@@ -1,11 +1,17 @@
 package org.nano.coffee.roasting.processors;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.NameFileFilter;
+import org.apache.commons.io.filefilter.NotFileFilter;
+import org.apache.commons.io.filefilter.OrFileFilter;
 import org.nano.coffee.roasting.mojos.AbstractRoastingCoffeeMojo;
 import org.nano.coffee.roasting.utils.OptionsHelper;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +22,62 @@ public class CopyAssetProcessor extends DefaultProcessor {
 
     private File assetsDir;
     private File workDir;
+
+    private static  FileFilter defaultExcludeFilter = new NotFileFilter(
+        new IOFileFilter() {
+            public boolean accept(File file) {
+                return accept(file.getParentFile(), file.getName());
+            }
+
+            public boolean accept(File dir, String name) {
+                File file = new File(dir, name);
+                return
+                        name.endsWith("~") // **/*~
+                                || name.startsWith("#")  && name.endsWith("#") // **/#*#
+                                || name.startsWith(".#") // **/.#
+                                || name.startsWith("%")  && name.endsWith("%") // **/%*%
+                                || name.startsWith("._") // **/._*
+
+                                || name.equals("CVS")  && file.isDirectory() // CVS dir
+                                || file.getAbsolutePath().contains("/CVS/") // Any CVS files
+                                || name.equals(".cvsignore")
+
+                                || name.equals("RCS")  && file.isDirectory() // RCS dir
+                                || file.getAbsolutePath().contains("/RCS/") // Any RCS files
+
+                                || name.equals("SCCS")  && file.isDirectory() // SCCS dir
+                                || file.getAbsolutePath().contains("/SCCS/") // Any SCCS files
+
+                                || name.equals("vssver.scc")  // VSServer
+
+                                || name.equals("project.pj")  // MKS
+
+                                || name.equals(".svn")  && file.isDirectory() // SVN dir
+                                || file.getAbsolutePath().contains("/.svn/") // Any SVN files
+
+                                || name.equals(".bzr")  && file.isDirectory() // Bazaar dir
+                                || file.getAbsolutePath().contains("/.bzr/") // Any Bazaar files
+
+                                || name.equals(".arch-ids")  && file.isDirectory() // GNU
+                                || file.getAbsolutePath().contains("/.arch-ids/") // GNU
+
+                                || name.equals(".DS_Store") // Mac
+
+                                || name.equals(".hg")  && file.isDirectory() // Mercurial
+                                || file.getAbsolutePath().contains("/.hg/") // Any Mercurial files
+
+                                || name.equals(".git")  && file.isDirectory() // Git
+                                || name.equals(".gitignore")
+                                || name.equals(".gitattributes")
+                                || file.getAbsolutePath().contains("/.git/")
+
+                                || name.equals("BitKeeper")  && file.isDirectory() // BitKeeper
+                                || file.getAbsolutePath().contains("/BitKeeper/")
+                                || name.equals("ChangeSet")  && file.isDirectory()
+                                || file.getAbsolutePath().contains("/ChangeSet/");
+            }
+        });
+
 
     public void configure(AbstractRoastingCoffeeMojo mojo, Map<String, Object> options) {
         super.configure(mojo, options);
@@ -30,7 +92,7 @@ public class CopyAssetProcessor extends DefaultProcessor {
 
         try {
             getLog().info("Copying " + assetsDir.getAbsolutePath() + " to " + workDir.getAbsolutePath());
-            FileUtils.copyDirectory(assetsDir, workDir);
+            FileUtils.copyDirectory(assetsDir, workDir, defaultExcludeFilter, true);
         } catch (IOException e) {
             throw new ProcessorException("Cannot copy assets to the work directory", e);
         }
