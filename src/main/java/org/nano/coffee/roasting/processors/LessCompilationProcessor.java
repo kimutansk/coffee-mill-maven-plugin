@@ -88,7 +88,7 @@ public class LessCompilationProcessor extends DefaultProcessor {
         }
     }
 
-    public static final String DEFAULT_LESS_JS = "less-1.3.0.min.js";
+    public static final String DEFAULT_LESS_JS = "/less/less-1.3.0.js";
     private static final String SCRIPT_RUN = "run.js";
     private static final String SCRIPT_INIT = "init.js";
 

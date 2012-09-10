@@ -1,0 +1,133 @@
+@list-item-img-width: 125px;
+@list-item-height: 50px;
+@list-item-text-width: 434px;
+@threadImage-margin-right: 8px;
+@shortened-info-width: @list-item-text-width - @list-item-img-width - @threadImage-margin-right;
+
+@posts-padding: 8px;
+
+@controls-color: #818181;
+
+// Mixins
+.threadImage {
+    float: left;
+    margin-right: @threadImage-margin-right;
+}
+.posts-common {
+    border: 1px solid @controls-color;
+    padding: @posts-padding;
+    margin: @posts-padding;
+}
+.oneContentPageh1 {
+    border-bottom: 1px solid #000000;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 30px;
+    margin: -2px 0 0;
+    padding: 0 0 11px 8px;
+}
+.rightLink() {
+    float: right;
+    margin-right: @posts-padding;
+}
+.underlineOnHover() {
+    text-decoration: underline;
+}
+.hideKlapper() {
+    .moreArea .klapperAction {
+        display: none;
+    }
+}
+
+/* Forum Homepage */
+#newestPosts {
+    h2 {
+        background: transparent url(/img/kommportal/forum/headline_neueste_beitraege_bg.png) right bottom no-repeat;
+    }
+    .hideKlapper();
+}
+#newestTopics {
+    h2 {
+        background: transparent url(/img/kommportal/forum/headline_neue_topics_bg.png) right bottom no-repeat;
+    }
+    .moreArea {
+        a:hover {
+            .underlineOnHover();
+        }
+        .forumAction {
+            float: right;
+            cursor: pointer;
+            padding: 0 7px 0 30px;
+            background: transparent url(/img/kommportal/forum/suggest_topic.png) no-repeat scroll left 4px;
+            &:hover {
+                .underlineOnHover();
+            }
+        }
+    }
+    .hideKlapper();
+}
+
+/* Lists */
+ul.threadList {
+    word-wrap: break-word;
+
+    div.threadImage {
+        .threadImage();
+
+        img {
+            max-height: @list-item-height;
+        }
+    }
+
+    div.threadInfoWithImage {
+        float: right;
+        width: @shortened-info-width;
+
+        h3, span {
+            width: @shortened-info-width;
+        }
+    }
+}
+
+/* Individual topic page */
+.topicPage {
+    .backLink {
+        padding: @posts-padding;
+    }
+
+    h1 {
+        .oneContentPageh1();
+        border-bottom: none;
+    }
+
+    .initialPost {
+        padding: @posts-padding;
+    }
+
+    button.add-post {
+        float: left;
+        margin-left: @posts-padding;
+    }
+
+    .netiquetteLink {
+        .rightLink();
+    }
+
+    .posts {
+        .posts-common();
+        padding: @posts-padding*2 @posts-padding 0;
+
+        .jumpLink {
+            .rightLink();
+        }
+
+        .postMetaData {
+            margin-bottom: 8px;
+        }
+
+        .post-content {
+            .posts-common();
+            margin: 0 0 32px;
+        }
+    }
+}
