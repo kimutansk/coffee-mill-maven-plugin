@@ -4,8 +4,8 @@ import org.apache.commons.io.FileUtils;
 import org.mozilla.javascript.RhinoException;
 import org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nano.coffee.mill.utils.OptionsHelper;
+import org.nano.coffee.mill.utils.RhinoLauncher;
 import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
-import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.util.WroUtil;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
         getLog().info("Compiling " + file.getAbsolutePath() + " to " + out.getAbsolutePath());
         try {
             final String data = FileUtils.readFileToString(file);
-            final RhinoScriptBuilder builder = initScriptBuilder();
+            final RhinoLauncher builder = initScriptBuilder();
             final String compileScript = String.format("CoffeeScript.compile(%s, %s);",
                     WroUtil.toJSMultiLineString(data), // TODO Extract method in a helper class.
                     "{}"); // No options
@@ -107,9 +107,9 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
     /**
      * Initialize script builder for evaluation.
      */
-    private RhinoScriptBuilder initScriptBuilder() {
+    private RhinoLauncher initScriptBuilder() {
         try {
-            return RhinoScriptBuilder.newChain().evaluateChain(getCoffeeScriptAsStream(),
+            return RhinoLauncher.newChain().evaluateChain(getCoffeeScriptAsStream(),
                         DEFAULT_COFFEE_SCRIPT);
         } catch (final IOException ex) {
             throw new IllegalStateException("Failed reading init script", ex);

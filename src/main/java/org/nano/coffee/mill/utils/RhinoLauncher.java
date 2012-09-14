@@ -1,4 +1,4 @@
-package org.nano.coffee.roasting.utils;
+package org.nano.coffee.mill.utils;
 
 
 import org.apache.commons.io.IOUtils;
@@ -57,7 +57,7 @@ public class RhinoLauncher {
             InputStream script = null;
             final ScriptableObject scope = (ScriptableObject) context.initStandardObjects(initialScope);
             try {
-                script = getClass().getResourceAsStream("commons.js");
+                script = getClass().getResourceAsStream("/rhino/commons.js");
                 context.evaluateReader(scope, new InputStreamReader(script), "commons.js", 1, null);
             } catch (final IOException e) {
                 throw new RuntimeException("Problem while evaluationg commons script.", e);
@@ -75,7 +75,7 @@ public class RhinoLauncher {
          */
         public RhinoLauncher addClientSideEnvironment() {
             try {
-                final String SCRIPT_ENV = "env.rhino.min.js";
+                final String SCRIPT_ENV = "/rhino/env.rhino.min.js";
                 final InputStream script = getClass().getResourceAsStream(SCRIPT_ENV);
                 evaluateChain(script, SCRIPT_ENV);
                 return this;
@@ -87,7 +87,7 @@ public class RhinoLauncher {
 
         public RhinoLauncher addJSON() {
             try {
-                final String SCRIPT_ENV = "json2.min.js";
+                final String SCRIPT_ENV = "/rhino/json2.min.js";
                 final InputStream script = getClass().getResourceAsStream(SCRIPT_ENV);
                 evaluateChain(script, SCRIPT_ENV);
                 return this;
@@ -103,7 +103,7 @@ public class RhinoLauncher {
      */
     public RhinoLauncher addRequire(String streamroot) {
         try {
-            final String SCRIPT_ENV = "rhino.require.js";
+            final String SCRIPT_ENV = "/rhino/rhino.require.js";
             if (streamroot != null) {
                 evaluate("var streamroot=" + streamroot +"; print(\"Stream Root \" + streamroot);", SCRIPT_ENV);
                 ScriptableObject.putProperty(getScope(), "streamloader", new ScriptLoader());

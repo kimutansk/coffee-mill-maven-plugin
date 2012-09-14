@@ -6,9 +6,9 @@ import org.apache.commons.io.FileUtils;
 import org.mozilla.javascript.RhinoException;
 import org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nano.coffee.mill.utils.OptionsHelper;
+import org.nano.coffee.mill.utils.RhinoLauncher;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLint;
 import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
-import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.extensions.script.RhinoUtils;
 import ro.isdc.wro.util.WroUtil;
 
@@ -16,7 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Processor validating CSS files using jslint.
@@ -32,7 +35,7 @@ public class CSSLintProcessor extends DefaultProcessor {
         try {
             String data = FileUtils.readFileToString(file);
             data = WroUtil.toJSMultiLineString(data);
-            final RhinoScriptBuilder builder = initScriptBuilder();
+            final RhinoLauncher builder = initScriptBuilder();
             String script = String.format("var result = CSSLint.verify(%s,%s)", data,
                     "CSSLint.getRules()"); // All rules.
             builder.evaluate(script, "CSSLint.verify").toString();
@@ -115,9 +118,9 @@ public class CSSLintProcessor extends DefaultProcessor {
     /**
      * Initialize script builder for evaluation.
      */
-    private RhinoScriptBuilder initScriptBuilder() {
+    private RhinoLauncher initScriptBuilder() {
         try {
-            return RhinoScriptBuilder.newChain().evaluateChain(getScriptAsStream(),
+            return RhinoLauncher.newChain().evaluateChain(getScriptAsStream(),
                     DEFAULT_CSSLINT_JS);
         } catch (final IOException ex) {
             throw new IllegalStateException("Failed reading init script", ex);

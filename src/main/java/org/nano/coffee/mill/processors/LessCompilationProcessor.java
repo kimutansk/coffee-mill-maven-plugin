@@ -3,8 +3,8 @@ package org.nano.coffee.mill.processors;
 import org.apache.commons.io.FileUtils;
 import org.mozilla.javascript.RhinoException;
 import org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo;
+import org.nano.coffee.mill.utils.RhinoLauncher;
 import ro.isdc.wro.extensions.processor.support.less.LessCss;
-import ro.isdc.wro.extensions.script.RhinoScriptBuilder;
 import ro.isdc.wro.extensions.script.RhinoUtils;
 import ro.isdc.wro.util.WroUtil;
 
@@ -95,12 +95,12 @@ public class LessCompilationProcessor extends DefaultProcessor {
     /**
      * Initialize script builder for evaluation.
      */
-    private RhinoScriptBuilder initScriptBuilder() {
+    private RhinoLauncher initScriptBuilder() {
         try {
-            RhinoScriptBuilder builder = null;
+            RhinoLauncher builder = null;
             final InputStream initStream = getInitScriptAsStream();
             final InputStream runStream = getRunScriptAsStream();
-            builder = RhinoScriptBuilder.newClientSideAwareChain().evaluateChain(initStream, SCRIPT_INIT).evaluateChain(
+            builder = RhinoLauncher.newClientSideAwareChain().evaluateChain(initStream, SCRIPT_INIT).evaluateChain(
                     getScriptAsStream(), DEFAULT_LESS_JS).evaluateChain(runStream, SCRIPT_RUN);
             return builder;
         } catch (final Exception e) {
@@ -138,7 +138,7 @@ public class LessCompilationProcessor extends DefaultProcessor {
      * @return processed css content.
      */
     public String less(final String data) throws ProcessorException {
-        final RhinoScriptBuilder builder = initScriptBuilder();
+        final RhinoLauncher builder = initScriptBuilder();
         try {
             final String execute = "lessIt(" + WroUtil.toJSMultiLineString(data) + ");";
             final Object result = builder.evaluate(execute, "lessIt");
