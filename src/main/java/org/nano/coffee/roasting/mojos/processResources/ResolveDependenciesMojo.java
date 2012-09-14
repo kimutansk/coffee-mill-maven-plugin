@@ -18,15 +18,14 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Copy project dependencies to the <tt>target/web</tt> folder.
- * The location can be changed using the <tt>webDir</tt> option
+ * Copy `js` project dependencies to the <tt>target/libs</tt> folder.
+ * Copy `css` project dependencies to the <tt>target/web</tt> folder.
+ * The location can be changed using the <tt>webDir</tt> and <tt>libsDir</tt> option
  *
  * @goal resolve-dependencies
  * @requiresDependencyResolution test
  */
 public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
-
-
 
     /**
      * Used to look up Artifacts in the remote repository.
@@ -83,10 +82,10 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
 
         CopyJSDependenciesMojo js = new CopyJSDependenciesMojo();
         js.execute();
-        CopyJSDependenciesMojo css = new CopyJSDependenciesMojo();
-        css.execute();
-
         stripMinClassifier();
+
+        CopyCSSDependenciesMojo css = new CopyCSSDependenciesMojo();
+        css.execute();
 
         CopyWebDependenciesMojo web = new CopyWebDependenciesMojo();
         web.execute();
@@ -130,6 +129,32 @@ public class ResolveDependenciesMojo extends AbstractRoastingCoffeeMojo {
             excludeTransitive = false;
             excludeScope = "provided";
             includeTypes = "js";
+        }
+    }
+
+    private class CopyCSSDependenciesMojo extends CopyDependenciesMojo {
+
+        public CopyCSSDependenciesMojo() {
+            super();
+            project = ResolveDependenciesMojo.this.project;
+            setFactory(factory);
+            setResolver(resolver);
+            setArtifactCollector(artifactCollector);
+            setArtifactMetadataSource(artifactMetadataSource);
+            setLocal(local);
+            setRemoteRepos(remoteRepos);
+            setOutputDirectory(getWorkDirectory());
+            setUseRepositoryLayout(false);
+            setLog(getLog());
+            setCopyPom(false);
+            stripVersion = true;
+            silent = false;
+            overWriteIfNewer = true;
+            overWriteSnapshots = true;
+            overWriteReleases = false;
+            excludeTransitive = false;
+            excludeScope = "provided";
+            includeTypes = "css";
         }
     }
 
