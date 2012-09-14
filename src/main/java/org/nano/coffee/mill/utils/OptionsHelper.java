@@ -66,6 +66,10 @@ public class OptionsHelper {
     }
 
     public static boolean getBoolean(Map<String, Object> options, String name, boolean defaultValue) {
+        if (options == null) {
+            return defaultValue;
+        }
+
         Object value = options.get(name);
         if (value == null  || ! (value instanceof Boolean)) {
             return defaultValue;
