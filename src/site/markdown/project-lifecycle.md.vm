@@ -7,7 +7,8 @@ The process-resources phase
 ---------------------------
 
 * _maven-resources-plugin:ressources_ : the regular resource processing
-* _resolve-dependencies_ : resolve _js_ dependencies and copy them within the _target/libs_ folder
+* _resolve-dependencies_ : resolve _js_ dependencies and copy them within the _target/libs_ folder,
+_css_ dependencies are cresolved and copied to _target/www_
 * _copy-assets_ : copy the files form the asset folder (_src/main/www_ by default) to _target/www_
 
 The compile phase
