@@ -1,6 +1,6 @@
 # I'm watching you
 
-The _watch_ mode is a way to launch the coffee-roasting plugin to monitor your files and process them automatically.
+The _watch_ mode is a way to launch the coffee-mill plugin to monitor your files and process them automatically.
 Everytime you change a file, it will process it. For example, changing a coffeescript file compiles it and builds
 aggregated JavaScript file.
 
@@ -12,7 +12,7 @@ Starting the watch mode
 
 To start the _watch_ mode, just launch:
 
-    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:watch
+    mvn ${project.groupId}:${project.artifactId}:watch
 
 It's recommended to run `mvn process-resources` first to resolve all dependencies.
 

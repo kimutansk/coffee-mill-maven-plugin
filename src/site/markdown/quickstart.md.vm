@@ -72,7 +72,7 @@ Adding JavaScript dependencies
 You can add JavaScript dependencies to the project by specifying the `type` to `js`:
 
         <dependency>
-            <groupId>org.nano.coffee-roasting</groupId>
+            <groupId>org.nano</groupId>
             <artifactId>syndication-service</artifactId>
             <type>js</type>
             <classifier>min</classifier>

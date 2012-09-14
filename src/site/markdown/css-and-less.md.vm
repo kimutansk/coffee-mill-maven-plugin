@@ -22,7 +22,7 @@ Compiling Less files
 Less files are also in `src/main/stylesheets`. They are compiled during the _compile_ phase,
 but you can launch the compilation with:
 
-    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-less
+    mvn ${project.groupId}:${project.artifactId}:compile-less
 
 Aggregating CSS files
 ---------------------

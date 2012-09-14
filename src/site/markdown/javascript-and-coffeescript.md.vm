@@ -7,7 +7,7 @@ Validating JavaScript files
 JavaScript files from `src/main/js` are validated against JSLint and JSHint. This step is automatically luanch during
 the _compile_ phase, however you can launch it using:
 
-    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-javascript
+    mvn ${project.groupId}:${project.artifactId}:compile-javascript
 
 Unlike for _main_ sources, _test_ sources from `src/test/js` are **not** validated.
 
@@ -19,11 +19,11 @@ the `target/www` directory.
 
 CoffeeScript compilation is part of the _js_ packaging lifecycle. However you can launch the compilation with:
 
-    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:compile-coffeescript
+    mvn ${project.groupId}:${project.artifactId}:compile-coffeescript
 
 The plugin also support compile _test_ sources with:
 
-    mvn org.nano.coffee-roasting:coffee-roasting-maven-plugin:test-compile-coffeescript
+    mvn ${project.groupId}:${project.artifactId}:test-compile-coffeescript
 
 Testing JavaScript and CoffeeScript code
 ---------------------------------------
@@ -193,7 +193,8 @@ placed in the `src/integration-test/js` directory. However this can be changed t
 
 By default, it runs the integration tests on the aggregated version and on the minified version:
 
-    [INFO] --- coffee-roasting-maven-plugin:1.0.0-SNAPSHOT:jasmine-it-test (default-jasmine-it-test) @ syndication-service-jfeed ---
+    [INFO] --- coffee-mill-maven-plugin:1.0.0-SNAPSHOT:jasmine-it-test (default-jasmine-it-test) @
+    syndication-service-jfeed ---
     [INFO] Running integration tests on aggregated version
     [INFO] Executing Jasmine Specs
     [INFO]

@@ -13,7 +13,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -22,21 +23,20 @@
         <version>5</version>
     </parent>
 
-    <groupId>org.nano.coffee-roasting</groupId>
-    <artifactId>coffee-roasting-maven-plugin</artifactId>
+    <groupId>org.nano.coffee-mill</groupId>
+    <artifactId>coffee-mill-maven-plugin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-    <name>coffee-roasting-maven-plugin</name>
+    <name>Coffee Mill Maven Plugin</name>
 
     <description>A Maven Plugin to build Client-Side Web Applications</description>
     <inceptionYear>2012</inceptionYear>
-    <url>https://github.com/nano-project/coffee-roasting-maven-plugin</url>
+    <url>https://github.com/nano-project/coffee-mill-maven-plugin</url>
 
     <organization>
         <name>Arrow-Group</name>
         <url>http://www.arrow-group.eu/</url>
     </organization>
-
 
     <licenses>
         <license>
@@ -58,9 +58,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:nano-project/coffee-roasting-maven-plugin.git</connection>
-        <url>https://github.com/nano-project/coffee-roasting-maven-plugin</url>
-        <developerConnection>scm:git:git@github.com:nano-project/coffee-roasting-maven-plugin.git</developerConnection>
+        <connection>scm:git:git@github.com:nano-project/coffee-mill-maven-plugin.git</connection>
+        <url>https://github.com/nano-project/coffee-mill-maven-plugin</url>
+        <developerConnection>scm:git:git@github.com:nano-project/coffee-mill-maven-plugin.git</developerConnection>
     </scm>
 
     <properties>
