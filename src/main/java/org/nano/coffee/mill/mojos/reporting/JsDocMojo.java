@@ -103,7 +103,8 @@ public class JsDocMojo extends AbstractMavenReport {
 
         File jsdocExec = ExecUtils.findExecutableInPath("jsdoc");
         if (jsdocExec == null) {
-            throw new MavenReportException("Cannot build jsdoc report - jsdoc not in the system path");
+            getLog().error("Cannot build jsdoc report - jsdoc not in the system path, the report is ignored.");
+            return;
         } else {
             getLog().info("Invoking jsdoc : " + jsdocExec.getAbsolutePath());
             getLog().info("Output directory : " + getOutputDirectory());
