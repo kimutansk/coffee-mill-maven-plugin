@@ -55,7 +55,7 @@
             <item name="Stylesheets" href="css-and-less.html"/>
             <item name="Lifecycle" href="project-lifecycle.html"/>
             <item name="Watch Mode" href="watch-mode.html"/>
-            <!-- TODO Reporting -->
+            <item name="Reports" href="reporting.html"/>
         </menu>
         <menu ref="reports" />
 
