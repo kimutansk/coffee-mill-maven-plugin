@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2012-09-15T10:34:02.540">
+<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/src/main/java/org/nano/coffee/mill/mojos/others/DirectoryHandler.java">
+<violation beginline="15" endline="15" begincolumn="20" endcolumn="25" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nano.coffee.mill.mojos.others" class="DirectoryHandler" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'prefix'.
+</violation>
+</file>
+</pmd>
