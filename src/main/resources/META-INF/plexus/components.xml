@@ -52,6 +52,7 @@
                         org.nano.coffee-mill:coffee-mill-maven-plugin:aggregate-javascript,
                         org.nano.coffee-mill:coffee-mill-maven-plugin:aggregate-stylesheets,
                         org.nano.coffee-mill:coffee-mill-maven-plugin:minify-javascript,
+                        org.nano.coffee-mill:coffee-mill-maven-plugin:minify-stylesheets,
                         org.nano.coffee-mill:coffee-mill-maven-plugin:build-zip
                     </package>
                     <integration-test>

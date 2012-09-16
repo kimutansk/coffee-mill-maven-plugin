@@ -50,6 +50,8 @@ resulting file is the main project artifact
  _css_ extension.
 * _minify-javascript_: minify the aggregated JavaScript file using YUI Compressor or Google Closure. The resulting
 file is attached ot the project using the _min_ classifier.
+* _minify-stylesheets: minify the aggregated CSS file using YUI Compressor. The resulting
+file is attached ot the project using the _min_ classifier and obvisouly the CSS extension.
 * _build-zip_ : create a zip from the _target/www_ and _target/libs_ directory. The zip file is attached to the
 project using the _dist_ classifier and the _zip_ extension.
 

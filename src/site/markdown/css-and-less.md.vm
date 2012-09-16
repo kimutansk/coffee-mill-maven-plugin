@@ -45,3 +45,12 @@ aggregated using the alphabetical order.
     </plugin>
 
 The resulting aggregated file is attached to the project using the `css` extension.
+
+Minification
+------------
+
+Once aggregated, the file can be minified using YUI CSS Compressor. This step happens automatically if you have an
+aggregated CSS file. The resulting minified file is attached to the project using the _min_ classifier and the _css_
+packaging type.
+
+If the input file does not exist, the minification process is skipped.

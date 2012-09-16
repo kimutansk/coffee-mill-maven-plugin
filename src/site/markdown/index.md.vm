@@ -20,6 +20,7 @@ Features
 * Build modular JavaScript application by depending on your other components
 * Use CoffeeScript without thinking about compilation
 * Valide your CSS files, compile LESS files
+* Don't worry about aggregation and minification, the plugin manages that for you
 * Don't launch Maven continuously, the _watch_ mode monitor your files and process them
 
 License
