@@ -29,10 +29,10 @@ public class LessCompilationProcessor extends DefaultProcessor {
     }
 
     @Override
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
-        this.source = millMojo.stylesheetsDir;
-        this.destination = millMojo.getWorkDirectory();
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
+        this.source = mojo.stylesheetsDir;
+        this.destination = mojo.getWorkDirectory();
     }
 
     public boolean accept(File file) {

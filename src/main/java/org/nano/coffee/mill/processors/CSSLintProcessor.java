@@ -72,8 +72,8 @@ public class CSSLintProcessor extends DefaultProcessor {
     }
 
     @Override
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
         this.source = OptionsHelper.getDirectory(options, "directory", false);
     }
 

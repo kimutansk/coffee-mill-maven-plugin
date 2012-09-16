@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public class DefaultProcessor implements Processor {
 
-    protected AbstractCoffeeMillMojo millMojo;
+    protected AbstractCoffeeMillMojo mojo;
     protected Map<String, Object> options;
 
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        this.millMojo = millMojo;
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        this.mojo = mojo;
         if (options == null) {
             this.options = new HashMap<String, Object>();
         } else {
@@ -28,11 +28,11 @@ public class DefaultProcessor implements Processor {
 
     public void processAll() throws ProcessorException {
         // Do nothing by default
-        millMojo.getLog().info("Processing triggered on " + this.getClass().getName() + " - do nothing by default");
+        mojo.getLog().info("Processing triggered on " + this.getClass().getName() + " - do nothing by default");
     }
 
     public void tearDown() {
-        this.millMojo = null;
+        this.mojo = null;
     }
 
     public boolean accept(File file) {
@@ -52,7 +52,7 @@ public class DefaultProcessor implements Processor {
     }
 
     public Log getLog() {
-        return millMojo.getLog();
+        return mojo.getLog();
     }
 
     public static boolean isFileContainedInDirectory(File file, File dir) {

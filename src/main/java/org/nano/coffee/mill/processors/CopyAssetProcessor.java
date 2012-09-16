@@ -75,10 +75,10 @@ public class CopyAssetProcessor extends DefaultProcessor {
         });
 
 
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
-        this.assetsDir = millMojo.assetsDir;
-        this.workDir = millMojo.getWorkDirectory();
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
+        this.assetsDir = mojo.assetsDir;
+        this.workDir = mojo.getWorkDirectory();
     }
 
     public void processAll() throws ProcessorException {

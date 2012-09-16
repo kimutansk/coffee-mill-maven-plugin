@@ -22,14 +22,14 @@ public class JavaScriptFileCopyProcessor extends DefaultProcessor {
     private File destination;
 
     @Override
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
         if (OptionsHelper.getBoolean(options, "test", false)) {
-            this.source = millMojo.javaScriptTestDir;
-            this.destination = millMojo.getWorkTestDirectory();
+            this.source = mojo.javaScriptTestDir;
+            this.destination = mojo.getWorkTestDirectory();
         } else {
-            this.source = millMojo.javaScriptDir;
-            this.destination = millMojo.getWorkDirectory();
+            this.source = mojo.javaScriptDir;
+            this.destination = mojo.getWorkDirectory();
         }
     }
 

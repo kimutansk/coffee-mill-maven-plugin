@@ -29,14 +29,14 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
     }
 
     @Override
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
         if (OptionsHelper.getBoolean(options, "test", false)) {
-            this.source = millMojo.coffeeScriptTestDir;
-            this.destination = millMojo.getWorkTestDirectory();
+            this.source = mojo.coffeeScriptTestDir;
+            this.destination = mojo.getWorkTestDirectory();
         } else {
-            this.source = millMojo.coffeeScriptDir;
-            this.destination = millMojo.getWorkDirectory();
+            this.source = mojo.coffeeScriptDir;
+            this.destination = mojo.getWorkDirectory();
         }
     }
 

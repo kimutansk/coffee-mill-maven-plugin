@@ -109,8 +109,8 @@ public abstract class AggregatorProcessor extends DefaultProcessor {
     }
 
     @Override
-    public void configure(AbstractCoffeeMillMojo millMojo, Map<String, Object> options) {
-        super.configure(millMojo, options);
+    public void configure(AbstractCoffeeMillMojo mojo, Map<String, Object> options) {
+        super.configure(mojo, options);
         this.extension = OptionsHelper.getString(options, "extension");
         this.output = OptionsHelper.getFile(options, "output");
         this.names = (List<String>) options.get("names");
@@ -119,14 +119,14 @@ public abstract class AggregatorProcessor extends DefaultProcessor {
     @Override
     public boolean accept(File file) {
         return !file.getAbsoluteFile().equals(output.getAbsoluteFile()) // Not the output
-                && isFileContainedInDirectory(file, millMojo.getWorkDirectory()) // from the work dir
+                && isFileContainedInDirectory(file, mojo.getWorkDirectory()) // from the work dir
                 && file.isFile()
                 && file.getName().endsWith(extension); // from the right type
     }
 
     public void aggregate() throws ProcessorException {
         try {
-            List<File> files = computeFileList(names, millMojo.getWorkDirectory(), millMojo.getLibDirectory(), extension, true);
+            List<File> files = computeFileList(names, mojo.getWorkDirectory(), mojo.getLibDirectory(), extension, true);
             aggregate(files, output);
         } catch (FileNotFoundException e) {
             throw new ProcessorException("Cannot build aggregate file " + output.getAbsolutePath(), e);
@@ -135,7 +135,7 @@ public abstract class AggregatorProcessor extends DefaultProcessor {
 
     @Override
     public void processAll() throws ProcessorException {
-        if (millMojo.getWorkDirectory().exists()) {
+        if (mojo.getWorkDirectory().exists()) {
             aggregate();
         }
     }

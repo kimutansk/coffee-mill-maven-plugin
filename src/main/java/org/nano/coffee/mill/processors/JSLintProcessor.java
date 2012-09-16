@@ -19,7 +19,7 @@ public class JSLintProcessor extends DefaultProcessor {
     @Override
     public void processAll() throws ProcessorException {
         getLog().info("Checking sources with JsLint");
-        Collection<File> files = FileUtils.listFiles(millMojo.getWorkDirectory(), new String[]{"js"}, true);
+        Collection<File> files = FileUtils.listFiles(mojo.getWorkDirectory(), new String[]{"js"}, true);
         for (File file : files) {
             List<ProcessorWarning> warnings = validate(file);
             getLog().info("Found " + warnings.size() + " issues in " + file.getAbsolutePath());
@@ -32,7 +32,7 @@ public class JSLintProcessor extends DefaultProcessor {
 
     @Override
     public boolean accept(File file) {
-        return file.isFile() && isFileContainedInDirectory(file, millMojo.getWorkDirectory());
+        return file.isFile() && isFileContainedInDirectory(file, mojo.getWorkDirectory());
     }
 
     @Override
