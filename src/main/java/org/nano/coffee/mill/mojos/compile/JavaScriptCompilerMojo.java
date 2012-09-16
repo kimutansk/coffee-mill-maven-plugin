@@ -3,10 +3,7 @@ package org.nano.coffee.mill.mojos.compile;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo;
-import org.nano.coffee.mill.processors.JSHintProcessor;
-import org.nano.coffee.mill.processors.JSLintProcessor;
-import org.nano.coffee.mill.processors.JavaScriptFileCopyProcessor;
-import org.nano.coffee.mill.processors.Processor;
+import org.nano.coffee.mill.processors.*;
 import org.nano.coffee.mill.utils.OptionsHelper;
 
 /**
@@ -14,6 +11,7 @@ import org.nano.coffee.mill.utils.OptionsHelper;
  * <ul>
  *     <li>Check the code using JSLint</li>
  *     <li>Check the code using JSHint</li>
+ *     <li>Compile dust template (<tt>.dust</tt> files)</li>
  * </ul>
  *
  * @goal compile-javascript
@@ -22,18 +20,25 @@ import org.nano.coffee.mill.utils.OptionsHelper;
 public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
 
     /**
-     * Sets to true to disable JSLint
+     * Enables / disables JSLint
      *
      * @parameter default-value="false"
      */
     protected boolean skipJsLint;
 
     /**
-     * Sets to true to disable JSHint
+     * Enables / disables JSHint
      *
      * @parameter default-value="false"
      */
     protected boolean skipJsHint;
+
+    /**
+     * Enables / disables dust compilation
+     *
+     * @parameter default-value="false"
+     */
+    protected boolean skipDustCompilation;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -62,6 +67,12 @@ public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
             getLog().debug("JS Hint skipped");
         }
 
+        if ( ! skipDustCompilation) {
+            doDust();
+        }  else {
+            getLog().debug("Dust Compilation skipped");
+        }
+
     }
 
     private void doJsLint() throws MojoExecutionException {
@@ -78,6 +89,16 @@ public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
     private void doJsHint() throws MojoExecutionException {
         getLog().info("Checking sources with JsHint");
         JSHintProcessor processor = new JSHintProcessor();
+        processor.configure(this, null);
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("", e);
+        }
+    }
+
+    private void doDust() throws MojoExecutionException {
+        DustJSProcessor processor = new DustJSProcessor();
         processor.configure(this, null);
         try {
             processor.processAll();

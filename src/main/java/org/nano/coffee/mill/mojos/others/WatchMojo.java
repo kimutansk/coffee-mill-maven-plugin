@@ -38,6 +38,11 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
     /**
      * @parameter default-value="true"
      */
+    protected boolean watchDust;
+
+    /**
+     * @parameter default-value="true"
+     */
     protected boolean watchDoAggregate;
 
     /**
@@ -158,6 +163,12 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
 
             processor = new CoffeeScriptCompilationProcessor();
             processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+            processors.add(processor);
+        }
+
+        if (watchDust) {
+            processor = new DustJSProcessor();
+            processor.configure(this, null);
             processors.add(processor);
         }
 

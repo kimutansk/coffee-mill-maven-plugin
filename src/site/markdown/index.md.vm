@@ -19,6 +19,7 @@ Features
 * Make your component more robust with unit and integration tests using Jasmine
 * Build modular JavaScript application by depending on your other components
 * Use CoffeeScript without thinking about compilation
+* Compile Dust templates for you
 * Valide your CSS files, compile LESS files
 * Don't worry about aggregation and minification, the plugin manages that for you
 * Don't launch Maven continuously, the _watch_ mode monitor your files and process them

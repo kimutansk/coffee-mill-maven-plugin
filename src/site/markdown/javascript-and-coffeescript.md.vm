@@ -25,6 +25,16 @@ The plugin also support compile _test_ sources with:
 
     mvn ${project.groupId}:${project.artifactId}:test-compile-coffeescript
 
+Compiling Dust Templates
+-------------------------
+
+The plugin is able to compile [Dust templates (linkedIn version)](http://linkedin.github.com/dustjs/) sources from the
+`src/main/js` to JavaScript. The output files are in the `target/www` directory. Dust templates must use the _.dust_
+extension.
+
+The compilation is part of the _js_ packaging lifecycle and happens automatically during JavaScript compilation (i.e.
+validation).
+
 Testing JavaScript and CoffeeScript code
 ---------------------------------------
 

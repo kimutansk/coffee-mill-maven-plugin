@@ -15,7 +15,7 @@ The compile phase
 -----------------
 
 * _compile-javascript_ : copy JavaScript files from _src/main/js_ to the _target/www_ folder. Validate them using
-JSHint and JSLint.
+JSHint and JSLint. Dust templates are also compiled.
 * _compile-coffeescript_ : compile CoffeeScript files (_.coffee_), from _src/main/coffee_ to the _target/www_ folder
 * _compile-less_ : compile Less files (_.less_), from _src/main/stylesheets_ to the _target/www_ folder
 * _compile-css_ : copy CSS files from _src/main/stylesheets_ to the _target/www_ folder. Validate them using
