@@ -128,8 +128,7 @@ public class LessCompilationProcessor extends DefaultProcessor {
      * @return stream of the less.js script.
      */
     private InputStream getScriptAsStream() {
-        //TODO use our own Less file.
-        return LessCss.class.getResourceAsStream(DEFAULT_LESS_JS);
+        return this.getClass().getResourceAsStream(DEFAULT_LESS_JS);
     }
 
 
