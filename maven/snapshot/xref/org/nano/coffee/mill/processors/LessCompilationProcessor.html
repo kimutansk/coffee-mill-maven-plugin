@@ -39,10 +39,10 @@
 <a class="jxr_linenumber" name="29" href="#29">29</a>      }
 <a class="jxr_linenumber" name="30" href="#30">30</a>  
 <a class="jxr_linenumber" name="31" href="#31">31</a>      @Override
-<a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> configure(<a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> millMojo, Map&lt;String, Object&gt; options) {
-<a class="jxr_linenumber" name="33" href="#33">33</a>          <strong class="jxr_keyword">super</strong>.configure(millMojo, options);
-<a class="jxr_linenumber" name="34" href="#34">34</a>          <strong class="jxr_keyword">this</strong>.source = millMojo.stylesheetsDir;
-<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">this</strong>.destination = millMojo.getWorkDirectory();
+<a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> configure(<a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> mojo, Map&lt;String, Object&gt; options) {
+<a class="jxr_linenumber" name="33" href="#33">33</a>          <strong class="jxr_keyword">super</strong>.configure(mojo, options);
+<a class="jxr_linenumber" name="34" href="#34">34</a>          <strong class="jxr_keyword">this</strong>.source = mojo.stylesheetsDir;
+<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">this</strong>.destination = mojo.getWorkDirectory();
 <a class="jxr_linenumber" name="36" href="#36">36</a>      }
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
 <a class="jxr_linenumber" name="38" href="#38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> accept(File file) {
@@ -138,26 +138,25 @@
 <a class="jxr_linenumber" name="128" href="#128">128</a> <em class="jxr_javadoccomment">     * @return stream of the less.js script.</em>
 <a class="jxr_linenumber" name="129" href="#129">129</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="130" href="#130">130</a>     <strong class="jxr_keyword">private</strong> InputStream getScriptAsStream() {
-<a class="jxr_linenumber" name="131" href="#131">131</a>         <em class="jxr_comment">//TODO use our own Less file.</em>
-<a class="jxr_linenumber" name="132" href="#132">132</a>         <strong class="jxr_keyword">return</strong> LessCss.<strong class="jxr_keyword">class</strong>.getResourceAsStream(DEFAULT_LESS_JS);
-<a class="jxr_linenumber" name="133" href="#133">133</a>     }
+<a class="jxr_linenumber" name="131" href="#131">131</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.getClass().getResourceAsStream(DEFAULT_LESS_JS);
+<a class="jxr_linenumber" name="132" href="#132">132</a>     }
+<a class="jxr_linenumber" name="133" href="#133">133</a> 
 <a class="jxr_linenumber" name="134" href="#134">134</a> 
-<a class="jxr_linenumber" name="135" href="#135">135</a> 
-<a class="jxr_linenumber" name="136" href="#136">136</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="137" href="#137">137</a> <em class="jxr_javadoccomment">     * @param data css content to process.</em>
-<a class="jxr_linenumber" name="138" href="#138">138</a> <em class="jxr_javadoccomment">     * @return processed css content.</em>
-<a class="jxr_linenumber" name="139" href="#139">139</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="140" href="#140">140</a>     <strong class="jxr_keyword">public</strong> String less(<strong class="jxr_keyword">final</strong> String data) <strong class="jxr_keyword">throws</strong> ProcessorException {
-<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../org/nano/coffee/mill/utils/RhinoLauncher.html">RhinoLauncher</a> builder = initScriptBuilder();
-<a class="jxr_linenumber" name="142" href="#142">142</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">final</strong> String execute = <span class="jxr_string">"lessIt("</span> + WroUtil.toJSMultiLineString(data) + <span class="jxr_string">");"</span>;
-<a class="jxr_linenumber" name="144" href="#144">144</a>             <strong class="jxr_keyword">final</strong> Object result = builder.evaluate(execute, <span class="jxr_string">"lessIt"</span>);
-<a class="jxr_linenumber" name="145" href="#145">145</a>             <strong class="jxr_keyword">return</strong> String.valueOf(result);
-<a class="jxr_linenumber" name="146" href="#146">146</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> RhinoException e) {
-<a class="jxr_linenumber" name="147" href="#147">147</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/nano/coffee/mill/processors/Processor.html">ProcessorException</a>(<span class="jxr_string">"Less compilation failed - "</span> + RhinoUtils.createExceptionMessage(e));
-<a class="jxr_linenumber" name="148" href="#148">148</a>         }
-<a class="jxr_linenumber" name="149" href="#149">149</a>     }
-<a class="jxr_linenumber" name="150" href="#150">150</a> }
+<a class="jxr_linenumber" name="135" href="#135">135</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="136" href="#136">136</a> <em class="jxr_javadoccomment">     * @param data css content to process.</em>
+<a class="jxr_linenumber" name="137" href="#137">137</a> <em class="jxr_javadoccomment">     * @return processed css content.</em>
+<a class="jxr_linenumber" name="138" href="#138">138</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="139" href="#139">139</a>     <strong class="jxr_keyword">public</strong> String less(<strong class="jxr_keyword">final</strong> String data) <strong class="jxr_keyword">throws</strong> ProcessorException {
+<a class="jxr_linenumber" name="140" href="#140">140</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../org/nano/coffee/mill/utils/RhinoLauncher.html">RhinoLauncher</a> builder = initScriptBuilder();
+<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="142" href="#142">142</a>             <strong class="jxr_keyword">final</strong> String execute = <span class="jxr_string">"lessIt("</span> + WroUtil.toJSMultiLineString(data) + <span class="jxr_string">");"</span>;
+<a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">final</strong> Object result = builder.evaluate(execute, <span class="jxr_string">"lessIt"</span>);
+<a class="jxr_linenumber" name="144" href="#144">144</a>             <strong class="jxr_keyword">return</strong> String.valueOf(result);
+<a class="jxr_linenumber" name="145" href="#145">145</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> RhinoException e) {
+<a class="jxr_linenumber" name="146" href="#146">146</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/nano/coffee/mill/processors/Processor.html">ProcessorException</a>(<span class="jxr_string">"Less compilation failed - "</span> + RhinoUtils.createExceptionMessage(e));
+<a class="jxr_linenumber" name="147" href="#147">147</a>         }
+<a class="jxr_linenumber" name="148" href="#148">148</a>     }
+<a class="jxr_linenumber" name="149" href="#149">149</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

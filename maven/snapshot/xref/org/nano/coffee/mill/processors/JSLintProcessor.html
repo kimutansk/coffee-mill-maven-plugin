@@ -29,7 +29,7 @@
 <a class="jxr_linenumber" name="19" href="#19">19</a>      @Override
 <a class="jxr_linenumber" name="20" href="#20">20</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> processAll() <strong class="jxr_keyword">throws</strong> ProcessorException {
 <a class="jxr_linenumber" name="21" href="#21">21</a>          getLog().info(<span class="jxr_string">"Checking sources with JsLint"</span>);
-<a class="jxr_linenumber" name="22" href="#22">22</a>          Collection&lt;File&gt; files = FileUtils.listFiles(millMojo.getWorkDirectory(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"js"</span>}, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="22" href="#22">22</a>          Collection&lt;File&gt; files = FileUtils.listFiles(mojo.getWorkDirectory(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"js"</span>}, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="23" href="#23">23</a>          <strong class="jxr_keyword">for</strong> (File file : files) {
 <a class="jxr_linenumber" name="24" href="#24">24</a>              List&lt;ProcessorWarning&gt; warnings = validate(file);
 <a class="jxr_linenumber" name="25" href="#25">25</a>              getLog().info(<span class="jxr_string">"Found "</span> + warnings.size() + <span class="jxr_string">" issues in "</span> + file.getAbsolutePath());
@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="32" href="#32">32</a>  
 <a class="jxr_linenumber" name="33" href="#33">33</a>      @Override
 <a class="jxr_linenumber" name="34" href="#34">34</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> accept(File file) {
-<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">return</strong> file.isFile() &amp;&amp; isFileContainedInDirectory(file, millMojo.getWorkDirectory());
+<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">return</strong> file.isFile() &amp;&amp; isFileContainedInDirectory(file, mojo.getWorkDirectory());
 <a class="jxr_linenumber" name="36" href="#36">36</a>      }
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
 <a class="jxr_linenumber" name="38" href="#38">38</a>      @Override

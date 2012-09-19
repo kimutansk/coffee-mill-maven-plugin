@@ -24,11 +24,11 @@
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/nano/coffee/mill/processors/DefaultProcessor.html">DefaultProcessor</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../../org/nano/coffee/mill/processors/Processor.html">Processor</a> {
 <a class="jxr_linenumber" name="16" href="#16">16</a>  
-<a class="jxr_linenumber" name="17" href="#17">17</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> millMojo;
+<a class="jxr_linenumber" name="17" href="#17">17</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> mojo;
 <a class="jxr_linenumber" name="18" href="#18">18</a>      <strong class="jxr_keyword">protected</strong> Map&lt;String, Object&gt; options;
 <a class="jxr_linenumber" name="19" href="#19">19</a>  
-<a class="jxr_linenumber" name="20" href="#20">20</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> configure(<a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> millMojo, Map&lt;String, Object&gt; options) {
-<a class="jxr_linenumber" name="21" href="#21">21</a>          <strong class="jxr_keyword">this</strong>.millMojo = millMojo;
+<a class="jxr_linenumber" name="20" href="#20">20</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> configure(<a href="../../../../../org/nano/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> mojo, Map&lt;String, Object&gt; options) {
+<a class="jxr_linenumber" name="21" href="#21">21</a>          <strong class="jxr_keyword">this</strong>.mojo = mojo;
 <a class="jxr_linenumber" name="22" href="#22">22</a>          <strong class="jxr_keyword">if</strong> (options == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="23" href="#23">23</a>              <strong class="jxr_keyword">this</strong>.options = <strong class="jxr_keyword">new</strong> HashMap&lt;String, Object&gt;();
 <a class="jxr_linenumber" name="24" href="#24">24</a>          } <strong class="jxr_keyword">else</strong> {
@@ -38,11 +38,11 @@
 <a class="jxr_linenumber" name="28" href="#28">28</a>  
 <a class="jxr_linenumber" name="29" href="#29">29</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> processAll() <strong class="jxr_keyword">throws</strong> ProcessorException {
 <a class="jxr_linenumber" name="30" href="#30">30</a>          <em class="jxr_comment">// Do nothing by default</em>
-<a class="jxr_linenumber" name="31" href="#31">31</a>          millMojo.getLog().info(<span class="jxr_string">"Processing triggered on "</span> + <strong class="jxr_keyword">this</strong>.getClass().getName() + <span class="jxr_string">" - do nothing by default"</span>);
+<a class="jxr_linenumber" name="31" href="#31">31</a>          mojo.getLog().info(<span class="jxr_string">"Processing triggered on "</span> + <strong class="jxr_keyword">this</strong>.getClass().getName() + <span class="jxr_string">" - do nothing by default"</span>);
 <a class="jxr_linenumber" name="32" href="#32">32</a>      }
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
 <a class="jxr_linenumber" name="34" href="#34">34</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> tearDown() {
-<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">this</strong>.millMojo = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">this</strong>.mojo = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="36" href="#36">36</a>      }
 <a class="jxr_linenumber" name="37" href="#37">37</a>  
 <a class="jxr_linenumber" name="38" href="#38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> accept(File file) {
@@ -62,7 +62,7 @@
 <a class="jxr_linenumber" name="52" href="#52">52</a>      }
 <a class="jxr_linenumber" name="53" href="#53">53</a>  
 <a class="jxr_linenumber" name="54" href="#54">54</a>      <strong class="jxr_keyword">public</strong> Log getLog() {
-<a class="jxr_linenumber" name="55" href="#55">55</a>          <strong class="jxr_keyword">return</strong> millMojo.getLog();
+<a class="jxr_linenumber" name="55" href="#55">55</a>          <strong class="jxr_keyword">return</strong> mojo.getLog();
 <a class="jxr_linenumber" name="56" href="#56">56</a>      }
 <a class="jxr_linenumber" name="57" href="#57">57</a>  
 <a class="jxr_linenumber" name="58" href="#58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isFileContainedInDirectory(File file, File dir) {
