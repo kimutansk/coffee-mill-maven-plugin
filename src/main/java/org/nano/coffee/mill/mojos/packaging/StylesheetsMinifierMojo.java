@@ -43,6 +43,7 @@ public class StylesheetsMinifierMojo extends AbstractCoffeeMillMojo {
         File input = new File(getTarget(), project.getBuild().getFinalName() + ".css");
         if (! input.exists()) {
             getLog().info("Stylesheets Minification skipped, no CSS file");
+            return;
         }
 
         File output = new File(getTarget(), project.getBuild().getFinalName() + "-min.css");
