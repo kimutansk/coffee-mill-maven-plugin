@@ -31,6 +31,9 @@ public class DustJSProcessor extends DefaultProcessor {
 
     @Override
     public void processAll() throws ProcessorException {
+        if (! source.exists()) {
+            return;
+        }
         getLog().info("Compiling dust templates");
         Collection<File> files = FileUtils.listFiles(source, new String[]{"dust"}, true);
         for (File file : files) {
