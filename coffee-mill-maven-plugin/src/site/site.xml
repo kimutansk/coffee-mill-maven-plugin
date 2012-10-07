@@ -57,6 +57,7 @@
             <item name="Watch Mode" href="watch-mode.html"/>
             <item name="Reports" href="reporting.html"/>
         </menu>
+        <menu ref="modules" />
         <menu ref="reports" />
 
 
