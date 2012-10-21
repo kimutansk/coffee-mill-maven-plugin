@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.nano.syndication</groupId>
+    	<artifactId>syndication-service-project</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>syndication-service</artifactId>
+    <packaging>js</packaging>
+    <name>syndication-service - contract</name>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.nano.coffee-mill</groupId>
+                <artifactId>coffee-mill-maven-plugin</artifactId>
+				<extensions>true</extensions>
+                <configuration>
+					<javascriptAggregation>
+                            <file>SyndicationService</file>
+                            <file>FeedEntry</file>
+                            <file>FeedReader</file>
+					</javascriptAggregation>
+					<minifier>YUI_COMPRESSOR</minifier>
+
+                    <jsdocIncludePrivate>true</jsdocIncludePrivate>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                    <reportPlugins>
+                        <plugin>
+                            <artifactId>maven-plugin-plugin</artifactId>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.4</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                            </configuration>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>org.nano.coffee-roasting</groupId>
+                            <artifactId>coffee-roasting-maven-plugin</artifactId>
+                            <version>1.0.0-SNAPSHOT</version>
+                            <configuration>
+                                <jsdocIncludePrivate>true</jsdocIncludePrivate>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.kohsuke</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>   
+	</build>
+</project>

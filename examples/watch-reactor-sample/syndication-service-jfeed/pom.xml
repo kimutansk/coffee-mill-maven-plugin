@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.nano.syndication</groupId>
+    	<artifactId>syndication-service-project</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>syndication-service-jfeed</artifactId>
+    <packaging>js</packaging>
+    <name>syndication-service - implementation based on JFeed</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.nano.syndication</groupId>
+            <artifactId>syndication-service</artifactId>
+            <type>js</type>
+            <classifier>min</classifier>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nano</groupId>
+            <artifactId>h-ubu</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+        <dependency>
+            <groupId>org.nano.libs</groupId>
+			<artifactId>jquery</artifactId>
+			<version>1.8.0</version>
+            <classifier>min</classifier>
+            <type>js</type>
+        </dependency>
+        <dependency>
+            <groupId>org.nano.libs</groupId>
+			<artifactId>jfeed</artifactId>
+			<version>20110925</version>
+            <type>js</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.nano.coffee-mill</groupId>
+                <artifactId>coffee-mill-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <javascriptAggregation>
+                        <file>syndication-service</file> <!-- This is a dependency, we use the artifact id -->
+                        <file>FeedReaderImpl.js</file>
+                    </javascriptAggregation>
+					<minifier>YUI_COMPRESSOR</minifier>
+		            <minifierYUIPreserveSemiColumn>true</minifierYUIPreserveSemiColumn>
+        		    <minifierYUIMunge>true</minifierYUIMunge>
+		            <minifierYUIDisableOptimizations>true</minifierYUIDisableOptimizations>
+		            <javaScriptIntegrationTestDir>src/test/js</javaScriptIntegrationTestDir>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.4</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                            </configuration>
+                        </plugin>
+                        
+                        <plugin>
+                            <groupId>org.nano.coffee-roasting</groupId>
+                            <artifactId>coffee-roasting-maven-plugin</artifactId>
+                            <version>1.0.0-SNAPSHOT</version>
+                            <configuration>
+                                <jsdocIncludePrivate>true</jsdocIncludePrivate>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.kohsuke</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

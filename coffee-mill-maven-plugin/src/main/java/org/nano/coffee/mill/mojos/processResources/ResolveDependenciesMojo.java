@@ -26,7 +26,6 @@ import java.util.List;
  * @requiresDependencyResolution test
  */
 public class ResolveDependenciesMojo extends AbstractCoffeeMillMojo {
-
     /**
      * Used to look up Artifacts in the remote repository.
      *
@@ -92,12 +91,12 @@ public class ResolveDependenciesMojo extends AbstractCoffeeMillMojo {
     }
 
     private void stripMinClassifier() {
-        if (! getLibDirectory().isDirectory()) {
+        if (!getLibDirectory().isDirectory()) {
             // Nothing to do.
             return;
         }
 
-        Collection<File> files = FileUtils.listFiles(getLibDirectory(), new String[] {"js"}, true);
+        Collection<File> files = FileUtils.listFiles(getLibDirectory(), new String[]{"js"}, true);
         for (File file : files) {
             if (file.getName().endsWith("-min.js")) {
                 File newFile = new File(file.getParent(), file.getName().replace("-min.js", ".js"));

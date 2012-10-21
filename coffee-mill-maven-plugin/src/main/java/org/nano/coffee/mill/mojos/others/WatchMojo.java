@@ -2,14 +2,17 @@ package org.nano.coffee.mill.mojos.others;
 
 import org.apache.commons.vfs2.*;
 import org.apache.commons.vfs2.impl.DefaultFileMonitor;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.project.MavenProject;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nano.coffee.mill.processors.*;
 import org.nano.coffee.mill.utils.OptionsHelper;
+import org.nano.coffee.mill.utils.ReactorUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,9 +24,32 @@ import java.util.Map;
  * This mojo watches the file change in the source directories and process them automatically.
  * To work correctly, launch <tt>mvn clean test</tt> first. This will resolve and prepare all required file.
  * Then <tt>mvn org.nano.coffee-mill:coffee-mill-maven-plugin:watch</tt> will starts the <i>watch</i> mode.
+ *
+ * This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode,
+ * launch the watch mode with <tt>-Dwatched.project=artifactId of the final project</tt>. This will watch all
+ * resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified
+ * project.
  * @goal watch
  */
 public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
+
+    /**
+     * The maven session.
+     *
+     * @parameter expression="${session}"
+     * @required
+     * @readonly
+     */
+    protected MavenSession session;
+
+    /**
+     * Contains the full list of projects in the reactor.
+     *
+     * @parameter expression="${reactorProjects}"
+     * @readonly
+     */
+    protected List<MavenProject> reactorProjects;
+
 
     /**
      * @parameter default-value="true"
@@ -66,6 +92,11 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
     protected int watchJettyServerPort;
 
     /**
+     * @parameter expression="${watched.project}" default-value="${project.artifactId}"
+     */
+    protected String watchedProject;
+
+    /**
      * @parameter
      */
     List<String> javascriptAggregation;
@@ -86,12 +117,37 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        // Are we in reactor mode, if so are we the target project
+        if (! watchedProject.equals(project.getArtifactId())) {
+            getLog().debug("Not the watched project, skip");
+            if ("js".equals(project.getPackaging())) {
+                getLog().debug("Adding the current project to session " + watchedProject);
+                ReactorUtils.addWatcherToSession(this, session);
+            }
+            return;
+        }
 
-        computeProcessors();
+        processors = new ArrayList<Processor>();
+        computeProcessors(this, processors);
+
+
         try {
-            setupMonitor();
+            setupMonitor(project);
         } catch (FileSystemException e) {
             throw new MojoExecutionException("Cannot set the file monitor on the source folder", e);
+        }
+
+        // Starts all others process and monitors on the others project
+        for (WatchMojo watcher : ReactorUtils.getWatchersFromSession(session)) {
+            computeProcessors(watcher, processors);
+            DefaultProcessor proc = new FinalArtifactProcessor(this, watcher);
+            proc.configure(this, null);
+            processors.add(proc);
+            try {
+                setupMonitor(watcher.project);
+            } catch (FileSystemException e) {
+                throw new MojoExecutionException("Cannot set the file monitor on the source folder", e);
+            }
         }
 
         String MESSAGE = "You're running the watch mode. All modified files will be processed " +
@@ -126,49 +182,51 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
         }
     }
 
-    private List<Processor> computeProcessors() {
-        processors = new ArrayList<Processor>();
+    private List<Processor> computeProcessors(WatchMojo mojo, List<Processor> processors) {
         // Always added
 
         // Asset Copy
-        Processor processor = new CopyAssetProcessor();
-        processor.configure(this, null);
+        DefaultProcessor processor = new CopyAssetProcessor();
+        processor.configure(mojo, null);
         processors.add(processor);
 
         // Copy JS Main + Test
         processor = new JavaScriptFileCopyProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", false).build());
+        processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("test", false).build());
         processors.add(processor);
         processor = new JavaScriptFileCopyProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+        processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("test",
+                true).build());
         processors.add(processor);
 
         // Copy CSS
         processor = new CSSFileCopyProcessor();
-        processor.configure(this, null);
+        processor.configure(mojo, null);
         processors.add(processor);
 
         // Less
         if (watchLess) {
             processor = new LessCompilationProcessor();
-            processor.configure(this, null);
+            processor.configure(mojo, null);
             processors.add(processor);
         }
 
         // CoffeeScript
         if (watchCoffeeScript) {
             processor = new CoffeeScriptCompilationProcessor();
-            processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", false).build());
+            processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("test",
+                    false).build());
             processors.add(processor);
 
             processor = new CoffeeScriptCompilationProcessor();
-            processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+            processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("test",
+                    true).build());
             processors.add(processor);
         }
 
         if (watchDust) {
             processor = new DustJSProcessor();
-            processor.configure(this, null);
+            processor.configure(mojo, null);
             processors.add(processor);
         }
 
@@ -176,36 +234,37 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
         if (watchDoAggregate) {
             processor = new JavaScriptAggregator();
             Map<String, Object> options = new HashMap<String, Object>();
-            File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".js");
+            File output = new File(mojo.getWorkDirectory(), mojo.project.getBuild().getFinalName() + ".js");
             options.put("output", output);
-            options.put("names", javascriptAggregation);
+            options.put("names", mojo.javascriptAggregation);
             options.put("extension", "js");
-            processor.configure(this, options);
+            processor.configure(mojo, options);
             processors.add(processor);
 
             processor = new CSSAggregator();
-            output = new File(getWorkDirectory(), project.getBuild().getFinalName() + ".css");
+            output = new File(mojo.getWorkDirectory(), mojo.project.getBuild().getFinalName() + ".css");
             options = new HashMap<String, Object>();
             options.put("output", output);
-            options.put("names", cssAggregation);
+            options.put("names", mojo.cssAggregation);
             options.put("extension", "css");
-            processor.configure(this, options);
+            processor.configure(mojo, options);
             processors.add(processor);
         }
 
         // CSSLint, JSLint and JSHint validation
         if (watchValidateJS) {
             processor = new JSHintProcessor();
-            processor.configure(this, null);
+            processor.configure(mojo, null);
             processors.add(processor);
 
             processor = new JSHintProcessor();
-            processor.configure(this, null);
+            processor.configure(mojo, null);
             processors.add(processor);
         }
         if (watchValidateCSS) {
             processor = new CSSLintProcessor();
-            processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
+            processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("directory",
+                    mojo.getWorkDirectory()).build());
             processors.add(processor);
         }
 
@@ -213,7 +272,7 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
     }
 
 
-    private void setupMonitor() throws FileSystemException {
+    private void setupMonitor(MavenProject project) throws FileSystemException {
         File baseDir = project.getBasedir();
         getLog().info("Set up file monitor on " + baseDir);
         FileSystemManager fsManager = VFS.getManager();
