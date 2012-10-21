@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2012-10-21T15:25:56.495">
-<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nano/coffee/mill/mojos/others/DirectoryHandler.java">
+<pmd version="4.2.5" timestamp="2012-10-21T16:04:05.580">
+<file name="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nano/coffee/mill/mojos/others/DirectoryHandler.java">
 <violation beginline="15" endline="15" begincolumn="20" endcolumn="25" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nano.coffee.mill.mojos.others" class="DirectoryHandler" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'prefix'.
 </violation>
 </file>
-<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nano/coffee/mill/mojos/others/FinalArtifactProcessor.java">
+<file name="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nano/coffee/mill/mojos/others/FinalArtifactProcessor.java">
 <violation beginline="4" endline="4" begincolumn="1" endcolumn="57" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nano.coffee.mill.mojos.others" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.nano.coffee.mill.mojos.AbstractCoffeeMillMojo'
 </violation>
