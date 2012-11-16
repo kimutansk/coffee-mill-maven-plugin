@@ -99,13 +99,23 @@ public class JasmineRunnerGenerator {
                 }
             } else {
                 for (File f : FileUtils.listFiles(mojo.getWorkDirectory(), new String[] {"js"}, true)) {
-                    set.add("/" + f.getName());
+                    String path = f.getAbsolutePath().substring(mojo.getWorkDirectory().getAbsolutePath().length());
+                    if (path.startsWith("/")) {
+                        set.add(path);
+                    } else {
+                        set.add("/" + path);
+                    }
                 }
             }
 
             // Specs
             for (File f : FileUtils.listFiles(mojo.getWorkTestDirectory(), new String[] {"js"}, true)) {
-                set.add("/" + f.getName());
+                String path = f.getAbsolutePath().substring(mojo.getWorkTestDirectory().getAbsolutePath().length());
+                if (path.startsWith("/")) {
+                    set.add(path);
+                } else {
+                    set.add("/" + path);
+                }
             }
 
             return set;
@@ -113,6 +123,8 @@ public class JasmineRunnerGenerator {
 
         public void resolveScripts() throws IOException { }
     }
+
+
 
 
 
