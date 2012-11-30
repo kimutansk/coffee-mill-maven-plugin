@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.nano.syndication</groupId>
+        <groupId>org.nanoko.syndication</groupId>
     	<artifactId>syndication-service-project</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.nano.syndication</groupId>
+            <groupId>org.nanoko.syndication</groupId>
             <artifactId>syndication-service</artifactId>
             <type>js</type>
             <classifier>min</classifier>
@@ -26,14 +26,14 @@
             <type>js</type>
         </dependency>
         <dependency>
-            <groupId>org.nano.libs</groupId>
+            <groupId>org.nanoko.libs</groupId>
 			<artifactId>jquery</artifactId>
 			<version>1.8.0</version>
             <classifier>min</classifier>
             <type>js</type>
         </dependency>
         <dependency>
-            <groupId>org.nano.libs</groupId>
+            <groupId>org.nanoko.libs</groupId>
 			<artifactId>jfeed</artifactId>
 			<version>20110925</version>
             <type>js</type>
@@ -43,7 +43,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.nano.coffee-mill</groupId>
+                <groupId>org.nanoko.coffee-mill</groupId>
                 <artifactId>coffee-mill-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
@@ -77,8 +77,8 @@
                         </plugin>
                         
                         <plugin>
-                            <groupId>org.nano.coffee-roasting</groupId>
-                            <artifactId>coffee-roasting-maven-plugin</artifactId>
+                            <groupId>org.nanoko.coffee-mill</groupId>
+                            <artifactId>coffee-mill-maven-plugin</artifactId>
                             <version>1.0.0-SNAPSHOT</version>
                             <configuration>
                                 <jsdocIncludePrivate>true</jsdocIncludePrivate>

@@ -1,0 +1,54 @@
+package org.nanoko.coffee.mill.mojos.compile;
+
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
+import org.nanoko.coffee.mill.processors.CoffeeScriptCompilationProcessor;
+import org.nanoko.coffee.mill.processors.Processor;
+import org.nanoko.coffee.mill.utils.OptionsHelper;
+
+/**
+ * Compiles CoffeeScript files.
+ * CoffeeScript files are generally in the <tt>src/test/coffee</tt> directory. It can be configured using the
+ * <tt>coffeeScriptTestDir</tt> parameter.
+ * If the directory does not exist, the compilation is skipped.
+ *
+ * @goal test-compile-coffeescript
+ */
+public class CoffeeScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
+
+    /**
+     * Enables / Disables the coffeescript compilation.
+     * Be aware that this property disables the compilation on both main sources and test sources.
+     * @parameter default-value="false"
+     */
+    protected boolean skipCoffeeScriptCompilation;
+
+    /**
+     * Enables / Disables the coffeescript test compilation.
+     * Be aware that this property disables the compilation of test sources only.
+     * @parameter default-value="false"
+     */
+    protected boolean skipCoffeeScriptTestCompilation;
+
+
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skipCoffeeScriptCompilation  || skipCoffeeScriptTestCompilation) {
+            getLog().info("CoffeeScript test compilation skipped");
+            return;
+        }
+
+        if (! coffeeScriptTestDir.exists()) {
+            return;
+        }
+
+        CoffeeScriptCompilationProcessor processor = new CoffeeScriptCompilationProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("", e);
+        }
+    }
+
+}

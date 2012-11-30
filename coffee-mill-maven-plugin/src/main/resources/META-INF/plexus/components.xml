@@ -29,34 +29,34 @@
                     </clean>
                     <process-resources>
                         org.apache.maven.plugins:maven-resources-plugin:resources,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:resolve-dependencies,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:copy-assets
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:resolve-dependencies,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:copy-assets
                     </process-resources>
                     <compile>
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:compile-javascript,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:compile-coffeescript,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:compile-less,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:compile-css
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-javascript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-coffeescript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-less,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-css
                     </compile>
                     <process-test-resources>
                         org.apache.maven.plugins:maven-resources-plugin:testResources
                     </process-test-resources>
                     <test-compile>
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:test-compile-javascript,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:test-compile-coffeescript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:test-compile-javascript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:test-compile-coffeescript,
                     </test-compile>
                     <test>
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:jasmine-test
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:jasmine-test
                     </test>
                     <package>
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:aggregate-javascript,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:aggregate-stylesheets,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:minify-javascript,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:minify-stylesheets,
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:build-zip
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:aggregate-javascript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:aggregate-stylesheets,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:minify-javascript,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:minify-stylesheets,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:build-zip
                     </package>
                     <integration-test>
-                        org.nano.coffee-mill:coffee-mill-maven-plugin:jasmine-it-test
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:jasmine-it-test
                     </integration-test>
                     <install>
                         org.apache.maven.plugins:maven-install-plugin:install
