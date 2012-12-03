@@ -72,7 +72,7 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
             final String data = FileUtils.readFileToString(file);
             final RhinoLauncher builder = initScriptBuilder();
             final String compileScript = String.format("CoffeeScript.compile(%s, %s);",
-                    WroUtil.toJSMultiLineString(data), // TODO Extract method in a helper class.
+                    RhinoLauncher.toJSMultiLineString(data),
                     "{}"); // No options
             final String result = (String) builder.evaluate(compileScript, "CoffeeScript.compile");
             FileUtils.write(out, result);
@@ -102,22 +102,25 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
         }
     }
 
-    private static final String DEFAULT_COFFEE_SCRIPT = "coffee-script.min.js";
+    private static final String DEFAULT_COFFEE_SCRIPT = "/coffeescript/coffee-script.js";
+
+    /**
+     * @return stream of the less.js script.
+     */
+    private InputStream getScriptAsStream() {
+        return this.getClass().getResourceAsStream(DEFAULT_COFFEE_SCRIPT);
+    }
 
     /**
      * Initialize script builder for evaluation.
      */
     private RhinoLauncher initScriptBuilder() {
         try {
-            return RhinoLauncher.newChain().evaluateChain(getCoffeeScriptAsStream(),
+            return RhinoLauncher.newChain().evaluateChain(getScriptAsStream(),
                         DEFAULT_COFFEE_SCRIPT);
         } catch (final IOException ex) {
             throw new IllegalStateException("Failed reading init script", ex);
         }
     }
 
-    protected InputStream getCoffeeScriptAsStream() {
-        //TODO Change the coffeescript version.
-        return CoffeeScript.class.getResourceAsStream(DEFAULT_COFFEE_SCRIPT);
-    }
 }
