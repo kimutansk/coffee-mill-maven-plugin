@@ -566,10 +566,9 @@
 <duplication lines="30" tokens="172">
 <file line="84" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <file line="146" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
-            append( sb, "Compiles CoffeeScript files. CoffeeScript files are generally in the src/main/coffee directory. It can be configured using the coffeeScriptDir parameter. If the directory does not exist, the compilation is skipped.", 1 );
+            append( sb, "Aggregate stylesheets sources: Aggregation order can be specified in the Maven Configuration It can also include:\n-\tThe CSS file from the project ((filename.js)\n-\tCompiled files (LESS) (less_filename.js)\nIf no file are included, the project CSS files are aggregated in the alphabetical order.", 1 );
             append( sb, "", 0 );
             if ( detail )
             {
@@ -598,7 +597,7 @@
                 append( sb, "Where are CoffeeScript files implementing tests.", 3 );
                 append( sb, "", 0 );
 
-                append( sb, "javaScriptDir (Default: src/main/js)", 2 );
+                append( sb, "cssAggregation", 2 );
 ]]>
 </codefragment>
 </duplication>
@@ -659,6 +658,38 @@
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="24" tokens="135">
+<file line="110" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1327" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<codefragment>
+<![CDATA[
+                append( sb, "(no description available)", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "javascriptAggregation", 2 );
+                append( sb, "(no description available)", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "javaScriptDir (Default: src/main/js)", 2 );
+                append( sb, "Where are JavaScript files.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "javaScriptTestDir (Default: src/test/js)", 2 );
+                append( sb, "Where are JavaScript files implementing tests.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "libDir (Default: target/libs)", 2 );
+                append( sb, "Where are the dependencies copies.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "stylesheetsDir (Default: src/main/stylesheets)", 2 );
+                append( sb, "Where are LESS, CSS and SASS/SCSS files.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "watchCoffeeScript (Default: true)", 2 );
+]]>
+</codefragment>
+</duplication>
 <duplication lines="22" tokens="134">
 <file line="58" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
 <file line="64" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
@@ -716,6 +747,36 @@
                 append( sb, "", 0 );
 
                 append( sb, "javaScriptDir (Default: src/main/js)", 2 );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="22" tokens="123">
+<file line="1017" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1083" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<codefragment>
+<![CDATA[
+                append( sb, "Where are the dependencies copies.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "skipMinification (Default: false)", 2 );
+                append( sb, "Enables to skip the minification phase.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "stylesheetsDir (Default: src/main/stylesheets)", 2 );
+                append( sb, "Where are LESS, CSS and SASS/SCSS files.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "workDir (Default: target/www)", 2 );
+                append( sb, "Where are the output files written.", 3 );
+                append( sb, "", 0 );
+
+                append( sb, "workTestDir (Default: target/www-test)", 2 );
+                append( sb, "Where are the output test files written.", 3 );
+                append( sb, "", 0 );
+            }
+        }
+
+        if ( goal == null || goal.length() <= 0 || "resolve-dependencies".equals( goal ) )
 ]]>
 </codefragment>
 </duplication>
@@ -783,7 +844,7 @@
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="111">
-<file line="552" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="494" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <file line="1331" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
