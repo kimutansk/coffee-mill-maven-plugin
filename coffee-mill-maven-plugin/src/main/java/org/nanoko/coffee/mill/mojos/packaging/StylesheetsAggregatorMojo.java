@@ -37,6 +37,7 @@ public class StylesheetsAggregatorMojo extends AbstractCoffeeMillMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         // Do we have css files ?
+        System.out.println(getWorkDirectory().getAbsolutePath());
         if (FileUtils.listFiles(getWorkDirectory(), new String[] {"css"}, true).size() == 0) {
             getLog().info("Skipping Stylessheets aggregation - no files");
             return;
@@ -60,7 +61,7 @@ public class StylesheetsAggregatorMojo extends AbstractCoffeeMillMojo {
             try {
                 FileUtils.copyFileToDirectory(output, getTarget());
                 // Do we already have a main JS artifact ?
-                if (project.getArtifact().getFile().exists()) {
+                if (project.getArtifact().getFile() != null  && project.getArtifact().getFile().exists()) {
                     projectHelper.attachArtifact(project, "css", output);
                 } else {
                     project.getArtifact().setFile(output);
