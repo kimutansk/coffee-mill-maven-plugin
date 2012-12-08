@@ -78,6 +78,19 @@ public class OptionsHelper {
         }
     }
 
+    public static int getInteger(Map<String, Object> options, String name, int defaultValue) {
+        if (options == null) {
+            return defaultValue;
+        }
+
+        Object value = options.get(name);
+        if (value == null  || ! (value instanceof Integer)) {
+            return defaultValue;
+        } else {
+            return (Integer) value;
+        }
+    }
+
     public static class OptionsBuilder {
         Map<String, Object> options = new HashMap<String, Object>();
 

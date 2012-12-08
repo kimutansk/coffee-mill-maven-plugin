@@ -115,6 +115,12 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
      */
     protected List<Processor> processors;
 
+    /**
+     * @parameter default-value=2
+     */
+    protected int optiPngOptimizationLevel;
+
+
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         // Are we in reactor mode, if so are we the target project
@@ -267,6 +273,11 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
                     mojo.getWorkDirectory()).build());
             processors.add(processor);
         }
+
+        // Asset optimization
+        processor = new OptiPNGProcessor();
+        processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("verbose", true).set("level",
+                optiPngOptimizationLevel).build());
 
         return processors;
     }
