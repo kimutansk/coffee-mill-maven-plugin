@@ -37,7 +37,8 @@
                         org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-coffeescript,
                         org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-less,
                         org.nanoko.coffee-mill:coffee-mill-maven-plugin:compile-css,
-                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:optimize-png
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:optimize-png,
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:optimize-jpeg
                     </compile>
                     <process-test-resources>
                         org.apache.maven.plugins:maven-resources-plugin:testResources

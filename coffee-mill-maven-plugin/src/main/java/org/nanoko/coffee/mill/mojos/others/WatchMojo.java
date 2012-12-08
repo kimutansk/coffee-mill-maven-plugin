@@ -279,6 +279,9 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
         processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("verbose", true).set("level",
                 optiPngOptimizationLevel).build());
 
+        processor = new JpegTranProcessor();
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("verbose", true).build());
+
         return processors;
     }
 
