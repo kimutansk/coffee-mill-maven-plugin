@@ -8,7 +8,6 @@ import org.nanoko.coffee.mill.mojos.compile.JavaScriptCompilerMojo;
 import java.io.File;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.Fail.fail;
 
 public class DustTemplateCompilationProcessorTest {
 

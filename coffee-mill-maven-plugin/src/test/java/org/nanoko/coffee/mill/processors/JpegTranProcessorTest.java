@@ -4,7 +4,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
 import org.nanoko.coffee.mill.mojos.compile.JpegTranMojo;
-import org.nanoko.coffee.mill.mojos.compile.OptiPNGMojo;
 import org.nanoko.coffee.mill.mojos.processResources.CopyAssetsMojo;
 
 import java.io.File;

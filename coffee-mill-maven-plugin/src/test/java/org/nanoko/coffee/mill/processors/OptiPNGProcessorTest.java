@@ -3,15 +3,12 @@ package org.nanoko.coffee.mill.processors;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
-import org.nanoko.coffee.mill.mojos.compile.JavaScriptCompilerMojo;
 import org.nanoko.coffee.mill.mojos.compile.OptiPNGMojo;
 import org.nanoko.coffee.mill.mojos.processResources.CopyAssetsMojo;
 
 import java.io.File;
 
-import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class OptiPNGProcessorTest {
 
