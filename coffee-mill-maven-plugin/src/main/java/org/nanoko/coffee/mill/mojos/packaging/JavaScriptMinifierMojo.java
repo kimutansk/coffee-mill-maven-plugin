@@ -10,7 +10,10 @@ import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Minify JavaScript sources.

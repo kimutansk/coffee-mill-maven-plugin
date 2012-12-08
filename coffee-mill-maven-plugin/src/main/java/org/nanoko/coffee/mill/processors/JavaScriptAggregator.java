@@ -1,6 +1,7 @@
 package org.nanoko.coffee.mill.processors;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Aggregates JavaScript files

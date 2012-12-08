@@ -1,6 +1,6 @@
 package org.nanoko.coffee.mill.mojos.test;
 
-import com.github.searls.jasmine.*;
+import com.github.searls.jasmine.TestMojo;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;

@@ -3,7 +3,6 @@ package org.nanoko.coffee.mill.mojos.compile;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
-import org.nanoko.coffee.mill.processors.LessCompilationProcessor;
 import org.nanoko.coffee.mill.processors.OptiPNGProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;

@@ -5,8 +5,6 @@ import org.mozilla.javascript.RhinoException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 import org.nanoko.coffee.mill.utils.RhinoLauncher;
-import ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript;
-import ro.isdc.wro.util.WroUtil;
 
 import java.io.File;
 import java.io.IOException;

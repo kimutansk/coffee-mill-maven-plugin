@@ -7,7 +7,8 @@ import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.CSSAggregator;
 import org.nanoko.coffee.mill.processors.Processor;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
