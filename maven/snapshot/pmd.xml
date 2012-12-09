@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2012-12-06T16:03:02.102">
-<file name="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/others/DirectoryHandler.java">
+<pmd version="4.2.5" timestamp="2012-12-09T09:43:32.129">
+<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/others/DirectoryHandler.java">
 <violation beginline="15" endline="15" begincolumn="20" endcolumn="25" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.others" class="DirectoryHandler" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'prefix'.
-</violation>
-</file>
-<file name="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CoffeeScriptCompilationProcessor.java">
-<violation beginline="8" endline="8" begincolumn="1" endcolumn="74" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.processors" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
-Avoid unused imports such as 'ro.isdc.wro.extensions.processor.support.coffeescript.CoffeeScript'
-</violation>
-<violation beginline="9" endline="9" begincolumn="1" endcolumn="32" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.processors" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
-Avoid unused imports such as 'ro.isdc.wro.util.WroUtil'
 </violation>
 </file>
 </pmd>
