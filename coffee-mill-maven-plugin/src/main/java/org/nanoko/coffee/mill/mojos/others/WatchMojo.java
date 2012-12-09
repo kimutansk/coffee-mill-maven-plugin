@@ -82,6 +82,12 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
     protected boolean watchValidateCSS;
 
     /**
+     * Enables the PNG and JPEG optimization
+     * @parameter default-value="true"
+     */
+    protected boolean watchOptimizeAssets;
+
+    /**
      * @parameter default-value="true"
      */
     protected boolean watchRunServer;
@@ -274,13 +280,15 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
             processors.add(processor);
         }
 
-        // Asset optimization
-        processor = new OptiPNGProcessor();
-        processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("verbose", true).set("level",
-                optiPngOptimizationLevel).build());
+        if (watchOptimizeAssets) {
+            // Asset optimization
+            processor = new OptiPNGProcessor();
+            processor.configure(mojo, new OptionsHelper.OptionsBuilder().set("verbose", true).set("level",
+                    optiPngOptimizationLevel).build());
 
-        processor = new JpegTranProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("verbose", true).build());
+            processor = new JpegTranProcessor();
+            processor.configure(this, new OptionsHelper.OptionsBuilder().set("verbose", true).build());
+        }
 
         return processors;
     }

@@ -29,11 +29,20 @@ public class OptiPNGMojo extends AbstractCoffeeMillMojo {
      */
     protected int optiPngOptimizationLevel;
 
+    /**
+     * Skips the PNG files optimization.
+     * @parameter default-value=false
+     */
+    protected boolean skipOptiPNG;
+
     public OptiPNGMojo() {
         processor = new OptiPNGProcessor();
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skipOptiPNG) {
+            return;
+        }
 
         if (optiPngOptimizationLevel < 0  || optiPngOptimizationLevel > 7) {
             throw new MojoExecutionException("Invalid optiPNG optimization level, it must be in [0-7]");

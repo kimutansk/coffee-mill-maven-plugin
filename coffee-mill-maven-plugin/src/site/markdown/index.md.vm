@@ -21,6 +21,7 @@ Features
 * Use CoffeeScript without thinking about compilation
 * Compile Dust templates for you
 * Valide your CSS files, compile LESS files
+* Optimize your JPEG and PNG files using `jpegtran` and `OptiPNG`
 * Don't worry about aggregation and minification, the plugin manages that for you
 * Don't launch Maven continuously, the _watch_ mode monitor your files and process them
 

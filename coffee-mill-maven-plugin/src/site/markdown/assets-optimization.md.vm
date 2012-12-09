@@ -1,0 +1,42 @@
+Assets optimization
+===================
+
+The plugins can optimize your PNG and JPEG files to reduce their sizes.
+
+Prerequisites
+-------------
+
+The plugin relies on `optipng` and `jpegtran`. However, those programs must be installed and available in your system
+path.
+
+To install those tools refer to:
+
+* [optiPNG](http://optipng.sourceforge.net/)
+* [JpegTran](http://jpegclub.org/jpegtran/)
+
+If you are using a Homebrew for Mac, the installation is pretty simple:
+
+    brew install optipng
+    brew install libjpeg
+
+If the tools are missing, the optimization is skipped.
+
+Optimizing PNG files
+---------------------
+
+The PNG optimization is automatically enabled in _regular_ Maven builds (during the _compile_ phase)and in _watch_
+mode. PNG files from _target/www_ are optimized in-place.
+
+You can configure the optimization level between 0 and 7. 0 does not optimize the file,
+7 is highly optimize but slows down the process. The default level is 2.
+
+More info about the configuration is available on the [Optimize PNG Mojo Page](./optimize-png-mojo.html).
+
+Optimizing JPEG files
+----------------------
+
+The JPEG optimization is automatically enabled in _regular_ Maven builds (during the _compile_ phase)and in _watch_
+mode. `jpg` and `jpeg` files files from _target/www_ are optimized in-place. However, the process creates a temporary
+file and then replace the file.
+
+More info about the configuration is available on the [Optimize JPEG Mojo Page](./optimize-jpeg-mojo.html).

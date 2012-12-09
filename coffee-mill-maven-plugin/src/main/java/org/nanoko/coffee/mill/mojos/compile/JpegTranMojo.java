@@ -23,13 +23,21 @@ public class JpegTranMojo extends AbstractCoffeeMillMojo {
      */
     public boolean jpegTranVerbose;
 
+    /**
+     * Skips the JPEG files optimization.
+     * @parameter default-value=false
+     */
+    protected boolean skipjpegTran;
+
 
     public JpegTranMojo() {
         processor = new JpegTranProcessor();
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-
+        if (skipjpegTran) {
+            return;
+        }
 
         processor.configure(this, new OptionsHelper.OptionsBuilder().set("verbose", true).build());
 

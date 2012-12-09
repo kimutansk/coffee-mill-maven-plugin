@@ -20,6 +20,8 @@ JSHint and JSLint. Dust templates are also compiled.
 * _compile-less_ : compile Less files (_.less_), from _src/main/stylesheets_ to the _target/www_ folder
 * _compile-css_ : copy CSS files from _src/main/stylesheets_ to the _target/www_ folder. Validate them using
 CSSHint.
+* _optimize-png_ : optimize the PNG files
+* _optimize-jpeg_ : optimize the JPEG files
 
 The process-test-resourcces phase
 ---------------------------------

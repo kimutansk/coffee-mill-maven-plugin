@@ -53,6 +53,7 @@
         <menu name="References">
             <item name="JavaScript &amp; CoffeeScript" href="javascript-and-coffeescript.html"/>
             <item name="Stylesheets" href="css-and-less.html"/>
+            <item name="Assets Optimization" href="assets-optimization.html"/>
             <item name="Lifecycle" href="project-lifecycle.html"/>
             <item name="Watch Mode" href="watch-mode.html"/>
             <item name="Reports" href="reporting.html"/>

@@ -9,7 +9,7 @@ The default structure of the project is the following:
        |- main
            |- js <------------ JavaScript files
            |- coffee <-------- CoffeeScript files
-           |- www <----------- HTML files and other files
+           |- www <----------- HTML files, images and other files
            |- resources <----- Regular resources
            |- stylesheets <--- CSS and Less
        |- test
@@ -62,7 +62,7 @@ The plugin creates the following artifacts:
 * the aggregated JS file
 * the minified JS file
 * the aggregated CSS file
-* the zip of the `target/www` and `target/libs` directories.
+* the zip of the `target/www` and `target/libs` directories. The assets are optimized.
 
 By default they are all attached to the project.
 
