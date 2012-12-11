@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2012-12-09T09:43:32.129">
+<pmd version="4.2.5" timestamp="2012-12-11T16:35:00.775">
 <file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/others/DirectoryHandler.java">
 <violation beginline="15" endline="15" begincolumn="20" endcolumn="25" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.others" class="DirectoryHandler" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'prefix'.
+</violation>
+</file>
+<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/others/WatchMojo.java">
+<violation beginline="22" endline="22" begincolumn="1" endcolumn="31" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.others" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.regex.Pattern'
+</violation>
+<violation beginline="23" endline="23" begincolumn="1" endcolumn="46" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.others" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.regex.PatternSyntaxException'
 </violation>
 </file>
 </pmd>
