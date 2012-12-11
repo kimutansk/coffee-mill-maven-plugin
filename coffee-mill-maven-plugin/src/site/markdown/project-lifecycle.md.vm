@@ -22,6 +22,7 @@ JSHint and JSLint. Dust templates are also compiled.
 CSSHint.
 * _optimize-png_ : optimize the PNG files
 * _optimize-jpeg_ : optimize the JPEG files
+* _compress-html_ : compress HTML files using HTML Compressor (disabled by default)
 
 The process-test-resourcces phase
 ---------------------------------
@@ -32,11 +33,9 @@ The test-compile phase
 ----------------------
 
 * _test-compile-javascript_ : copy JavaScript files from _src/test/js_ to the _target/www-test_ folder. Validate them
-using
-JSHint and JSLint.
+using JSHint and JSLint.
 * _test-compile-coffeescript_ : compile CoffeeScript files (_.coffee_), from _src/test/coffee_ to the
-_target/www-test_
-folder
+_target/www-test_ folder
 
 The test phase
 -------------

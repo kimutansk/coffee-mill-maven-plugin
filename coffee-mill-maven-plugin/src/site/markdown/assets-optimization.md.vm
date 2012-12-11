@@ -40,3 +40,9 @@ mode. `jpg` and `jpeg` files files from _target/www_ are optimized in-place. How
 file and then replace the file.
 
 More info about the configuration is available on the [Optimize JPEG Mojo Page](./optimize-jpeg-mojo.html).
+
+Optimizing HTML files
+---------------------
+
+The plugin is able to compress HTML files. However this feature is disabled by default,
+and must be enabled in your _pom.xml_ file. You can find more info on the [compress HTML pages](./compress-html-mojo.html).

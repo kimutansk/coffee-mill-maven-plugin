@@ -1,4 +1,4 @@
-package org.nanoko.coffee.mill.mojos.packaging;
+package org.nanoko.coffee.mill.mojos.compile;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -15,15 +15,9 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Compress HTML pages using HtmlCompressor
+ * @goal compress-html
  */
 public class HtmlCompressorMojo extends AbstractCoffeeMillMojo {
-
-    /**
-     * File where statistics of html compression are stored
-     *
-     * @parameter default-value="${project.build.directory}/htmlcompressor/html-compression-statistics.txt"
-     */
-    public String htmlCompressionStatistics;
 
     /**
      * Enables / disables the HTML Compression

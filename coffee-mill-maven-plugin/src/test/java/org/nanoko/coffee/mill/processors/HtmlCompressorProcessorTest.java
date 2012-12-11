@@ -3,7 +3,7 @@ package org.nanoko.coffee.mill.processors;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
-import org.nanoko.coffee.mill.mojos.packaging.HtmlCompressorMojo;
+import org.nanoko.coffee.mill.mojos.compile.HtmlCompressorMojo;
 import org.nanoko.coffee.mill.mojos.processResources.CopyAssetsMojo;
 
 import java.io.File;
