@@ -1,0 +1,1 @@
+define(["lib/jquery","lmd/core/context","lmd/core/conf","lmd/core/auth"],function($,context,conf,auth){var xiti={_loadDeferred:null,load:function(){if(this._loadDeferred===null){this._loadDeferred=$.Deferred();this._loadDeferred.resolve()}return this._loadDeferred.promise()},xt_med:function(){},xt_click:function(){return true},init:function(){this.load()}};return xiti});

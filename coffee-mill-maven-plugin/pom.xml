@@ -207,6 +207,13 @@
             <version>2.0</version>
         </dependency>
 
+        <!-- HTML Compressor -->
+        <dependency>
+            <groupId>com.googlecode.htmlcompressor</groupId>
+            <artifactId>htmlcompressor</artifactId>
+            <version>1.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

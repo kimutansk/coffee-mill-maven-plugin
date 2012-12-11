@@ -1,0 +1,75 @@
+
+
+
+
+var ezMarker = {
+    type: 'asq',
+    customs: '',
+    uid: '',
+    tmst: new Date().getTime()+"",
+    fmt: '',
+    frm: '',
+    mark: function () {
+        try {
+            var src = 'http://asq.ezakus.net/marker/image/' + ezMarker.type + '?cref=' + ezMarker.encodeUrl(document.referrer) + '&tjs=' + ezMarker.tmst + ezMarker.uid + ezMarker.fmt + ezMarker.frm + ezMarker.customs;
+            var im = new Image();
+            im.src = src;
+            im.onload = function () {
+                im.onload = null;
+            };
+        } catch (e) {}
+    },
+    encodeUrl: function (url) {
+        if (url) {
+            if (url.length > 500) {
+                url = url.substring(0, 500);
+            }
+            url = encodeURIComponent(url);
+        } else {
+            url = '';
+        }
+        return url;
+    },
+    ckok: function () {
+        document.cookie = 'ez=ok;expires=' + new Date(new Date().getTime() + 1800000).toGMTString() + ';path=/;';
+        if (document.cookie.indexOf('ez=ok') >= 0) {
+            document.cookie = 'ez=ok;expires=' + new Date(new Date().getTime() - 60000).toGMTString();
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+};
+try {
+    if (window.ezMarkerType) {
+        ezMarker.type = window.ezMarkerType;
+    }
+    if (window.ezUID) {
+        ezMarker.uid = '&uid=' + window.ezUID;
+    }
+    if (window.ezFmt) {
+        ezMarker.fmt = '&fmt=' + window.ezFmt;
+    }
+    if (top != self) {
+        ezMarker.frm = '&frm=1';
+    }
+    if (window.ezFrm) {
+        ezMarker.frm = '&frm=' + window.ezFrm;
+    }
+    if (window.ezC) {
+        if (Object.prototype.toString.call(window.ezC) == '[object Array]') {
+            ezMarker.customs = '';
+            for (var i = 0; i < window.ezC.length; i++) {
+                ezMarker.customs += '&ezC=' + ezMarker.encodeUrl(window.ezC[i]);
+            }
+        } else {
+            ezMarker.customs = '&ezC=' + ezMarker.encodeUrl(window.ezC);
+        }
+    }
+    if (ezMarker.ckok() < 1) {
+        ezMarker.customs += '&ezC=ezCkKo';
+    }
+    ezMarker.mark();    
+       
+    
+} catch (err) {}

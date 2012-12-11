@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * This mojo watches the file change in the source directories and process them automatically.
@@ -288,6 +290,27 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
 
             processor = new JpegTranProcessor();
             processor.configure(this, new OptionsHelper.OptionsBuilder().set("verbose", true).build());
+
+            // HTML Compression
+            processor = new HTMLCompressorProcessor();
+            Map<String, Object> options = new OptionsHelper.OptionsBuilder()
+                    .set("preserveLineBreak", true)
+                    .set("removeComments", true)
+                    .set("removeMultispaces", true)
+                    .set("removeFormAttributes", true)
+                    .set("removeHttpProtocol", true)
+                    .set("removeHttpsProtocol", true)
+                    .set("removeInputAttributes", true)
+                    .set("removeIntertagSpaces", true)
+                    .set("removeJavascriptProtocol", true)
+                    .set("removeLinkAttributes", true)
+                    .set("removeQuotes", true)
+                    .set("removeScriptAttributes", true)
+                    .set("simpleBooleanAttributes", true)
+                    .set("removeStyleAttributes", true)
+                    .set("simpleDocType", true)
+                    .build();
+            processor.configure(this, options);
         }
 
         return processors;
