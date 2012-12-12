@@ -24,15 +24,15 @@
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> java.util.regex.PatternSyntaxException;
 <a class="jxr_linenumber" name="15" href="#15">15</a>  
 <a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * Compress HTML pages using HtmlCompressor</em>
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * Compress HTML pages using HtmlCompressor.</em>
 <a class="jxr_linenumber" name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> * @goal compress-html</em>
 <a class="jxr_linenumber" name="19" href="#19">19</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/compile/HtmlCompressorMojo.html">HtmlCompressorMojo</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/AbstractCoffeeMillMojo.html">AbstractCoffeeMillMojo</a> {
 <a class="jxr_linenumber" name="21" href="#21">21</a>  
 <a class="jxr_linenumber" name="22" href="#22">22</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="23" href="#23">23</a>  <em class="jxr_javadoccomment">     * Enables / disables the HTML Compression</em>
-<a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment">     * @parameter default-value=false</em>
+<a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment">     * The compression is disabled by default. Once enabled, don't forget to set up the compression options.</em>
+<a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment">     * @parameter default-value=true</em>
 <a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="27" href="#27">27</a>      <strong class="jxr_keyword">public</strong> Boolean skipHtmlCompressor = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="28" href="#28">28</a>  
@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="39" href="#39">39</a>  <em class="jxr_javadoccomment">     * @parameter default-value="true"</em>
 <a class="jxr_linenumber" name="40" href="#40">40</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> Boolean htmlCompressionpPreserveLineBreak = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="41" href="#41">41</a>      <strong class="jxr_keyword">public</strong> Boolean htmlCompressionPreserveLineBreak = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="42" href="#42">42</a>  
 <a class="jxr_linenumber" name="43" href="#43">43</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment">     * If sets to false keeps multiple whitespace characters (default is true)</em>
@@ -172,7 +172,7 @@
 <a class="jxr_linenumber" name="162" href="#162">162</a>         <a href="../../../../../../org/nanoko/coffee/mill/processors/HTMLCompressorProcessor.html">HTMLCompressorProcessor</a> processor = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/nanoko/coffee/mill/processors/HTMLCompressorProcessor.html">HTMLCompressorProcessor</a>();
 <a class="jxr_linenumber" name="163" href="#163">163</a> 
 <a class="jxr_linenumber" name="164" href="#164">164</a>         Map&lt;String, Object&gt; options = <strong class="jxr_keyword">new</strong> OptionsHelper.OptionsBuilder()
-<a class="jxr_linenumber" name="165" href="#165">165</a>                 .set(<span class="jxr_string">"preserveLineBreak"</span>, htmlCompressionpPreserveLineBreak)
+<a class="jxr_linenumber" name="165" href="#165">165</a>                 .set(<span class="jxr_string">"preserveLineBreak"</span>, htmlCompressionPreserveLineBreak)
 <a class="jxr_linenumber" name="166" href="#166">166</a>                 .set(<span class="jxr_string">"removeComments"</span>, htmlCompressionRemoveComments)
 <a class="jxr_linenumber" name="167" href="#167">167</a>                 .set(<span class="jxr_string">"removeMultispaces"</span>, htmlCompressionRemoveMultiSpaces)
 <a class="jxr_linenumber" name="168" href="#168">168</a>                 .set(<span class="jxr_string">"removeFormAttributes"</span>, htmlCompressionRemoveFormAttributes)
