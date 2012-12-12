@@ -24,7 +24,7 @@ public class HtmlCompressorProcessorTest {
         mojo.workDir = new File("target/test/testHTMLCompression-www");
 
         mojo.skipHtmlCompressor = false;
-        mojo.htmlCompressionpPreserveLineBreak = false;
+        mojo.htmlCompressionPreserveLineBreak = false;
         mojo.htmlCompressionGenerateStatistics = true;
         mojo.htmlCompressionRemoveComments = true;
         mojo.htmlCompressionRemoveFormAttributes = true;

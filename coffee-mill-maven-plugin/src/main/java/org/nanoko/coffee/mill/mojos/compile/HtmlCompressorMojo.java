@@ -14,15 +14,15 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * Compress HTML pages using HtmlCompressor
+ * Compress HTML pages using HtmlCompressor.
  * @goal compress-html
  */
 public class HtmlCompressorMojo extends AbstractCoffeeMillMojo {
 
     /**
      * Enables / disables the HTML Compression
-     *
-     * @parameter default-value=false
+     * The compression is disabled by default. Once enabled, don't forget to set up the compression options.
+     * @parameter default-value=true
      */
     public Boolean skipHtmlCompressor = true;
 
@@ -38,7 +38,7 @@ public class HtmlCompressorMojo extends AbstractCoffeeMillMojo {
      *
      * @parameter default-value="true"
      */
-    public Boolean htmlCompressionpPreserveLineBreak = true;
+    public Boolean htmlCompressionPreserveLineBreak = true;
 
     /**
      * If sets to false keeps multiple whitespace characters (default is true)
@@ -162,7 +162,7 @@ public class HtmlCompressorMojo extends AbstractCoffeeMillMojo {
         HTMLCompressorProcessor processor = new HTMLCompressorProcessor();
 
         Map<String, Object> options = new OptionsHelper.OptionsBuilder()
-                .set("preserveLineBreak", htmlCompressionpPreserveLineBreak)
+                .set("preserveLineBreak", htmlCompressionPreserveLineBreak)
                 .set("removeComments", htmlCompressionRemoveComments)
                 .set("removeMultispaces", htmlCompressionRemoveMultiSpaces)
                 .set("removeFormAttributes", htmlCompressionRemoveFormAttributes)
