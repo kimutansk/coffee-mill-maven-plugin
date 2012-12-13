@@ -33,6 +33,10 @@ If you have an `index.html` page, access it with: http://localhost:8234/index.ht
 Don't forget that dependencies files don't have their version and _min_ classifier. So,
 a dependency on `com.jquery:jquery:1.7.:min:js` can be loaded from `http://localhost:1234/jquery.js`.
 
+By default, the server is listening the port 8234. It can be configured using the `-Dwatch.port` option:
+
+    mvn ${project.groupId}:${project.artifactId}:watch -Dwatch.port=8080
+
 Watch mode and reactor
 ----------------------
 

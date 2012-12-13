@@ -25,12 +25,14 @@ import java.util.regex.PatternSyntaxException;
 /**
  * This mojo watches the file change in the source directories and process them automatically.
  * To work correctly, launch <tt>mvn clean test</tt> first. This will resolve and prepare all required file.
- * Then <tt>mvn org.nano.coffee-mill:coffee-mill-maven-plugin:watch</tt> will starts the <i>watch</i> mode.
+ * Then <tt>mvn org.nanoko.coffee-mill:coffee-mill-maven-plugin:watch</tt> will starts the <i>watch</i> mode.
  *
  * This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode,
  * launch the watch mode with <tt>-Dwatched.project=artifactId of the final project</tt>. This will watch all
  * resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified
  * project.
+ *
+ * You can configure the watched port with the <tt>-Dwatch.port=8234</tt> option. By default the used port is 8234.
  * @goal watch
  */
 public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
@@ -95,7 +97,7 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
     protected boolean watchRunServer;
 
     /**
-     * @parameter default-value="8234"
+     * @parameter default-value="8234" expression="${watch.port}"
      */
     protected int watchJettyServerPort;
 
