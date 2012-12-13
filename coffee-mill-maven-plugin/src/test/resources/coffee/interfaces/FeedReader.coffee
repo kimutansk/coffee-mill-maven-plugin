@@ -5,11 +5,11 @@ Service defining methods to read a syndicated feed. This service exposed
  methods to read one specific feed. Providers must also publish the following
  properties:
 
-    org.nano.syndication.feed.title: the feed title
-    org.nano.syndication.feed.url: the feed url (String)
+    org.nanoko.syndication.feed.title: the feed title
+    org.nanoko.syndication.feed.url: the feed url (String)
 
 Providers may also poll the feed for new entries periodically. If new entries are found, the providers must post an
- event on the hub to the topic: **org/nano/syndication**. The event must contains the following properties:
+ event on the hub to the topic: **org/nanoko/syndication**. The event must contains the following properties:
 
     feed.url: the feed url (String)
     feed.title: the feed title

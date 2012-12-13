@@ -18,7 +18,7 @@
 
             <!-- Github ribbon -->
             <gitHub>
-                <projectId>nano-project/coffee-mill-maven-plugin</projectId>
+                <projectId>nanoko-project/coffee-mill-maven-plugin</projectId>
                 <ribbonOrientation>right</ribbonOrientation>
                 <ribbonColor>black</ribbonColor>
             </gitHub>
