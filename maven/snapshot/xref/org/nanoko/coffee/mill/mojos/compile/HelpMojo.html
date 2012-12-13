@@ -20,7 +20,7 @@
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="11" href="#11">11</a>  <em class="jxr_javadoccomment"> * Display help information on coffee-mill-maven-plugin.&lt;br/&gt; Call &lt;pre&gt;  mvn coffee-mill:help -Ddetail=true -Dgoal=&amp;lt;goal-name&amp;gt;&lt;/pre&gt; to display parameter details.</em>
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * @version generated on Wed Dec 12 12:37:44 CET 2012</em>
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * @version generated on Thu Dec 13 09:59:36 CET 2012</em>
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * @author org.apache.maven.tools.plugin.generator.PluginHelpGenerator (version 2.8)</em>
 <a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * @goal help</em>
 <a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> * @requiresProject false</em>
@@ -1575,7 +1575,7 @@
 <a class="jxr_linenumber" name="1565" href="#1565">1565</a>         <strong class="jxr_keyword">if</strong> ( goal == <strong class="jxr_keyword">null</strong> || goal.length() &lt;= 0 || <span class="jxr_string">"watch"</span>.equals( goal ) )
 <a class="jxr_linenumber" name="1566" href="#1566">1566</a>         {
 <a class="jxr_linenumber" name="1567" href="#1567">1567</a>             append( sb, <span class="jxr_string">"coffee-mill:watch"</span>, 0 );
-<a class="jxr_linenumber" name="1568" href="#1568">1568</a>             append( sb, <span class="jxr_string">"This mojo watches the file change in the source directories and process them automatically. To work correctly, launch mvn clean test first. This will resolve and prepare all required file. Then mvn org.nano.coffee-mill:coffee-mill-maven-plugin:watch will starts the watch mode. This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode, launch the watch mode with -Dwatched.project=artifactId of the final project. This will watch all resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified project."</span>, 1 );
+<a class="jxr_linenumber" name="1568" href="#1568">1568</a>             append( sb, <span class="jxr_string">"This mojo watches the file change in the source directories and process them automatically. To work correctly, launch mvn clean test first. This will resolve and prepare all required file. Then mvn org.nanoko.coffee-mill:coffee-mill-maven-plugin:watch will starts the watch mode. This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode, launch the watch mode with -Dwatched.project=artifactId of the final project. This will watch all resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified project. You can configure the watched port with the -Dwatch.port=8234 option. By default the used port is 8234."</span>, 1 );
 <a class="jxr_linenumber" name="1569" href="#1569">1569</a>             append( sb, <span class="jxr_string">""</span>, 0 );
 <a class="jxr_linenumber" name="1570" href="#1570">1570</a>             <strong class="jxr_keyword">if</strong> ( detail )
 <a class="jxr_linenumber" name="1571" href="#1571">1571</a>             {
@@ -1651,178 +1651,179 @@
 <a class="jxr_linenumber" name="1641" href="#1641">1641</a> 
 <a class="jxr_linenumber" name="1642" href="#1642">1642</a>                 append( sb, <span class="jxr_string">"watchJettyServerPort (Default: 8234)"</span>, 2 );
 <a class="jxr_linenumber" name="1643" href="#1643">1643</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
-<a class="jxr_linenumber" name="1644" href="#1644">1644</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1645" href="#1645">1645</a> 
-<a class="jxr_linenumber" name="1646" href="#1646">1646</a>                 append( sb, <span class="jxr_string">"watchLess (Default: true)"</span>, 2 );
-<a class="jxr_linenumber" name="1647" href="#1647">1647</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
-<a class="jxr_linenumber" name="1648" href="#1648">1648</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1649" href="#1649">1649</a> 
-<a class="jxr_linenumber" name="1650" href="#1650">1650</a>                 append( sb, <span class="jxr_string">"watchOptimizeAssets (Default: true)"</span>, 2 );
-<a class="jxr_linenumber" name="1651" href="#1651">1651</a>                 append( sb, <span class="jxr_string">"Enables the PNG and JPEG optimization"</span>, 3 );
-<a class="jxr_linenumber" name="1652" href="#1652">1652</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1653" href="#1653">1653</a> 
-<a class="jxr_linenumber" name="1654" href="#1654">1654</a>                 append( sb, <span class="jxr_string">"watchRunServer (Default: true)"</span>, 2 );
-<a class="jxr_linenumber" name="1655" href="#1655">1655</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
-<a class="jxr_linenumber" name="1656" href="#1656">1656</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1657" href="#1657">1657</a> 
-<a class="jxr_linenumber" name="1658" href="#1658">1658</a>                 append( sb, <span class="jxr_string">"watchValidateCSS (Default: false)"</span>, 2 );
-<a class="jxr_linenumber" name="1659" href="#1659">1659</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
-<a class="jxr_linenumber" name="1660" href="#1660">1660</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1661" href="#1661">1661</a> 
-<a class="jxr_linenumber" name="1662" href="#1662">1662</a>                 append( sb, <span class="jxr_string">"watchValidateJS (Default: false)"</span>, 2 );
-<a class="jxr_linenumber" name="1663" href="#1663">1663</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
-<a class="jxr_linenumber" name="1664" href="#1664">1664</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1665" href="#1665">1665</a> 
-<a class="jxr_linenumber" name="1666" href="#1666">1666</a>                 append( sb, <span class="jxr_string">"workDir (Default: target/www)"</span>, 2 );
-<a class="jxr_linenumber" name="1667" href="#1667">1667</a>                 append( sb, <span class="jxr_string">"Where are the output files written."</span>, 3 );
-<a class="jxr_linenumber" name="1668" href="#1668">1668</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1669" href="#1669">1669</a> 
-<a class="jxr_linenumber" name="1670" href="#1670">1670</a>                 append( sb, <span class="jxr_string">"workTestDir (Default: target/www-test)"</span>, 2 );
-<a class="jxr_linenumber" name="1671" href="#1671">1671</a>                 append( sb, <span class="jxr_string">"Where are the output test files written."</span>, 3 );
-<a class="jxr_linenumber" name="1672" href="#1672">1672</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
-<a class="jxr_linenumber" name="1673" href="#1673">1673</a>             }
-<a class="jxr_linenumber" name="1674" href="#1674">1674</a>         }
-<a class="jxr_linenumber" name="1675" href="#1675">1675</a> 
-<a class="jxr_linenumber" name="1676" href="#1676">1676</a>         <strong class="jxr_keyword">if</strong> ( getLog().isInfoEnabled() )
-<a class="jxr_linenumber" name="1677" href="#1677">1677</a>         {
-<a class="jxr_linenumber" name="1678" href="#1678">1678</a>             getLog().info( sb.toString() );
-<a class="jxr_linenumber" name="1679" href="#1679">1679</a>         }
-<a class="jxr_linenumber" name="1680" href="#1680">1680</a>     }
-<a class="jxr_linenumber" name="1681" href="#1681">1681</a> 
-<a class="jxr_linenumber" name="1682" href="#1682">1682</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="1683" href="#1683">1683</a> <em class="jxr_javadoccomment">     * &lt;p&gt;Repeat a String &lt;code&gt;n&lt;/code&gt; times to form a new string.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="1684" href="#1684">1684</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="1685" href="#1685">1685</a> <em class="jxr_javadoccomment">     * @param str String to repeat</em>
-<a class="jxr_linenumber" name="1686" href="#1686">1686</a> <em class="jxr_javadoccomment">     * @param repeat number of times to repeat str</em>
-<a class="jxr_linenumber" name="1687" href="#1687">1687</a> <em class="jxr_javadoccomment">     * @return String with repeated String</em>
-<a class="jxr_linenumber" name="1688" href="#1688">1688</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;repeat &lt; 0&lt;/code&gt;</em>
-<a class="jxr_linenumber" name="1689" href="#1689">1689</a> <em class="jxr_javadoccomment">     * @throws NullPointerException if str is &lt;code&gt;null&lt;/code&gt;</em>
-<a class="jxr_linenumber" name="1690" href="#1690">1690</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1691" href="#1691">1691</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String repeat( String str, <strong class="jxr_keyword">int</strong> repeat )
-<a class="jxr_linenumber" name="1692" href="#1692">1692</a>     {
-<a class="jxr_linenumber" name="1693" href="#1693">1693</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer( repeat * str.length() );
-<a class="jxr_linenumber" name="1694" href="#1694">1694</a> 
-<a class="jxr_linenumber" name="1695" href="#1695">1695</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; repeat; i++ )
-<a class="jxr_linenumber" name="1696" href="#1696">1696</a>         {
-<a class="jxr_linenumber" name="1697" href="#1697">1697</a>             buffer.append( str );
-<a class="jxr_linenumber" name="1698" href="#1698">1698</a>         }
-<a class="jxr_linenumber" name="1699" href="#1699">1699</a> 
-<a class="jxr_linenumber" name="1700" href="#1700">1700</a>         <strong class="jxr_keyword">return</strong> buffer.toString();
-<a class="jxr_linenumber" name="1701" href="#1701">1701</a>     }
-<a class="jxr_linenumber" name="1702" href="#1702">1702</a> 
-<a class="jxr_linenumber" name="1703" href="#1703">1703</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
-<a class="jxr_linenumber" name="1704" href="#1704">1704</a> <em class="jxr_javadoccomment">     * Append a description to the buffer by respecting the indentSize and lineLength parameters.</em>
-<a class="jxr_linenumber" name="1705" href="#1705">1705</a> <em class="jxr_javadoccomment">     * &lt;b&gt;Note&lt;/b&gt;: The last character is always a new line.</em>
-<a class="jxr_linenumber" name="1706" href="#1706">1706</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="1707" href="#1707">1707</a> <em class="jxr_javadoccomment">     * @param sb The buffer to append the description, not &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1708" href="#1708">1708</a> <em class="jxr_javadoccomment">     * @param description The description, not &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1709" href="#1709">1709</a> <em class="jxr_javadoccomment">     * @param indent The base indentation level of each line, must not be negative.</em>
-<a class="jxr_linenumber" name="1710" href="#1710">1710</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1711" href="#1711">1711</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> append( StringBuffer sb, String description, <strong class="jxr_keyword">int</strong> indent )
-<a class="jxr_linenumber" name="1712" href="#1712">1712</a>     {
-<a class="jxr_linenumber" name="1713" href="#1713">1713</a>         <strong class="jxr_keyword">for</strong> ( Iterator it = toLines( description, indent, indentSize, lineLength ).iterator(); it.hasNext(); )
-<a class="jxr_linenumber" name="1714" href="#1714">1714</a>         {
-<a class="jxr_linenumber" name="1715" href="#1715">1715</a>             sb.append( it.next().toString() ).append( '\n' );
-<a class="jxr_linenumber" name="1716" href="#1716">1716</a>         }
-<a class="jxr_linenumber" name="1717" href="#1717">1717</a>     }
-<a class="jxr_linenumber" name="1718" href="#1718">1718</a> 
-<a class="jxr_linenumber" name="1719" href="#1719">1719</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
-<a class="jxr_linenumber" name="1720" href="#1720">1720</a> <em class="jxr_javadoccomment">     * Splits the specified text into lines of convenient display length.</em>
-<a class="jxr_linenumber" name="1721" href="#1721">1721</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="1722" href="#1722">1722</a> <em class="jxr_javadoccomment">     * @param text The text to split into lines, must not be &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1723" href="#1723">1723</a> <em class="jxr_javadoccomment">     * @param indent The base indentation level of each line, must not be negative.</em>
-<a class="jxr_linenumber" name="1724" href="#1724">1724</a> <em class="jxr_javadoccomment">     * @param indentSize The size of each indentation, must not be negative.</em>
-<a class="jxr_linenumber" name="1725" href="#1725">1725</a> <em class="jxr_javadoccomment">     * @param lineLength The length of the line, must not be negative.</em>
-<a class="jxr_linenumber" name="1726" href="#1726">1726</a> <em class="jxr_javadoccomment">     * @return The sequence of display lines, never &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1727" href="#1727">1727</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;indent &lt; 0&lt;/code&gt;</em>
-<a class="jxr_linenumber" name="1728" href="#1728">1728</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1729" href="#1729">1729</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List toLines( String text, <strong class="jxr_keyword">int</strong> indent, <strong class="jxr_keyword">int</strong> indentSize, <strong class="jxr_keyword">int</strong> lineLength )
-<a class="jxr_linenumber" name="1730" href="#1730">1730</a>     {
-<a class="jxr_linenumber" name="1731" href="#1731">1731</a>         List lines = <strong class="jxr_keyword">new</strong> ArrayList();
-<a class="jxr_linenumber" name="1732" href="#1732">1732</a> 
-<a class="jxr_linenumber" name="1733" href="#1733">1733</a>         String ind = repeat( <span class="jxr_string">"\t"</span>, indent );
-<a class="jxr_linenumber" name="1734" href="#1734">1734</a>         String[] plainLines = text.split( <span class="jxr_string">"(\r\n)|(\r)|(\n)"</span> );
-<a class="jxr_linenumber" name="1735" href="#1735">1735</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; plainLines.length; i++ )
-<a class="jxr_linenumber" name="1736" href="#1736">1736</a>         {
-<a class="jxr_linenumber" name="1737" href="#1737">1737</a>             toLines( lines, ind + plainLines[i], indentSize, lineLength );
-<a class="jxr_linenumber" name="1738" href="#1738">1738</a>         }
-<a class="jxr_linenumber" name="1739" href="#1739">1739</a> 
-<a class="jxr_linenumber" name="1740" href="#1740">1740</a>         <strong class="jxr_keyword">return</strong> lines;
-<a class="jxr_linenumber" name="1741" href="#1741">1741</a>     }
-<a class="jxr_linenumber" name="1742" href="#1742">1742</a> 
-<a class="jxr_linenumber" name="1743" href="#1743">1743</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
-<a class="jxr_linenumber" name="1744" href="#1744">1744</a> <em class="jxr_javadoccomment">     * Adds the specified line to the output sequence, performing line wrapping if necessary.</em>
-<a class="jxr_linenumber" name="1745" href="#1745">1745</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="1746" href="#1746">1746</a> <em class="jxr_javadoccomment">     * @param lines The sequence of display lines, must not be &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1747" href="#1747">1747</a> <em class="jxr_javadoccomment">     * @param line The line to add, must not be &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1748" href="#1748">1748</a> <em class="jxr_javadoccomment">     * @param indentSize The size of each indentation, must not be negative.</em>
-<a class="jxr_linenumber" name="1749" href="#1749">1749</a> <em class="jxr_javadoccomment">     * @param lineLength The length of the line, must not be negative.</em>
-<a class="jxr_linenumber" name="1750" href="#1750">1750</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1751" href="#1751">1751</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> toLines( List lines, String line, <strong class="jxr_keyword">int</strong> indentSize, <strong class="jxr_keyword">int</strong> lineLength )
-<a class="jxr_linenumber" name="1752" href="#1752">1752</a>     {
-<a class="jxr_linenumber" name="1753" href="#1753">1753</a>         <strong class="jxr_keyword">int</strong> lineIndent = getIndentLevel( line );
-<a class="jxr_linenumber" name="1754" href="#1754">1754</a>         StringBuffer buf = <strong class="jxr_keyword">new</strong> StringBuffer( 256 );
-<a class="jxr_linenumber" name="1755" href="#1755">1755</a>         String[] tokens = line.split( <span class="jxr_string">" +"</span> );
-<a class="jxr_linenumber" name="1756" href="#1756">1756</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; tokens.length; i++ )
-<a class="jxr_linenumber" name="1757" href="#1757">1757</a>         {
-<a class="jxr_linenumber" name="1758" href="#1758">1758</a>             String token = tokens[i];
-<a class="jxr_linenumber" name="1759" href="#1759">1759</a>             <strong class="jxr_keyword">if</strong> ( i &gt; 0 )
-<a class="jxr_linenumber" name="1760" href="#1760">1760</a>             {
-<a class="jxr_linenumber" name="1761" href="#1761">1761</a>                 <strong class="jxr_keyword">if</strong> ( buf.length() + token.length() &gt;= lineLength )
-<a class="jxr_linenumber" name="1762" href="#1762">1762</a>                 {
-<a class="jxr_linenumber" name="1763" href="#1763">1763</a>                     lines.add( buf.toString() );
-<a class="jxr_linenumber" name="1764" href="#1764">1764</a>                     buf.setLength( 0 );
-<a class="jxr_linenumber" name="1765" href="#1765">1765</a>                     buf.append( repeat( <span class="jxr_string">" "</span>, lineIndent * indentSize ) );
-<a class="jxr_linenumber" name="1766" href="#1766">1766</a>                 }
-<a class="jxr_linenumber" name="1767" href="#1767">1767</a>                 <strong class="jxr_keyword">else</strong>
-<a class="jxr_linenumber" name="1768" href="#1768">1768</a>                 {
-<a class="jxr_linenumber" name="1769" href="#1769">1769</a>                     buf.append( ' ' );
-<a class="jxr_linenumber" name="1770" href="#1770">1770</a>                 }
-<a class="jxr_linenumber" name="1771" href="#1771">1771</a>             }
-<a class="jxr_linenumber" name="1772" href="#1772">1772</a>             <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> j = 0; j &lt; token.length(); j++ )
-<a class="jxr_linenumber" name="1773" href="#1773">1773</a>             {
-<a class="jxr_linenumber" name="1774" href="#1774">1774</a>                 <strong class="jxr_keyword">char</strong> c = token.charAt( j );
-<a class="jxr_linenumber" name="1775" href="#1775">1775</a>                 <strong class="jxr_keyword">if</strong> ( c == '\t' )
-<a class="jxr_linenumber" name="1776" href="#1776">1776</a>                 {
-<a class="jxr_linenumber" name="1777" href="#1777">1777</a>                     buf.append( repeat( <span class="jxr_string">" "</span>, indentSize - buf.length() % indentSize ) );
-<a class="jxr_linenumber" name="1778" href="#1778">1778</a>                 }
-<a class="jxr_linenumber" name="1779" href="#1779">1779</a>                 <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> ( c == '\u00A0' )
-<a class="jxr_linenumber" name="1780" href="#1780">1780</a>                 {
-<a class="jxr_linenumber" name="1781" href="#1781">1781</a>                     buf.append( ' ' );
-<a class="jxr_linenumber" name="1782" href="#1782">1782</a>                 }
-<a class="jxr_linenumber" name="1783" href="#1783">1783</a>                 <strong class="jxr_keyword">else</strong>
-<a class="jxr_linenumber" name="1784" href="#1784">1784</a>                 {
-<a class="jxr_linenumber" name="1785" href="#1785">1785</a>                     buf.append( c );
-<a class="jxr_linenumber" name="1786" href="#1786">1786</a>                 }
-<a class="jxr_linenumber" name="1787" href="#1787">1787</a>             }
-<a class="jxr_linenumber" name="1788" href="#1788">1788</a>         }
-<a class="jxr_linenumber" name="1789" href="#1789">1789</a>         lines.add( buf.toString() );
-<a class="jxr_linenumber" name="1790" href="#1790">1790</a>     }
-<a class="jxr_linenumber" name="1791" href="#1791">1791</a> 
-<a class="jxr_linenumber" name="1792" href="#1792">1792</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
-<a class="jxr_linenumber" name="1793" href="#1793">1793</a> <em class="jxr_javadoccomment">     * Gets the indentation level of the specified line.</em>
-<a class="jxr_linenumber" name="1794" href="#1794">1794</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="1795" href="#1795">1795</a> <em class="jxr_javadoccomment">     * @param line The line whose indentation level should be retrieved, must not be &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="1796" href="#1796">1796</a> <em class="jxr_javadoccomment">     * @return The indentation level of the line.</em>
-<a class="jxr_linenumber" name="1797" href="#1797">1797</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="1798" href="#1798">1798</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getIndentLevel( String line )
-<a class="jxr_linenumber" name="1799" href="#1799">1799</a>     {
-<a class="jxr_linenumber" name="1800" href="#1800">1800</a>         <strong class="jxr_keyword">int</strong> level = 0;
-<a class="jxr_linenumber" name="1801" href="#1801">1801</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; line.length() &amp;&amp; line.charAt( i ) == '\t'; i++ )
-<a class="jxr_linenumber" name="1802" href="#1802">1802</a>         {
-<a class="jxr_linenumber" name="1803" href="#1803">1803</a>             level++;
-<a class="jxr_linenumber" name="1804" href="#1804">1804</a>         }
-<a class="jxr_linenumber" name="1805" href="#1805">1805</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = level + 1; i &lt;= level + 4 &amp;&amp; i &lt; line.length(); i++ )
-<a class="jxr_linenumber" name="1806" href="#1806">1806</a>         {
-<a class="jxr_linenumber" name="1807" href="#1807">1807</a>             <strong class="jxr_keyword">if</strong> ( line.charAt( i ) == '\t' )
-<a class="jxr_linenumber" name="1808" href="#1808">1808</a>             {
-<a class="jxr_linenumber" name="1809" href="#1809">1809</a>                 level++;
-<a class="jxr_linenumber" name="1810" href="#1810">1810</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="1811" href="#1811">1811</a>             }
-<a class="jxr_linenumber" name="1812" href="#1812">1812</a>         }
-<a class="jxr_linenumber" name="1813" href="#1813">1813</a>         <strong class="jxr_keyword">return</strong> level;
-<a class="jxr_linenumber" name="1814" href="#1814">1814</a>     }
-<a class="jxr_linenumber" name="1815" href="#1815">1815</a> }
+<a class="jxr_linenumber" name="1644" href="#1644">1644</a>                 append( sb, <span class="jxr_string">"Expression: ${watch.port}"</span>, 3 );
+<a class="jxr_linenumber" name="1645" href="#1645">1645</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1646" href="#1646">1646</a> 
+<a class="jxr_linenumber" name="1647" href="#1647">1647</a>                 append( sb, <span class="jxr_string">"watchLess (Default: true)"</span>, 2 );
+<a class="jxr_linenumber" name="1648" href="#1648">1648</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
+<a class="jxr_linenumber" name="1649" href="#1649">1649</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1650" href="#1650">1650</a> 
+<a class="jxr_linenumber" name="1651" href="#1651">1651</a>                 append( sb, <span class="jxr_string">"watchOptimizeAssets (Default: true)"</span>, 2 );
+<a class="jxr_linenumber" name="1652" href="#1652">1652</a>                 append( sb, <span class="jxr_string">"Enables the PNG and JPEG optimization"</span>, 3 );
+<a class="jxr_linenumber" name="1653" href="#1653">1653</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1654" href="#1654">1654</a> 
+<a class="jxr_linenumber" name="1655" href="#1655">1655</a>                 append( sb, <span class="jxr_string">"watchRunServer (Default: true)"</span>, 2 );
+<a class="jxr_linenumber" name="1656" href="#1656">1656</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
+<a class="jxr_linenumber" name="1657" href="#1657">1657</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1658" href="#1658">1658</a> 
+<a class="jxr_linenumber" name="1659" href="#1659">1659</a>                 append( sb, <span class="jxr_string">"watchValidateCSS (Default: false)"</span>, 2 );
+<a class="jxr_linenumber" name="1660" href="#1660">1660</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
+<a class="jxr_linenumber" name="1661" href="#1661">1661</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1662" href="#1662">1662</a> 
+<a class="jxr_linenumber" name="1663" href="#1663">1663</a>                 append( sb, <span class="jxr_string">"watchValidateJS (Default: false)"</span>, 2 );
+<a class="jxr_linenumber" name="1664" href="#1664">1664</a>                 append( sb, <span class="jxr_string">"(no description available)"</span>, 3 );
+<a class="jxr_linenumber" name="1665" href="#1665">1665</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1666" href="#1666">1666</a> 
+<a class="jxr_linenumber" name="1667" href="#1667">1667</a>                 append( sb, <span class="jxr_string">"workDir (Default: target/www)"</span>, 2 );
+<a class="jxr_linenumber" name="1668" href="#1668">1668</a>                 append( sb, <span class="jxr_string">"Where are the output files written."</span>, 3 );
+<a class="jxr_linenumber" name="1669" href="#1669">1669</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1670" href="#1670">1670</a> 
+<a class="jxr_linenumber" name="1671" href="#1671">1671</a>                 append( sb, <span class="jxr_string">"workTestDir (Default: target/www-test)"</span>, 2 );
+<a class="jxr_linenumber" name="1672" href="#1672">1672</a>                 append( sb, <span class="jxr_string">"Where are the output test files written."</span>, 3 );
+<a class="jxr_linenumber" name="1673" href="#1673">1673</a>                 append( sb, <span class="jxr_string">""</span>, 0 );
+<a class="jxr_linenumber" name="1674" href="#1674">1674</a>             }
+<a class="jxr_linenumber" name="1675" href="#1675">1675</a>         }
+<a class="jxr_linenumber" name="1676" href="#1676">1676</a> 
+<a class="jxr_linenumber" name="1677" href="#1677">1677</a>         <strong class="jxr_keyword">if</strong> ( getLog().isInfoEnabled() )
+<a class="jxr_linenumber" name="1678" href="#1678">1678</a>         {
+<a class="jxr_linenumber" name="1679" href="#1679">1679</a>             getLog().info( sb.toString() );
+<a class="jxr_linenumber" name="1680" href="#1680">1680</a>         }
+<a class="jxr_linenumber" name="1681" href="#1681">1681</a>     }
+<a class="jxr_linenumber" name="1682" href="#1682">1682</a> 
+<a class="jxr_linenumber" name="1683" href="#1683">1683</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="1684" href="#1684">1684</a> <em class="jxr_javadoccomment">     * &lt;p&gt;Repeat a String &lt;code&gt;n&lt;/code&gt; times to form a new string.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="1685" href="#1685">1685</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="1686" href="#1686">1686</a> <em class="jxr_javadoccomment">     * @param str String to repeat</em>
+<a class="jxr_linenumber" name="1687" href="#1687">1687</a> <em class="jxr_javadoccomment">     * @param repeat number of times to repeat str</em>
+<a class="jxr_linenumber" name="1688" href="#1688">1688</a> <em class="jxr_javadoccomment">     * @return String with repeated String</em>
+<a class="jxr_linenumber" name="1689" href="#1689">1689</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;repeat &lt; 0&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="1690" href="#1690">1690</a> <em class="jxr_javadoccomment">     * @throws NullPointerException if str is &lt;code&gt;null&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="1691" href="#1691">1691</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1692" href="#1692">1692</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String repeat( String str, <strong class="jxr_keyword">int</strong> repeat )
+<a class="jxr_linenumber" name="1693" href="#1693">1693</a>     {
+<a class="jxr_linenumber" name="1694" href="#1694">1694</a>         StringBuffer buffer = <strong class="jxr_keyword">new</strong> StringBuffer( repeat * str.length() );
+<a class="jxr_linenumber" name="1695" href="#1695">1695</a> 
+<a class="jxr_linenumber" name="1696" href="#1696">1696</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; repeat; i++ )
+<a class="jxr_linenumber" name="1697" href="#1697">1697</a>         {
+<a class="jxr_linenumber" name="1698" href="#1698">1698</a>             buffer.append( str );
+<a class="jxr_linenumber" name="1699" href="#1699">1699</a>         }
+<a class="jxr_linenumber" name="1700" href="#1700">1700</a> 
+<a class="jxr_linenumber" name="1701" href="#1701">1701</a>         <strong class="jxr_keyword">return</strong> buffer.toString();
+<a class="jxr_linenumber" name="1702" href="#1702">1702</a>     }
+<a class="jxr_linenumber" name="1703" href="#1703">1703</a> 
+<a class="jxr_linenumber" name="1704" href="#1704">1704</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
+<a class="jxr_linenumber" name="1705" href="#1705">1705</a> <em class="jxr_javadoccomment">     * Append a description to the buffer by respecting the indentSize and lineLength parameters.</em>
+<a class="jxr_linenumber" name="1706" href="#1706">1706</a> <em class="jxr_javadoccomment">     * &lt;b&gt;Note&lt;/b&gt;: The last character is always a new line.</em>
+<a class="jxr_linenumber" name="1707" href="#1707">1707</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="1708" href="#1708">1708</a> <em class="jxr_javadoccomment">     * @param sb The buffer to append the description, not &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1709" href="#1709">1709</a> <em class="jxr_javadoccomment">     * @param description The description, not &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1710" href="#1710">1710</a> <em class="jxr_javadoccomment">     * @param indent The base indentation level of each line, must not be negative.</em>
+<a class="jxr_linenumber" name="1711" href="#1711">1711</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1712" href="#1712">1712</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> append( StringBuffer sb, String description, <strong class="jxr_keyword">int</strong> indent )
+<a class="jxr_linenumber" name="1713" href="#1713">1713</a>     {
+<a class="jxr_linenumber" name="1714" href="#1714">1714</a>         <strong class="jxr_keyword">for</strong> ( Iterator it = toLines( description, indent, indentSize, lineLength ).iterator(); it.hasNext(); )
+<a class="jxr_linenumber" name="1715" href="#1715">1715</a>         {
+<a class="jxr_linenumber" name="1716" href="#1716">1716</a>             sb.append( it.next().toString() ).append( '\n' );
+<a class="jxr_linenumber" name="1717" href="#1717">1717</a>         }
+<a class="jxr_linenumber" name="1718" href="#1718">1718</a>     }
+<a class="jxr_linenumber" name="1719" href="#1719">1719</a> 
+<a class="jxr_linenumber" name="1720" href="#1720">1720</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
+<a class="jxr_linenumber" name="1721" href="#1721">1721</a> <em class="jxr_javadoccomment">     * Splits the specified text into lines of convenient display length.</em>
+<a class="jxr_linenumber" name="1722" href="#1722">1722</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="1723" href="#1723">1723</a> <em class="jxr_javadoccomment">     * @param text The text to split into lines, must not be &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1724" href="#1724">1724</a> <em class="jxr_javadoccomment">     * @param indent The base indentation level of each line, must not be negative.</em>
+<a class="jxr_linenumber" name="1725" href="#1725">1725</a> <em class="jxr_javadoccomment">     * @param indentSize The size of each indentation, must not be negative.</em>
+<a class="jxr_linenumber" name="1726" href="#1726">1726</a> <em class="jxr_javadoccomment">     * @param lineLength The length of the line, must not be negative.</em>
+<a class="jxr_linenumber" name="1727" href="#1727">1727</a> <em class="jxr_javadoccomment">     * @return The sequence of display lines, never &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1728" href="#1728">1728</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;indent &lt; 0&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="1729" href="#1729">1729</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1730" href="#1730">1730</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List toLines( String text, <strong class="jxr_keyword">int</strong> indent, <strong class="jxr_keyword">int</strong> indentSize, <strong class="jxr_keyword">int</strong> lineLength )
+<a class="jxr_linenumber" name="1731" href="#1731">1731</a>     {
+<a class="jxr_linenumber" name="1732" href="#1732">1732</a>         List lines = <strong class="jxr_keyword">new</strong> ArrayList();
+<a class="jxr_linenumber" name="1733" href="#1733">1733</a> 
+<a class="jxr_linenumber" name="1734" href="#1734">1734</a>         String ind = repeat( <span class="jxr_string">"\t"</span>, indent );
+<a class="jxr_linenumber" name="1735" href="#1735">1735</a>         String[] plainLines = text.split( <span class="jxr_string">"(\r\n)|(\r)|(\n)"</span> );
+<a class="jxr_linenumber" name="1736" href="#1736">1736</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; plainLines.length; i++ )
+<a class="jxr_linenumber" name="1737" href="#1737">1737</a>         {
+<a class="jxr_linenumber" name="1738" href="#1738">1738</a>             toLines( lines, ind + plainLines[i], indentSize, lineLength );
+<a class="jxr_linenumber" name="1739" href="#1739">1739</a>         }
+<a class="jxr_linenumber" name="1740" href="#1740">1740</a> 
+<a class="jxr_linenumber" name="1741" href="#1741">1741</a>         <strong class="jxr_keyword">return</strong> lines;
+<a class="jxr_linenumber" name="1742" href="#1742">1742</a>     }
+<a class="jxr_linenumber" name="1743" href="#1743">1743</a> 
+<a class="jxr_linenumber" name="1744" href="#1744">1744</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
+<a class="jxr_linenumber" name="1745" href="#1745">1745</a> <em class="jxr_javadoccomment">     * Adds the specified line to the output sequence, performing line wrapping if necessary.</em>
+<a class="jxr_linenumber" name="1746" href="#1746">1746</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="1747" href="#1747">1747</a> <em class="jxr_javadoccomment">     * @param lines The sequence of display lines, must not be &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1748" href="#1748">1748</a> <em class="jxr_javadoccomment">     * @param line The line to add, must not be &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1749" href="#1749">1749</a> <em class="jxr_javadoccomment">     * @param indentSize The size of each indentation, must not be negative.</em>
+<a class="jxr_linenumber" name="1750" href="#1750">1750</a> <em class="jxr_javadoccomment">     * @param lineLength The length of the line, must not be negative.</em>
+<a class="jxr_linenumber" name="1751" href="#1751">1751</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1752" href="#1752">1752</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> toLines( List lines, String line, <strong class="jxr_keyword">int</strong> indentSize, <strong class="jxr_keyword">int</strong> lineLength )
+<a class="jxr_linenumber" name="1753" href="#1753">1753</a>     {
+<a class="jxr_linenumber" name="1754" href="#1754">1754</a>         <strong class="jxr_keyword">int</strong> lineIndent = getIndentLevel( line );
+<a class="jxr_linenumber" name="1755" href="#1755">1755</a>         StringBuffer buf = <strong class="jxr_keyword">new</strong> StringBuffer( 256 );
+<a class="jxr_linenumber" name="1756" href="#1756">1756</a>         String[] tokens = line.split( <span class="jxr_string">" +"</span> );
+<a class="jxr_linenumber" name="1757" href="#1757">1757</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; tokens.length; i++ )
+<a class="jxr_linenumber" name="1758" href="#1758">1758</a>         {
+<a class="jxr_linenumber" name="1759" href="#1759">1759</a>             String token = tokens[i];
+<a class="jxr_linenumber" name="1760" href="#1760">1760</a>             <strong class="jxr_keyword">if</strong> ( i &gt; 0 )
+<a class="jxr_linenumber" name="1761" href="#1761">1761</a>             {
+<a class="jxr_linenumber" name="1762" href="#1762">1762</a>                 <strong class="jxr_keyword">if</strong> ( buf.length() + token.length() &gt;= lineLength )
+<a class="jxr_linenumber" name="1763" href="#1763">1763</a>                 {
+<a class="jxr_linenumber" name="1764" href="#1764">1764</a>                     lines.add( buf.toString() );
+<a class="jxr_linenumber" name="1765" href="#1765">1765</a>                     buf.setLength( 0 );
+<a class="jxr_linenumber" name="1766" href="#1766">1766</a>                     buf.append( repeat( <span class="jxr_string">" "</span>, lineIndent * indentSize ) );
+<a class="jxr_linenumber" name="1767" href="#1767">1767</a>                 }
+<a class="jxr_linenumber" name="1768" href="#1768">1768</a>                 <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="1769" href="#1769">1769</a>                 {
+<a class="jxr_linenumber" name="1770" href="#1770">1770</a>                     buf.append( ' ' );
+<a class="jxr_linenumber" name="1771" href="#1771">1771</a>                 }
+<a class="jxr_linenumber" name="1772" href="#1772">1772</a>             }
+<a class="jxr_linenumber" name="1773" href="#1773">1773</a>             <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> j = 0; j &lt; token.length(); j++ )
+<a class="jxr_linenumber" name="1774" href="#1774">1774</a>             {
+<a class="jxr_linenumber" name="1775" href="#1775">1775</a>                 <strong class="jxr_keyword">char</strong> c = token.charAt( j );
+<a class="jxr_linenumber" name="1776" href="#1776">1776</a>                 <strong class="jxr_keyword">if</strong> ( c == '\t' )
+<a class="jxr_linenumber" name="1777" href="#1777">1777</a>                 {
+<a class="jxr_linenumber" name="1778" href="#1778">1778</a>                     buf.append( repeat( <span class="jxr_string">" "</span>, indentSize - buf.length() % indentSize ) );
+<a class="jxr_linenumber" name="1779" href="#1779">1779</a>                 }
+<a class="jxr_linenumber" name="1780" href="#1780">1780</a>                 <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> ( c == '\u00A0' )
+<a class="jxr_linenumber" name="1781" href="#1781">1781</a>                 {
+<a class="jxr_linenumber" name="1782" href="#1782">1782</a>                     buf.append( ' ' );
+<a class="jxr_linenumber" name="1783" href="#1783">1783</a>                 }
+<a class="jxr_linenumber" name="1784" href="#1784">1784</a>                 <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="1785" href="#1785">1785</a>                 {
+<a class="jxr_linenumber" name="1786" href="#1786">1786</a>                     buf.append( c );
+<a class="jxr_linenumber" name="1787" href="#1787">1787</a>                 }
+<a class="jxr_linenumber" name="1788" href="#1788">1788</a>             }
+<a class="jxr_linenumber" name="1789" href="#1789">1789</a>         }
+<a class="jxr_linenumber" name="1790" href="#1790">1790</a>         lines.add( buf.toString() );
+<a class="jxr_linenumber" name="1791" href="#1791">1791</a>     }
+<a class="jxr_linenumber" name="1792" href="#1792">1792</a> 
+<a class="jxr_linenumber" name="1793" href="#1793">1793</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> </em>
+<a class="jxr_linenumber" name="1794" href="#1794">1794</a> <em class="jxr_javadoccomment">     * Gets the indentation level of the specified line.</em>
+<a class="jxr_linenumber" name="1795" href="#1795">1795</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="1796" href="#1796">1796</a> <em class="jxr_javadoccomment">     * @param line The line whose indentation level should be retrieved, must not be &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="1797" href="#1797">1797</a> <em class="jxr_javadoccomment">     * @return The indentation level of the line.</em>
+<a class="jxr_linenumber" name="1798" href="#1798">1798</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="1799" href="#1799">1799</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> getIndentLevel( String line )
+<a class="jxr_linenumber" name="1800" href="#1800">1800</a>     {
+<a class="jxr_linenumber" name="1801" href="#1801">1801</a>         <strong class="jxr_keyword">int</strong> level = 0;
+<a class="jxr_linenumber" name="1802" href="#1802">1802</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = 0; i &lt; line.length() &amp;&amp; line.charAt( i ) == '\t'; i++ )
+<a class="jxr_linenumber" name="1803" href="#1803">1803</a>         {
+<a class="jxr_linenumber" name="1804" href="#1804">1804</a>             level++;
+<a class="jxr_linenumber" name="1805" href="#1805">1805</a>         }
+<a class="jxr_linenumber" name="1806" href="#1806">1806</a>         <strong class="jxr_keyword">for</strong> ( <strong class="jxr_keyword">int</strong> i = level + 1; i &lt;= level + 4 &amp;&amp; i &lt; line.length(); i++ )
+<a class="jxr_linenumber" name="1807" href="#1807">1807</a>         {
+<a class="jxr_linenumber" name="1808" href="#1808">1808</a>             <strong class="jxr_keyword">if</strong> ( line.charAt( i ) == '\t' )
+<a class="jxr_linenumber" name="1809" href="#1809">1809</a>             {
+<a class="jxr_linenumber" name="1810" href="#1810">1810</a>                 level++;
+<a class="jxr_linenumber" name="1811" href="#1811">1811</a>                 <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="1812" href="#1812">1812</a>             }
+<a class="jxr_linenumber" name="1813" href="#1813">1813</a>         }
+<a class="jxr_linenumber" name="1814" href="#1814">1814</a>         <strong class="jxr_keyword">return</strong> level;
+<a class="jxr_linenumber" name="1815" href="#1815">1815</a>     }
+<a class="jxr_linenumber" name="1816" href="#1816">1816</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

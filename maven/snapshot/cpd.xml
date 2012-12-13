@@ -456,7 +456,7 @@
 <file line="1568" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
-            append( sb, "This mojo watches the file change in the source directories and process them automatically. To work correctly, launch mvn clean test first. This will resolve and prepare all required file. Then mvn org.nano.coffee-mill:coffee-mill-maven-plugin:watch will starts the watch mode. This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode, launch the watch mode with -Dwatched.project=artifactId of the final project. This will watch all resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified project.", 1 );
+            append( sb, "This mojo watches the file change in the source directories and process them automatically. To work correctly, launch mvn clean test first. This will resolve and prepare all required file. Then mvn org.nanoko.coffee-mill:coffee-mill-maven-plugin:watch will starts the watch mode. This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode, launch the watch mode with -Dwatched.project=artifactId of the final project. This will watch all resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified project. You can configure the watched port with the -Dwatch.port=8234 option. By default the used port is 8234.", 1 );
             append( sb, "", 0 );
             if ( detail )
             {
