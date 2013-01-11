@@ -1,8 +1,7 @@
+coffee-mill-maven-plugin
+=========================
 
-Coffee-Mill ?
-==================
-
-${project.artifactId} is a Maven plugin focusing on modern web development and especially on the client side
+**coffee-mill-maven-plugin** is a Maven plugin focusing on modern web development and especially on the client side
 technologies. A lot of technologies have emerged to make client-side development a bit easier.
 
 Why using Apache Maven for such kind of code ? Because such development can also benefit from _modularity_,
@@ -25,13 +24,12 @@ Features
 * Don't worry about aggregation and minification, the plugin manages that for you
 * Don't launch Maven continuously, the _watch_ mode monitor your files and process them
 
+Documentation
+-------------
+
+The documentation is available on:
+http://nanoko-project.github.com/coffee-mill-maven-plugin/maven/snapshot/
+
 License
 -------
-This plugin is licensed under the Apache License 2.0. The project is now founded by Arrow-Group.
-
-
-
-
-
-
-
+This plugin is licensed under the Apache License 2.0. The project is part of the _nanoko_ initiative.
