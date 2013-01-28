@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-01-11T11:03:53.522">
+<pmd version="4.2.5" timestamp="2013-01-28T19:04:59.288">
 <file name="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/others/DirectoryHandler.java">
 <violation beginline="15" endline="15" begincolumn="20" endcolumn="25" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.others" class="DirectoryHandler" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'prefix'.
