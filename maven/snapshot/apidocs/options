@@ -8,7 +8,7 @@
 '/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java:/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin'
 -author
 -bottom
-'Copyright &#169; 2012-2013 <a href="http://www.arrow-group.eu/">Arrow-Group</a>. All Rights Reserved.'
+'Copyright &#169; 2012-2013 <a href="http://ow2.org">OW2</a>. All Rights Reserved.'
 -charset
 'UTF-8'
 -d
@@ -16,7 +16,7 @@
 -docencoding
 'UTF-8'
 -doctitle
-'Coffee Mill Maven Plugin 1.0.0-SNAPSHOT API'
+'OW2 Nanoko -  Coffee Mill Maven Plugin 1.0.0-SNAPSHOT API'
 -link
 'http://download.oracle.com/javase/1.5.0/docs/api'
 -linkoffline
@@ -24,4 +24,4 @@
 -use
 -version
 -windowtitle
-'Coffee Mill Maven Plugin 1.0.0-SNAPSHOT API'
+'OW2 Nanoko -  Coffee Mill Maven Plugin 1.0.0-SNAPSHOT API'
