@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
 <duplication lines="57" tokens="336">
-<file line="969" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1027" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="969" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1027" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "coffee-mill:jslint-report", 0 );
@@ -66,11 +66,11 @@
 </codefragment>
 </duplication>
 <duplication lines="56" tokens="328">
-<file line="468" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="661" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="719" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="970" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1378" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="468" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="661" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="719" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="970" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1378" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "Copy `js` project dependencies to the target/libs folder. Copy `css` project dependencies to the target/web folder. The location can be changed using the webDir and libsDir option", 1 );
@@ -133,8 +133,8 @@
 </codefragment>
 </duplication>
 <duplication lines="46" tokens="268">
-<file line="274" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1436" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1436" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "Compiles CoffeeScript files. CoffeeScript files are generally in the src/test/coffee directory. It can be configured using the coffeeScriptTestDir parameter. If the directory does not exist, the compilation is skipped.", 1 );
@@ -187,12 +187,12 @@
 </codefragment>
 </duplication>
 <duplication lines="42" tokens="244">
-<file line="274" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="336" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="398" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="468" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1308" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1502" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="336" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="398" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="468" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1308" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1502" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "Copy JavaScript sources to the work directory and check JavaScript sources with\n-\tCheck the code using JSLint\n-\tCheck the code using JSHint\nTODO Exclude strict mode.", 1 );
@@ -241,8 +241,8 @@
 </codefragment>
 </duplication>
 <duplication lines="38" tokens="220">
-<file line="274" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1242" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1242" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "Optimizes JPEG files using jpegtran (http://jpegclub.org/jpegtran/). JpegTran must be installed and the executable `jpegtran` available form the system path.", 1 );
@@ -287,8 +287,8 @@
 </codefragment>
 </duplication>
 <duplication lines="35" tokens="207">
-<file line="1097" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1187" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1097" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1187" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "attachMinifiedCSS (Default: true)", 2 );
@@ -330,8 +330,8 @@
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="204">
-<file line="36" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
-<file line="36" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
+<file line="36" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
+<file line="36" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
 <codefragment>
 <![CDATA[
         getLog().info("Checking sources with JsLint");
@@ -367,9 +367,9 @@
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="199">
-<file line="220" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="282" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1098" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="220" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="282" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1098" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "Enables / Disables the attachment of the minified file to the Maven project. Enabled by default.", 3 );
@@ -410,8 +410,8 @@
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="196">
-<file line="274" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="809" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="809" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "(no description available)", 1 );
@@ -452,8 +452,8 @@
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="196">
-<file line="146" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1568" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="146" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1568" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "This mojo watches the file change in the source directories and process them automatically. To work correctly, launch mvn clean test first. This will resolve and prepare all required file. Then mvn org.nanoko.coffee-mill:coffee-mill-maven-plugin:watch will starts the watch mode. This mojo supports reactor mode, i.e. is able to watch several modules and updates files. To enable this mode, launch the watch mode with -Dwatched.project=artifactId of the final project. This will watch all resources of all the modules of the reactor and copy the resulting artifact on the other module in the specified project. You can configure the watched port with the -Dwatch.port=8234 option. By default the used port is 8234.", 1 );
@@ -494,8 +494,8 @@
 </codefragment>
 </duplication>
 <duplication lines="31" tokens="180">
-<file line="808" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="882" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="808" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="882" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "coffee-mill:jasmine-test", 0 );
@@ -533,8 +533,8 @@
 </codefragment>
 </duplication>
 <duplication lines="31" tokens="180">
-<file line="84" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="883" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="84" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="883" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "(no description available)", 1 );
@@ -572,8 +572,8 @@
 </codefragment>
 </duplication>
 <duplication lines="31" tokens="179">
-<file line="113" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="175" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="113" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="175" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "cssAggregation", 2 );
@@ -611,8 +611,8 @@
 </codefragment>
 </duplication>
 <duplication lines="30" tokens="175">
-<file line="1098" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1250" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1098" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1250" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "Where are the assets.", 3 );
@@ -649,10 +649,10 @@
 </codefragment>
 </duplication>
 <duplication lines="30" tokens="172">
-<file line="84" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="146" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="274" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="526" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="84" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="146" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="274" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="526" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
             append( sb, "Compress HTML pages using HtmlCompressor.", 1 );
@@ -689,8 +689,8 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="151">
-<file line="817" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1098" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="817" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1098" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "Enables / Disables the attachment of the minified file to the Maven project. Enabled by default.", 3 );
@@ -723,8 +723,8 @@
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="141">
-<file line="71" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
-<file line="119" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="71" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="119" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
 <codefragment>
 <![CDATA[
         for (Dependency dep : (Collection<Dependency>) mill.project.getDependencies()) {
@@ -746,8 +746,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="134">
-<file line="73" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
-<file line="79" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
+<file line="73" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
+<file line="79" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
 <codefragment>
 <![CDATA[
         return isFileContainedInDirectory(file, source)  && file.isFile()  &&  file.getName().endsWith(".js");
@@ -776,8 +776,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="127">
-<file line="92" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="220" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="92" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="220" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "(no description available)", 3 );
@@ -806,8 +806,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="123">
-<file line="1152" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1218" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1152" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1218" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "Where are the dependencies copies.", 3 );
@@ -836,8 +836,8 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="117">
-<file line="88" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptCompilerMojo.java"/>
-<file line="78" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptTestCompilerMojo.java"/>
+<file line="88" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptCompilerMojo.java"/>
+<file line="78" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptTestCompilerMojo.java"/>
 <codefragment>
 <![CDATA[
             getLog().debug("JS Hint skipped");
@@ -870,8 +870,8 @@
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="111">
-<file line="110" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="1598" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="110" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="1598" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "(no description available)", 3 );
@@ -898,9 +898,9 @@
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="107">
-<file line="253" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="862" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
-<file line="928" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="253" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="862" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
+<file line="928" path="/Users/Shared/Jenkins/Home/jobs/Nano - Coffee-Mill - Deploy Site/workspace/coffee-mill-maven-plugin/target/generated-sources/plugin/org/nanoko/coffee/mill/mojos/compile/HelpMojo.java"/>
 <codefragment>
 <![CDATA[
                 append( sb, "skipJasmineTest (Default: false)", 2 );
