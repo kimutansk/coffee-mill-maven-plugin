@@ -28,7 +28,9 @@ Documentation
 -------------
 
 The documentation is available on:
-http://nanoko-project.github.com/coffee-mill-maven-plugin/maven/snapshot/
+
+* Last stable version : http://nanoko-project.github.com/coffee-mill-maven-plugin/maven/release/
+* Development version : http://nanoko-project.github.com/coffee-mill-maven-plugin/maven/snapshot/
 
 License
 -------
