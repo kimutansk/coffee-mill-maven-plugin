@@ -381,4 +381,13 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <site.path>maven/release</site.path>
+            </properties>   
+        </profile>
+    </profiles>
+
 </project>
