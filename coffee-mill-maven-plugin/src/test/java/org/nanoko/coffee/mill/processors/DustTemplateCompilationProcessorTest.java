@@ -16,7 +16,6 @@
 package org.nanoko.coffee.mill.processors;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.vfs2.FileUtil;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
