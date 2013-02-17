@@ -62,7 +62,8 @@ public class DustJSProcessor extends DefaultProcessor {
             RhinoLauncher launcher = initScriptBuilder();
             String content = FileUtils.readFileToString(input);
             String compileScript =
-                    String.format("%s(%s);", "dust.compile", RhinoLauncher.toJSMultiLineString(content));
+                    String.format("%s(%s,\"%s\");", "dust.compile", RhinoLauncher.toJSMultiLineString(content),
+                            input.getName().substring(0, input.getName().length() - ".dust".length()));
             String result = (String) launcher.evaluate(compileScript, "dust.compile");
             FileUtils.write(output, result);
         } catch (IOException e) {

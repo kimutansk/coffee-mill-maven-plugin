@@ -15,12 +15,15 @@
 
 package org.nanoko.coffee.mill.processors;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.vfs2.FileUtil;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
 import org.nanoko.coffee.mill.mojos.compile.JavaScriptCompilerMojo;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -32,8 +35,18 @@ public class DustTemplateCompilationProcessorTest {
         mojo.javaScriptDir = new File("src/test/resources/js");
         mojo.workDir = new File("target/test/testDustCompilation-www");
         mojo.execute();
+        File result = new File(mojo.workDir, "sample/templates/mytemplate.js");
 
-        assertThat(new File(mojo.workDir, "sample/templates/mytemplate.js").isFile()).isTrue();
+        assertThat(result.isFile()).isTrue();
+
+        //check the compiled template name is set to the file name
+        //i.e mytemplate is this test
+        try {
+            assertThat(FileUtils.readFileToString(result)
+                    .startsWith("(function(){dust.register(\"mytemplate\"")).isTrue();
+        } catch (IOException e) {
+            //we already have check that the file does exist
+        }
     }
 
     @Test
