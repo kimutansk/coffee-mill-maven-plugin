@@ -120,7 +120,7 @@ public class JpegTranProcessor extends DefaultProcessor {
         cmdLine.addArgument("-optimize");
 
         cmdLine.addArgument("-outfile");
-        cmdLine.addArgument("out.jpeg");
+        cmdLine.addArgument("__out.jpeg");
 
         cmdLine.addArgument(file.getName());
 
@@ -133,9 +133,10 @@ public class JpegTranProcessor extends DefaultProcessor {
             executor.execute(cmdLine);
 
             // Overwrite the original file
-            File out = new File(dir, "out.jpeg");
+            File out = new File(dir, "__out.jpeg");
             if (out.exists()) {
-                FileUtils.copyFile(new File(dir, "out.jpeg"), file);
+                FileUtils.copyFile(out, file);
+                FileUtils.deleteQuietly(out);
             } else {
                 throw new IOException("Output file not found : " + out.getAbsolutePath());
             }
