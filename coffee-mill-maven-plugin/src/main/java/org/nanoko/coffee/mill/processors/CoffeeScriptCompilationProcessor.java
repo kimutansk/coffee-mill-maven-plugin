@@ -16,14 +16,13 @@
 package org.nanoko.coffee.mill.processors;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.artifact.Artifact;
 import org.mozilla.javascript.RhinoException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 import org.nanoko.coffee.mill.utils.RhinoLauncher;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -36,6 +35,7 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
 
     private File source;
     private File destination;
+    private File coffeescript;
 
     public void tearDown() {
         // Do nothing.
@@ -50,6 +50,11 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
         } else {
             this.source = mojo.coffeeScriptDir;
             this.destination = mojo.getWorkDirectory();
+        }
+
+        coffeescript = OptionsHelper.getFile(options, "coffeescript");
+        if (coffeescript == null || ! coffeescript.isFile()) {
+            throw new IllegalArgumentException("The coffeeescript file must exist");
         }
     }
 
@@ -113,14 +118,16 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
             theFile.delete();
         }
     }
-
-    private static final String DEFAULT_COFFEE_SCRIPT = "/coffeescript/coffee-script.js";
-
     /**
      * @return stream of the less.js script.
      */
     private InputStream getScriptAsStream() {
-        return this.getClass().getResourceAsStream(DEFAULT_COFFEE_SCRIPT);
+        try {
+            return new FileInputStream(coffeescript);
+        } catch (FileNotFoundException e) {
+            // Cannot happen.
+        }
+        return null;
     }
 
     /**
@@ -129,7 +136,7 @@ public class CoffeeScriptCompilationProcessor extends DefaultProcessor {
     private RhinoLauncher initScriptBuilder() {
         try {
             return RhinoLauncher.newChain().evaluateChain(getScriptAsStream(),
-                        DEFAULT_COFFEE_SCRIPT);
+                    coffeescript.getName());
         } catch (final IOException ex) {
             throw new IllegalStateException("Failed reading init script", ex);
         }

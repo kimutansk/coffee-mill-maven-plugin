@@ -15,12 +15,15 @@
 
 package org.nanoko.coffee.mill.mojos.compile;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.CoffeeScriptCompilationProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
+
+import java.io.File;
 
 /**
  * Compiles CoffeeScript files.
@@ -32,38 +35,62 @@ import org.nanoko.coffee.mill.utils.OptionsHelper;
  */
 public class CoffeeScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
 
+    private static final String COFFEE_SCRIPT_ARTIFACTID = "coffeescript";
     /**
      * Enables / Disables the coffeescript compilation.
      * Be aware that this property disables the compilation on both main sources and test sources.
+     *
      * @parameter default-value="false"
      */
     protected boolean skipCoffeeScriptCompilation;
-
     /**
      * Enables / Disables the coffeescript test compilation.
      * Be aware that this property disables the compilation of test sources only.
+     *
      * @parameter default-value="false"
      */
     protected boolean skipCoffeeScriptTestCompilation;
 
-
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (skipCoffeeScriptCompilation  || skipCoffeeScriptTestCompilation) {
+        if (skipCoffeeScriptCompilation || skipCoffeeScriptTestCompilation) {
             getLog().info("CoffeeScript test compilation skipped");
             return;
         }
 
-        if (! coffeeScriptTestDir.exists()) {
+        if (!coffeeScriptTestDir.exists()) {
             return;
         }
 
+        File coffee = getCoffeeScript();
+        if (coffee == null) {
+            throw new MojoExecutionException("Cannot configure the coffeescript compiler without coffeescript");
+        }
+
         CoffeeScriptCompilationProcessor processor = new CoffeeScriptCompilationProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("test", true).build());
+        processor.configure(this, new OptionsHelper.OptionsBuilder()
+                .set("test", true)
+                .set("coffeescript", coffee)
+                .build());
         try {
             processor.processAll();
         } catch (Processor.ProcessorException e) {
             throw new MojoExecutionException("", e);
         }
+    }
+
+    /**
+     * Extracts the coffeescript artifact from the plugin's dependency list and returns the file.
+     * This file is injected into the processor.
+     *
+     * @return the coffeescript's artifact file.
+     */
+    private File getCoffeeScript() {
+        for (Artifact artifact : pluginDependencies) {
+            if (artifact.getArtifactId().equals(COFFEE_SCRIPT_ARTIFACTID)) {
+                return artifact.getFile();
+            }
+        }
+        return null;
     }
 
 }

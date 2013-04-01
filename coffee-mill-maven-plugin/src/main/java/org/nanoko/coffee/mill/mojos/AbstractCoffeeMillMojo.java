@@ -16,6 +16,7 @@
 package org.nanoko.coffee.mill.mojos;
 
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
@@ -40,6 +41,13 @@ public abstract class AbstractCoffeeMillMojo extends AbstractMojo {
      * @readonly
      */
     public MavenProjectHelper projectHelper;
+
+
+    /**
+     * The plugin dependencies.
+     * @parameter default-value="${plugin.artifacts}"
+     */
+    public java.util.List<Artifact> pluginDependencies;
 
     /**
      * Directory containing the build files.

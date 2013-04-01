@@ -213,6 +213,15 @@
             <version>1.4</version>
         </dependency>
 
+        <!-- JS Libs -->
+        <dependency>
+            <groupId>org.nanoko.libs</groupId>
+            <artifactId>coffeescript</artifactId>
+            <version>1.6.2</version>
+            <classifier>min</classifier>
+            <type>js</type>
+        </dependency>
+
     </dependencies>
 
     <build>
