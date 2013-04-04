@@ -231,17 +231,17 @@
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.nanoko.libs</groupId>
             <artifactId>compass-gems</artifactId>
             <version>0.12.2</version>
         </dependency>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.nanoko.libs</groupId>
             <artifactId>compass-gems</artifactId>
+            <version>0.12.2</version>
             <classifier>frameworks</classifier>
             <type>zip</type>
-            <version>0.12.2</version>
         </dependency>
 
         <!-- JS Libs -->

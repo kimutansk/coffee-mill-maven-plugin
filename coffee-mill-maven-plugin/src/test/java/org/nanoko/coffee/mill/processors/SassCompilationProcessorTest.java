@@ -26,6 +26,11 @@ import java.util.ArrayList;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+/**
+ * This tests are checking the Sass / Compass compilation.
+ * It contains a hack to retrive the compass-gems from the local maven repository.
+ * {@code org.nanoko.libs:compass-gems:0.12.2}
+ */
 public class SassCompilationProcessorTest {
 
     @Test
@@ -41,7 +46,8 @@ public class SassCompilationProcessorTest {
                         new File("src/test/resources/jslibs/coffee-script.js")));
         mojo.pluginDependencies.add( //TODO Update when we will have set the groupId.
                 new FakeArtifact("org.nanoko.libs", "compass-gems", "0.12.2", "frameworks",
-                        new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/coffee-mill/compass-gems/0.12.2/compass-gems-0.12.2-frameworks.zip")));
+                        new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/libs/compass-gems/0.12" +
+                                ".2/compass-gems-0.12.2-frameworks.zip")));
         mojo.execute();
 
         assertThat(new File(mojo.workDir, "a_style.css").isFile()).isTrue();
@@ -60,7 +66,8 @@ public class SassCompilationProcessorTest {
                 new File("src/test/resources/jslibs/coffee-script.js")));
         mojo.pluginDependencies.add( //TODO Update when we will have set the groupId.
                 new FakeArtifact("org.nanoko.libs", "compass", "0.12.2", "frameworks",
-                        new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/coffee-mill/compass-gems/0.12.2/compass-gems-0.12.2-frameworks.zip")));
+                        new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/libs/compass-gems/0.12" +
+                                ".2/compass-gems-0.12.2-frameworks.zip")));
         mojo.execute();
 
         // Mock the compass-framework lookup
