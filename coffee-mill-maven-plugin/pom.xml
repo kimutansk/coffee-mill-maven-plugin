@@ -159,6 +159,10 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>me.n4u.sass</groupId>
+                    <artifactId>sass-gems</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -211,6 +215,33 @@
             <groupId>com.googlecode.htmlcompressor</groupId>
             <artifactId>htmlcompressor</artifactId>
             <version>1.4</version>
+        </dependency>
+
+        <!-- jruby -->
+        <dependency>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby-complete</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.n4u.sass</groupId>
+            <artifactId>sass-gems</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>compass-gems</artifactId>
+            <version>0.12.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>compass-gems</artifactId>
+            <classifier>frameworks</classifier>
+            <type>zip</type>
+            <version>0.12.2</version>
         </dependency>
 
         <!-- JS Libs -->
