@@ -238,8 +238,8 @@ public class RhinoLauncher {
     }
 
     /**
-     * Transforms a java multi-line string into javascript multi-line string. This technique was found at
-     * {@link http://stackoverflow.com/questions/805107/multiline-strings-in-javascript/}
+     * Transforms a java multi-line string into javascript multi-line string. This technique was found on
+     * <a href="http://stackoverflow.com/questions/805107/multiline-strings-in-javascript/">Stack Overflow</a>
      *
      * @param data a string containing new lines.
      * @return a string which being evaluated on the client-side will be treated as a correct multi-line string.
