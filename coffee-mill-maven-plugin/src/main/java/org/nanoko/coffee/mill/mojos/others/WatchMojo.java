@@ -25,11 +25,13 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
+import org.nanoko.coffee.mill.mojos.compile.SassCompilerMojo;
 import org.nanoko.coffee.mill.processors.*;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 import org.nanoko.coffee.mill.utils.ReactorUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +79,12 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
      * @parameter default-value="true"
      */
     protected boolean watchLess;
+
+    /**
+     * Enables Sass and Compass support.
+     * @parameter default-value="true"
+     */
+    protected boolean watchSass;
 
     /**
      * @parameter default-value="true"
@@ -238,6 +246,21 @@ public class WatchMojo extends AbstractCoffeeMillMojo implements FileListener {
             processor = new LessCompilationProcessor();
             processor.configure(mojo, null);
             processors.add(processor);
+        }
+
+        // Sass
+        if (watchSass) {
+            try {
+                File frameworks = SassCompilerMojo.expandCompassFrameworks(this);
+                processor = new SassCompilationProcessor();
+                processor.configure(this, new OptionsHelper.OptionsBuilder()
+                        .set("frameworks", frameworks)
+                        .set("useCompass", true) // Compass enabled by default.
+                        .build());
+                processors.add(processor);
+            } catch (IOException e) {
+                getLog().error("Cannot expand compass-frameworks, Sass / Compass disabled", e);
+            }
         }
 
         // CoffeeScript
