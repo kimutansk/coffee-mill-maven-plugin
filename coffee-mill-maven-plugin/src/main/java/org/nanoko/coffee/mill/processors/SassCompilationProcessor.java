@@ -26,7 +26,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Processor handling Sass and Compass to CSS compilation.
@@ -103,13 +106,12 @@ public class SassCompilationProcessor extends DefaultProcessor {
             jruby.eval(script.toString());
             final SassCompilationErrors compilationErrors = (SassCompilationErrors) jruby.getBindings(ScriptContext.ENGINE_SCOPE).get("compilation_errors");
             if (compilationErrors.hasErrors()) {
-                for (SassCompilationErrors.CompilationError error: compilationErrors) {
+                for (SassCompilationErrors.CompilationError error : compilationErrors) {
                     getLog().error("Compilation of template " + error.filename + " failed: " + error.message);
                 }
                 throw new ProcessorException("SASS compilation encountered errors (see above for details).");
             }
-        }
-        catch (final ScriptException e) {
+        } catch (final ScriptException e) {
             throw new ProcessorException("Failed to execute SASS ruby script:\n" + script, e);
         }
     }
@@ -151,12 +153,10 @@ public class SassCompilationProcessor extends DefaultProcessor {
             // manually specify these paths
             script.append("Compass::Frameworks.register_directory('jar:'+ File.join(Compass.base_directory, 'frameworks/compass'))\n");
             script.append("Compass::Frameworks.register_directory('jar:'+ File.join(Compass.base_directory, 'frameworks/blueprint'))\n");
-            script.append("Compass::Frameworks.register_directory('" + FilenameUtils.separatorsToUnix(frameworks
-                    .getAbsolutePath() + "/compass") +"')" +
-                    "\n");
-            script.append("Compass::Frameworks.register_directory('" + FilenameUtils.separatorsToUnix(frameworks
-                    .getAbsolutePath() + "/blueprint") +"')" +
-                    "\n");
+            script.append("Compass::Frameworks.register_directory('").append(FilenameUtils.separatorsToUnix(frameworks
+                    .getAbsolutePath() + "/compass")).append("')").append("\n");
+            script.append("Compass::Frameworks.register_directory('").append(FilenameUtils.separatorsToUnix(frameworks
+                    .getAbsolutePath() + "/blueprint")).append("')").append("\n");
         }
 
         script.append("Sass::Plugin.options.merge!(\n");
