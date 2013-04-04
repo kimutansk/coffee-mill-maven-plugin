@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
 <duplication lines="29" tokens="204">
-<file line="36" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
-<file line="36" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
+<file line="36" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
+<file line="36" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
 <codefragment>
 <![CDATA[
         getLog().info("Checking sources with JsLint");
@@ -38,8 +38,8 @@
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="141">
-<file line="71" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
-<file line="119" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="71" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="119" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
 <codefragment>
 <![CDATA[
         for (Dependency dep : (Collection<Dependency>) mill.project.getDependencies()) {
@@ -61,8 +61,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="134">
-<file line="73" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
-<file line="79" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
+<file line="73" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
+<file line="79" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
 <codefragment>
 <![CDATA[
         return isFileContainedInDirectory(file, source)  && file.isFile()  &&  file.getName().endsWith(".js");
@@ -91,8 +91,8 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="117">
-<file line="88" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptCompilerMojo.java"/>
-<file line="78" path="/Users/clement/Projects/nano/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptTestCompilerMojo.java"/>
+<file line="88" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptCompilerMojo.java"/>
+<file line="78" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptTestCompilerMojo.java"/>
 <codefragment>
 <![CDATA[
             getLog().debug("JS Hint skipped");
