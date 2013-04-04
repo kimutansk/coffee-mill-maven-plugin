@@ -44,7 +44,7 @@ public class SassCompilationProcessorTest {
         mojo.pluginDependencies.add(
                 new FakeArtifact("org.nanoko.libs", "coffeescript", "1.6.2",
                         new File("src/test/resources/jslibs/coffee-script.js")));
-        mojo.pluginDependencies.add( //TODO Update when we will have set the groupId.
+        mojo.pluginDependencies.add(
                 new FakeArtifact("org.nanoko.libs", "compass-gems", "0.12.2", "frameworks",
                         new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/libs/compass-gems/0.12" +
                                 ".2/compass-gems-0.12.2-frameworks.zip")));
@@ -64,7 +64,7 @@ public class SassCompilationProcessorTest {
         mojo.pluginDependencies.add(
                 new FakeArtifact("org.nanoko.libs", "coffeescript", "1.6.2",
                 new File("src/test/resources/jslibs/coffee-script.js")));
-        mojo.pluginDependencies.add( //TODO Update when we will have set the groupId.
+        mojo.pluginDependencies.add(
                 new FakeArtifact("org.nanoko.libs", "compass", "0.12.2", "frameworks",
                         new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/libs/compass-gems/0.12" +
                                 ".2/compass-gems-0.12.2-frameworks.zip")));
