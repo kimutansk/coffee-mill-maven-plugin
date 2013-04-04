@@ -24,11 +24,18 @@ public class FakeArtifact implements Artifact {
     private String groupId;
     private String artifactId;
 
+    private String classifier;
+
     public FakeArtifact(String groupId, String artifactId, String version, File artifactFile) {
         setGroupId(groupId);
         setArtifactId(artifactId);
         setVersion(version);
         setFile(artifactFile);
+    }
+
+    public FakeArtifact(String groupId, String artifactId, String version, String classifier, File artifactFile) {
+        this(groupId, artifactId, version, artifactFile);
+        this.classifier = classifier;
     }
 
     public String getGroupId() {
@@ -68,11 +75,11 @@ public class FakeArtifact implements Artifact {
     }
 
     public String getClassifier() {
-        return null;
+        return classifier;
     }
 
     public boolean hasClassifier() {
-        return false;
+        return classifier != null;
     }
 
     public File getFile() {
