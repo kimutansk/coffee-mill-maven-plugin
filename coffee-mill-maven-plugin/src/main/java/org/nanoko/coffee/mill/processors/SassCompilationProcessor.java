@@ -75,6 +75,7 @@ public class SassCompilationProcessor extends DefaultProcessor {
 
         final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         this.jruby = scriptEngineManager.getEngineByName("jruby");
+        jruby.getContext().setAttribute("org.jruby.embed.sharing.variables", false, ScriptContext.ENGINE_SCOPE);
     }
 
     public boolean accept(File file) {
