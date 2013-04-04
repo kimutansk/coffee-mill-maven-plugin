@@ -61,7 +61,7 @@ public class CoffeeScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
             return;
         }
 
-        File coffee = getCoffeeScript();
+        File coffee = CoffeeScriptCompilerMojo.getCoffeeScript(this);
         if (coffee == null) {
             throw new MojoExecutionException("Cannot configure the coffeescript compiler without coffeescript");
         }
@@ -76,21 +76,6 @@ public class CoffeeScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
         } catch (Processor.ProcessorException e) {
             throw new MojoExecutionException("", e);
         }
-    }
-
-    /**
-     * Extracts the coffeescript artifact from the plugin's dependency list and returns the file.
-     * This file is injected into the processor.
-     *
-     * @return the coffeescript's artifact file.
-     */
-    private File getCoffeeScript() {
-        for (Artifact artifact : pluginDependencies) {
-            if (artifact.getArtifactId().equals(COFFEE_SCRIPT_ARTIFACTID)) {
-                return artifact.getFile();
-            }
-        }
-        return null;
     }
 
 }
