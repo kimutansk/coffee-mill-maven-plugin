@@ -75,6 +75,7 @@ public class SassCompilationProcessor extends DefaultProcessor {
 
         final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         this.jruby = scriptEngineManager.getEngineByName("jruby");
+        jruby.getContext().setAttribute("org.jruby.embed.sharing.variables", false, ScriptContext.ENGINE_SCOPE);
     }
 
     public boolean accept(File file) {
@@ -112,10 +113,6 @@ public class SassCompilationProcessor extends DefaultProcessor {
                 throw new ProcessorException("SASS compilation encountered errors (see above for details).");
             }
         } catch (final ScriptException e) {
-            // Turn around the '(ArgumentError) $! not set.' error happening on older VM
-            if (e.getMessage().contains("(ArgumentError) $! not set.")) {
-                return;
-            }
             throw new ProcessorException("Failed to execute SASS ruby script:\n" + script, e);
         }
     }
