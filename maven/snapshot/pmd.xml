@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-04-06T13:43:53.314">
+<pmd version="4.2.5" timestamp="2013-04-06T17:04:54.425">
 <file name="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="18" endline="18" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.compile" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.apache.maven.artifact.Artifact'
 </violation>
 <violation beginline="38" endline="38" begincolumn="33" endcolumn="56" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="CoffeeScriptTestCompilerMojo" variable="COFFEE_SCRIPT_ARTIFACTID" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'COFFEE_SCRIPT_ARTIFACTID'.
+</violation>
+</file>
+<file name="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/LessCompilerMojo.java">
+<violation beginline="18" endline="18" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.compile" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.apache.maven.artifact.Artifact'
+</violation>
+<violation beginline="24" endline="24" begincolumn="1" endcolumn="50" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.compile" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.nanoko.coffee.mill.utils.OptionsHelper'
+</violation>
+<violation beginline="26" endline="26" begincolumn="1" endcolumn="20" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.compile" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.io.File'
 </violation>
 </file>
 <file name="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CoffeeScriptCompilationProcessor.java">

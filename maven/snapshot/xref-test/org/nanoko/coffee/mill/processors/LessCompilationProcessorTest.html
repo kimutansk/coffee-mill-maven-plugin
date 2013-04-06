@@ -59,7 +59,7 @@
 <a class="jxr_linenumber" name="49" href="#49">49</a>  
 <a class="jxr_linenumber" name="50" href="#50">50</a>          LessCompilerMojo mojo = <strong class="jxr_keyword">new</strong> LessCompilerMojo();
 <a class="jxr_linenumber" name="51" href="#51">51</a>          mojo.stylesheetsDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/resources/stylesheets"</span>);
-<a class="jxr_linenumber" name="52" href="#52">52</a>          mojo.workDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"target/test/testLessCompilation-www"</span>);
+<a class="jxr_linenumber" name="52" href="#52">52</a>          mojo.workDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"target/test/testLessCompilation-www2"</span>);
 <a class="jxr_linenumber" name="53" href="#53">53</a>          mojo.execute();
 <a class="jxr_linenumber" name="54" href="#54">54</a>  
 <a class="jxr_linenumber" name="55" href="#55">55</a>          assertThat(<strong class="jxr_keyword">new</strong> File(mojo.workDir, <span class="jxr_string">"forum.css"</span>).isFile()).isTrue();
@@ -69,20 +69,24 @@
 <a class="jxr_linenumber" name="59" href="#59">59</a>      }
 <a class="jxr_linenumber" name="60" href="#60">60</a>  
 <a class="jxr_linenumber" name="61" href="#61">61</a>      @Test
-<a class="jxr_linenumber" name="62" href="#62">62</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInvalidLessFile() {
+<a class="jxr_linenumber" name="62" href="#62">62</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testInvalidLessFile() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="63" href="#63">63</a>          LessCompilerMojo mojo = <strong class="jxr_keyword">new</strong> LessCompilerMojo();
-<a class="jxr_linenumber" name="64" href="#64">64</a>          mojo.stylesheetsDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"src/test/resources/stylesheets"</span>);
+<a class="jxr_linenumber" name="64" href="#64">64</a>          mojo.stylesheetsDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"target/test/junk"</span>);
 <a class="jxr_linenumber" name="65" href="#65">65</a>          mojo.workDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"target/test/testLessCompilation-www"</span>);
 <a class="jxr_linenumber" name="66" href="#66">66</a>  
-<a class="jxr_linenumber" name="67" href="#67">67</a>          LessCompilationProcessor processor = mojo.getProcessor();
-<a class="jxr_linenumber" name="68" href="#68">68</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="69" href="#69">69</a>              processor.less(<span class="jxr_string">"this is not less"</span>);
-<a class="jxr_linenumber" name="70" href="#70">70</a>              fail(<span class="jxr_string">"Less compilation should have failed"</span>);
-<a class="jxr_linenumber" name="71" href="#71">71</a>          } <strong class="jxr_keyword">catch</strong> (Processor.ProcessorException e) {
-<a class="jxr_linenumber" name="72" href="#72">72</a>              <em class="jxr_comment">// OK.</em>
-<a class="jxr_linenumber" name="73" href="#73">73</a>          }
-<a class="jxr_linenumber" name="74" href="#74">74</a>      }
-<a class="jxr_linenumber" name="75" href="#75">75</a>  }
+<a class="jxr_linenumber" name="67" href="#67">67</a>          File error = <strong class="jxr_keyword">new</strong> File(mojo.stylesheetsDir, <span class="jxr_string">"error.less"</span>);
+<a class="jxr_linenumber" name="68" href="#68">68</a>          FileUtils.write(error, <span class="jxr_string">"this is not less"</span>);
+<a class="jxr_linenumber" name="69" href="#69">69</a>  
+<a class="jxr_linenumber" name="70" href="#70">70</a>          LessCompilationProcessor processor = mojo.getProcessor();
+<a class="jxr_linenumber" name="71" href="#71">71</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="72" href="#72">72</a>              processor.compile(error);
+<a class="jxr_linenumber" name="73" href="#73">73</a>              fail(<span class="jxr_string">"Less compilation should have failed"</span>);
+<a class="jxr_linenumber" name="74" href="#74">74</a>          } <strong class="jxr_keyword">catch</strong> (Processor.ProcessorException e) {
+<a class="jxr_linenumber" name="75" href="#75">75</a>              System.out.println(e.getMessage() + <span class="jxr_string">" "</span> + e.getCause().getMessage());
+<a class="jxr_linenumber" name="76" href="#76">76</a>              <em class="jxr_comment">// OK.</em>
+<a class="jxr_linenumber" name="77" href="#77">77</a>          }
+<a class="jxr_linenumber" name="78" href="#78">78</a>      }
+<a class="jxr_linenumber" name="79" href="#79">79</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
