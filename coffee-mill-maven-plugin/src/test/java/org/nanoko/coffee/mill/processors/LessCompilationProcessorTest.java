@@ -49,7 +49,7 @@ public class LessCompilationProcessorTest {
 
         LessCompilerMojo mojo = new LessCompilerMojo();
         mojo.stylesheetsDir = new File("src/test/resources/stylesheets");
-        mojo.workDir = new File("target/test/testLessCompilation-www");
+        mojo.workDir = new File("target/test/testLessCompilation-www2");
         mojo.execute();
 
         assertThat(new File(mojo.workDir, "forum.css").isFile()).isTrue();
@@ -59,16 +59,20 @@ public class LessCompilationProcessorTest {
     }
 
     @Test
-    public void testInvalidLessFile() {
+    public void testInvalidLessFile() throws IOException {
         LessCompilerMojo mojo = new LessCompilerMojo();
-        mojo.stylesheetsDir = new File("src/test/resources/stylesheets");
+        mojo.stylesheetsDir = new File("target/test/junk");
         mojo.workDir = new File("target/test/testLessCompilation-www");
+
+        File error = new File(mojo.stylesheetsDir, "error.less");
+        FileUtils.write(error, "this is not less");
 
         LessCompilationProcessor processor = mojo.getProcessor();
         try {
-            processor.less("this is not less");
+            processor.compile(error);
             fail("Less compilation should have failed");
         } catch (Processor.ProcessorException e) {
+            System.out.println(e.getMessage() + " " + e.getCause().getMessage());
             // OK.
         }
     }
