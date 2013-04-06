@@ -18,13 +18,12 @@ package org.nanoko.coffee.mill.processors;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.jruby.embed.LocalContextScope;
+import org.jruby.embed.LocalVariableBehavior;
+import org.jruby.embed.ScriptingContainer;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public class SassCompilationProcessor extends DefaultProcessor {
     private File source;
     private File destination;
     private StringBuilder script;
-    private ScriptEngine jruby;
+    private ScriptingContainer jruby;
     private File frameworks;
 
     public void tearDown() {
@@ -73,9 +72,12 @@ public class SassCompilationProcessor extends DefaultProcessor {
         getLog().info("Compiling SASS Templates");
         System.setProperty("org.jruby.embed.localcontext.scope", "threadsafe");
 
-        final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        this.jruby = scriptEngineManager.getEngineByName("jruby");
-        jruby.getContext().setAttribute("org.jruby.embed.sharing.variables", false, ScriptContext.ENGINE_SCOPE);
+//        final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+//        this.jruby = scriptEngineManager.getEngineByName("jruby");
+//        jruby.getContext().setAttribute("org.jruby.embed.sharing.variables", false, ScriptContext.ENGINE_SCOPE);
+
+        jruby = new ScriptingContainer(LocalContextScope.THREADSAFE, LocalVariableBehavior.GLOBAL);
+
     }
 
     public boolean accept(File file) {
@@ -88,10 +90,8 @@ public class SassCompilationProcessor extends DefaultProcessor {
             return;
         }
         Collection<File> files = FileUtils.listFiles(source, new String[]{"scss"}, true);
-        for (File file : files) {
-            if (file.isFile()) {
-                compile(file);
-            }
+        if (! files.isEmpty()) {
+            compile();
         }
     }
 
@@ -101,30 +101,25 @@ public class SassCompilationProcessor extends DefaultProcessor {
         return new File(destination, path + "/" + cssFileName);
     }
 
-    private void compile(File file) throws ProcessorException {
+    private void compile() throws ProcessorException {
         //Execute the SASS Compilation Ruby Script
-        try {
-            jruby.eval(script.toString());
-            final SassCompilationErrors compilationErrors = (SassCompilationErrors) jruby.getBindings(ScriptContext.ENGINE_SCOPE).get("compilation_errors");
-            if (compilationErrors.hasErrors()) {
-                for (SassCompilationErrors.CompilationError error : compilationErrors) {
-                    getLog().error("Compilation of template " + error.filename + " failed: " + error.message);
-                }
-                throw new ProcessorException("SASS compilation encountered errors (see above for details).");
+        final SassCompilationErrors compilationErrors = (SassCompilationErrors) jruby.runScriptlet(script.toString());
+        if (compilationErrors.hasErrors()) {
+            for (SassCompilationErrors.CompilationError error : compilationErrors) {
+                getLog().error("Compilation of template " + error.filename + " failed: " + error.message);
             }
-        } catch (final ScriptException e) {
-            throw new ProcessorException("Failed to execute SASS ruby script:\n" + script, e);
+            throw new ProcessorException("SASS compilation encountered errors (see above for details).");
         }
     }
 
     @Override
     public void fileCreated(File file) throws ProcessorException {
-        compile(file);
+        compile();
     }
 
     @Override
     public void fileUpdated(File file) throws ProcessorException {
-        compile(file);
+        compile();
     }
 
     @Override
@@ -203,7 +198,8 @@ public class SassCompilationProcessor extends DefaultProcessor {
             script.append("pp Compass::configuration\n");
         }
 
-        script.append("Sass::Plugin.update_stylesheets");
+        script.append("Sass::Plugin.update_stylesheets\n");
+        script.append("return $compilation_errors\n");
     }
 
 }
