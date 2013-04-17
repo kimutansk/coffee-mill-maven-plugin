@@ -1,0 +1,67 @@
+//
+ / Copyright 2013 OW2 Nanoko Project
+ / Licensed under the Apache License, Version 2.0 (the "License");
+ / you may not use this file except in compliance with the License.
+ / You may obtain a copy of the License at
+ /
+ /    http://www.apache.org/licenses/LICENSE-2.0
+ /
+ / Unless required by applicable law or agreed to in writing, software
+ / distributed under the License is distributed on an "AS IS" BASIS,
+ / WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ / See the License for the specific language governing permissions and
+ / limitations under the License.
+ /
+
+=arrow($direction, $bg-color, $border-color, $border-width, $top, $left, $width: 10px)
+  position: relative
+  &:before
+    content: "\00a0"
+    // reduce the damage in FF3.0:
+    display: block
+    position: absolute
+    width: 0
+    height: 0
+    top: $top
+    left: $left
+    bottom: auto
+    border-width: floor($width / 2)
+    border-style: solid
+    @if $direction == "south"
+      border-color: $border-color transparent transparent transparent
+    @if $direction == "north"
+      border-color: transparent transparent $border-color transparent
+    @if $direction == "east"
+      border-color: transparent transparent transparent $border-color
+    @if $direction == "west"
+      border-color: transparent $border-color transparent transparent
+  // creates the smaller  triangle
+  &:after
+    content: "\00a0"
+    display: block
+    position: absolute
+    width: 0
+    height: 0
+    @if $direction == "south"
+      top: $top - $border-width
+    @else if $direction == "north"
+      top: $top + $border-width
+    @else
+      top: $top
+    @if $direction == "east"
+      left: $left - $border-width
+    @else if $direction == "west"
+      left: $left + $border-width
+    @else
+      left: $left
+    bottom: auto
+    border-width: floor($width / 2)
+    border-style: solid
+    @if $direction == "south"
+      border-color: $bg-color transparent transparent transparent
+    @if $direction == "north"
+      border-color: transparent transparent $bg-color transparent
+    @if $direction == "east"
+      border-color: transparent transparent transparent $bg-color
+    @if $direction == "west"
+      border-color: transparent $bg-color transparent transparent
