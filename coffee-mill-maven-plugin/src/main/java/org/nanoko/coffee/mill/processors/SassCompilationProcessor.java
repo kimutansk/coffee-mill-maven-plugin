@@ -69,7 +69,6 @@ public class SassCompilationProcessor extends DefaultProcessor {
         buildSASSScript(script);
         getLog().debug(script.toString());
 
-        getLog().info("Compiling SASS Templates");
         System.setProperty("org.jruby.embed.localcontext.scope", "threadsafe");
 
 //        final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
@@ -81,7 +80,9 @@ public class SassCompilationProcessor extends DefaultProcessor {
     }
 
     public boolean accept(File file) {
-        return isFileContainedInDirectory(file, source) && file.getName().endsWith(".scss") && file.isFile();
+        return isFileContainedInDirectory(file, source)
+                && (file.getName().endsWith(".scss") || file.getName().endsWith(".sass"))
+                && file.isFile();
     }
 
     @Override
@@ -89,7 +90,7 @@ public class SassCompilationProcessor extends DefaultProcessor {
         if (!source.exists()) {
             return;
         }
-        Collection<File> files = FileUtils.listFiles(source, new String[]{"scss"}, true);
+        Collection<File> files = FileUtils.listFiles(source, new String[]{"scss", "sass"}, true);
         if (! files.isEmpty()) {
             compile();
         }
@@ -102,6 +103,7 @@ public class SassCompilationProcessor extends DefaultProcessor {
     }
 
     private void compile() throws ProcessorException {
+        getLog().info("Compiling SASS Templates");
         //Execute the SASS Compilation Ruby Script
         final SassCompilationErrors compilationErrors = (SassCompilationErrors) jruby.runScriptlet(script.toString());
         if (compilationErrors.hasErrors()) {
