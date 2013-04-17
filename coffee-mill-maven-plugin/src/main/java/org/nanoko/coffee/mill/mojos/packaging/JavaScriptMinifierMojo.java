@@ -108,13 +108,24 @@ public class JavaScriptMinifierMojo extends AbstractCoffeeMillMojo {
         if (skipMinification) {
             getLog().debug("JavaScript Minification skipped");
             return;
+        }
 
+        // Check whether we have a js file
+        File input = null;
+        if (project.getArtifact() != null) {
+            input = project.getArtifact().getFile();
         }
-        if (! project.getArtifact().getFile().exists()  || ! project.getArtifact().getFile().getName().endsWith("" +
-                ".js")) {
-            throw new MojoExecutionException("Cannot minify the project artifact - either the file does not exist or " +
-                    "is not a JavaScript file");
+
+        // Detect when we don't have a JS artifact
+        if (input == null  || ! input.exists()) {
+            getLog().warn("JavaScript minification skipped - no JavaScript artifact found");
+            return;
+        } else  if (! input.getName().endsWith(".js")) {
+            getLog().warn("JavaScript minification skipped - the project artifact is not a javascript file (" +
+                    input.getName() + ")");
+            return;
         }
+
 
         File output = new File(getTarget(), project.getBuild().getFinalName() + "-min.js");
 
