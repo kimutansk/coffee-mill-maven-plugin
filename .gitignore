@@ -1,1 +1,8 @@
 /atlassian-ide-plugin.xml
+target/
+.settings/
+.project
+.DS_Store
+.classpath
+.settings/
+.project
