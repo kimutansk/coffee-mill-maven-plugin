@@ -136,129 +136,136 @@
 <a class="jxr_linenumber" name="126" href="#126">126</a>             <strong class="jxr_keyword">return</strong>;
 <a class="jxr_linenumber" name="127" href="#127">127</a>         }
 <a class="jxr_linenumber" name="128" href="#128">128</a> 
-<a class="jxr_linenumber" name="129" href="#129">129</a> 
-<a class="jxr_linenumber" name="130" href="#130">130</a>         File output = <strong class="jxr_keyword">new</strong> File(getTarget(), project.getBuild().getFinalName() + <span class="jxr_string">"-min.js"</span>);
-<a class="jxr_linenumber" name="131" href="#131">131</a> 
-<a class="jxr_linenumber" name="132" href="#132">132</a>         <strong class="jxr_keyword">if</strong> (Minifier.GOOGLE_CLOSURE.equals(minifier)) {
-<a class="jxr_linenumber" name="133" href="#133">133</a>             doGoogleCompression(project.getArtifact().getFile(), output);
-<a class="jxr_linenumber" name="134" href="#134">134</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (Minifier.YUI_COMPRESSOR.equals(minifier)) {
-<a class="jxr_linenumber" name="135" href="#135">135</a>             doYUICompression(project.getArtifact().getFile(), output);
-<a class="jxr_linenumber" name="136" href="#136">136</a>         }
-<a class="jxr_linenumber" name="137" href="#137">137</a> 
-<a class="jxr_linenumber" name="138" href="#138">138</a>         <strong class="jxr_keyword">if</strong> (! output.isFile()) {
-<a class="jxr_linenumber" name="139" href="#139">139</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoFailureException(<span class="jxr_string">"The minified file "</span>+ output.getAbsolutePath() + <span class="jxr_string">" does not exist - check "</span> +
-<a class="jxr_linenumber" name="140" href="#140">140</a>                     <span class="jxr_string">"log."</span>);
-<a class="jxr_linenumber" name="141" href="#141">141</a>         }
-<a class="jxr_linenumber" name="142" href="#142">142</a> 
-<a class="jxr_linenumber" name="143" href="#143">143</a>         <strong class="jxr_keyword">if</strong> (attachMinifiedJavaScript) {
-<a class="jxr_linenumber" name="144" href="#144">144</a>             projectHelper.attachArtifact(project, output, <span class="jxr_string">"min"</span>);
-<a class="jxr_linenumber" name="145" href="#145">145</a>         }
-<a class="jxr_linenumber" name="146" href="#146">146</a>     }
-<a class="jxr_linenumber" name="147" href="#147">147</a> 
-<a class="jxr_linenumber" name="148" href="#148">148</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> doGoogleCompression(File file, File output) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a class="jxr_linenumber" name="149" href="#149">149</a>         getLog().info(<span class="jxr_string">"Compressing "</span> + file.getName() + <span class="jxr_string">" using Google Closure"</span>);
-<a class="jxr_linenumber" name="150" href="#150">150</a>         <strong class="jxr_keyword">final</strong> com.google.javascript.jscomp.Compiler compiler = <strong class="jxr_keyword">new</strong> Compiler();
-<a class="jxr_linenumber" name="151" href="#151">151</a>         CompilerOptions options = newCompilerOptions();
-<a class="jxr_linenumber" name="152" href="#152">152</a>         getLog().info(<span class="jxr_string">"Compilation Level set to "</span> + minifierGoogleCompilationLevel);
-<a class="jxr_linenumber" name="153" href="#153">153</a>         minifierGoogleCompilationLevel.setOptionsForCompilationLevel(options);
+<a class="jxr_linenumber" name="129" href="#129">129</a>         File output = <strong class="jxr_keyword">new</strong> File(getWorkDirectory(), project.getBuild().getFinalName() + <span class="jxr_string">"-min.js"</span>);
+<a class="jxr_linenumber" name="130" href="#130">130</a> 
+<a class="jxr_linenumber" name="131" href="#131">131</a>         <strong class="jxr_keyword">if</strong> (Minifier.GOOGLE_CLOSURE.equals(minifier)) {
+<a class="jxr_linenumber" name="132" href="#132">132</a>             doGoogleCompression(project.getArtifact().getFile(), output);
+<a class="jxr_linenumber" name="133" href="#133">133</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (Minifier.YUI_COMPRESSOR.equals(minifier)) {
+<a class="jxr_linenumber" name="134" href="#134">134</a>             doYUICompression(project.getArtifact().getFile(), output);
+<a class="jxr_linenumber" name="135" href="#135">135</a>         }
+<a class="jxr_linenumber" name="136" href="#136">136</a> 
+<a class="jxr_linenumber" name="137" href="#137">137</a>         <strong class="jxr_keyword">if</strong> (! output.isFile()) {
+<a class="jxr_linenumber" name="138" href="#138">138</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoFailureException(<span class="jxr_string">"The minified file "</span>+ output.getAbsolutePath() + <span class="jxr_string">" does not exist - check "</span> +
+<a class="jxr_linenumber" name="139" href="#139">139</a>                     <span class="jxr_string">"log."</span>);
+<a class="jxr_linenumber" name="140" href="#140">140</a>         }
+<a class="jxr_linenumber" name="141" href="#141">141</a> 
+<a class="jxr_linenumber" name="142" href="#142">142</a>         File minArtifact = <strong class="jxr_keyword">new</strong> File(getTarget(), project.getBuild().getFinalName() + <span class="jxr_string">"-min.js"</span>);
+<a class="jxr_linenumber" name="143" href="#143">143</a>         getLog().info(<span class="jxr_string">"Copying "</span> + output.getAbsolutePath() + <span class="jxr_string">" to the "</span> + minArtifact.getAbsolutePath());
+<a class="jxr_linenumber" name="144" href="#144">144</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="145" href="#145">145</a> 			FileUtils.copyFile(output, minArtifact);
+<a class="jxr_linenumber" name="146" href="#146">146</a> 		} <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="147" href="#147">147</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Cannot copy the minified file to the target folder"</span>, e);
+<a class="jxr_linenumber" name="148" href="#148">148</a> 		}
+<a class="jxr_linenumber" name="149" href="#149">149</a> 
+<a class="jxr_linenumber" name="150" href="#150">150</a>         <strong class="jxr_keyword">if</strong> (attachMinifiedJavaScript) {
+<a class="jxr_linenumber" name="151" href="#151">151</a>         	projectHelper.attachArtifact(project, minArtifact, <span class="jxr_string">"min"</span>);
+<a class="jxr_linenumber" name="152" href="#152">152</a>         }
+<a class="jxr_linenumber" name="153" href="#153">153</a>     }
 <a class="jxr_linenumber" name="154" href="#154">154</a> 
-<a class="jxr_linenumber" name="155" href="#155">155</a>         <strong class="jxr_keyword">final</strong> JSSourceFile[] input = <strong class="jxr_keyword">new</strong> JSSourceFile[] {
-<a class="jxr_linenumber" name="156" href="#156">156</a>                 JSSourceFile.fromFile(file)
-<a class="jxr_linenumber" name="157" href="#157">157</a>         };
-<a class="jxr_linenumber" name="158" href="#158">158</a>         JSSourceFile[] externs = <strong class="jxr_keyword">new</strong> JSSourceFile[] {};
-<a class="jxr_linenumber" name="159" href="#159">159</a> 
-<a class="jxr_linenumber" name="160" href="#160">160</a>         compiler.initOptions(options);
-<a class="jxr_linenumber" name="161" href="#161">161</a>         <strong class="jxr_keyword">final</strong> Result result = compiler.compile(externs, input, options);
-<a class="jxr_linenumber" name="162" href="#162">162</a>         <strong class="jxr_keyword">if</strong> (result.success) {
-<a class="jxr_linenumber" name="163" href="#163">163</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="164" href="#164">164</a>                 FileUtils.write(output, compiler.toSource());
-<a class="jxr_linenumber" name="165" href="#165">165</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="166" href="#166">166</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Cannot write minified file"</span>, e);
-<a class="jxr_linenumber" name="167" href="#167">167</a>             }
-<a class="jxr_linenumber" name="168" href="#168">168</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="169" href="#169">169</a>             <strong class="jxr_keyword">for</strong> (JSError error : result.errors) {
-<a class="jxr_linenumber" name="170" href="#170">170</a>                 getLog().error(error.sourceName + <span class="jxr_string">":"</span> + error.lineNumber + <span class="jxr_string">" - "</span> + error.description);
-<a class="jxr_linenumber" name="171" href="#171">171</a>             }
-<a class="jxr_linenumber" name="172" href="#172">172</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"The minification failed - check log"</span>);
-<a class="jxr_linenumber" name="173" href="#173">173</a>         }
-<a class="jxr_linenumber" name="174" href="#174">174</a> 
-<a class="jxr_linenumber" name="175" href="#175">175</a>     }
-<a class="jxr_linenumber" name="176" href="#176">176</a> 
-<a class="jxr_linenumber" name="177" href="#177">177</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> doYUICompression(File file, File output) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a class="jxr_linenumber" name="178" href="#178">178</a>         getLog().info(<span class="jxr_string">"Compressing "</span> + file.getName() + <span class="jxr_string">" using YUI Compressor"</span>);
-<a class="jxr_linenumber" name="179" href="#179">179</a>         <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a> reporter = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a>();
-<a class="jxr_linenumber" name="180" href="#180">180</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="181" href="#181">181</a>             <strong class="jxr_keyword">final</strong> JavaScriptCompressor compressor = <strong class="jxr_keyword">new</strong> JavaScriptCompressor(<strong class="jxr_keyword">new</strong> FileReader(file),
-<a class="jxr_linenumber" name="182" href="#182">182</a>                 reporter);
-<a class="jxr_linenumber" name="183" href="#183">183</a>             FileWriter writer = <strong class="jxr_keyword">new</strong> FileWriter(output);
-<a class="jxr_linenumber" name="184" href="#184">184</a>             <strong class="jxr_keyword">int</strong> linebreakpos = -1;
-<a class="jxr_linenumber" name="185" href="#185">185</a>             compressor.compress(writer, linebreakpos, minifierYUIMunge, minifierYUIVerbose, minifierYUIPreserveSemiColumn,
-<a class="jxr_linenumber" name="186" href="#186">186</a>                     minifierYUIDisableOptimizations);
-<a class="jxr_linenumber" name="187" href="#187">187</a>             writer.close();
-<a class="jxr_linenumber" name="188" href="#188">188</a>             <strong class="jxr_keyword">if</strong> (reporter.errorFound) {
-<a class="jxr_linenumber" name="189" href="#189">189</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error during minification - Check log"</span>);
-<a class="jxr_linenumber" name="190" href="#190">190</a>             }
-<a class="jxr_linenumber" name="191" href="#191">191</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="192" href="#192">192</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error during minification"</span>, e);
-<a class="jxr_linenumber" name="193" href="#193">193</a>         }
-<a class="jxr_linenumber" name="194" href="#194">194</a>     }
-<a class="jxr_linenumber" name="195" href="#195">195</a> 
-<a class="jxr_linenumber" name="196" href="#196">196</a> 
-<a class="jxr_linenumber" name="197" href="#197">197</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="198" href="#198">198</a> <em class="jxr_javadoccomment">     * @return default {@link CompilerOptions} object to be used by compressor.</em>
-<a class="jxr_linenumber" name="199" href="#199">199</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="200" href="#200">200</a>     <strong class="jxr_keyword">protected</strong> CompilerOptions newCompilerOptions() {
-<a class="jxr_linenumber" name="201" href="#201">201</a>         <strong class="jxr_keyword">final</strong> CompilerOptions options = <strong class="jxr_keyword">new</strong> CompilerOptions();
-<a class="jxr_linenumber" name="202" href="#202">202</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="203" href="#203">203</a> <em class="jxr_javadoccomment">         * According to John Lenz from the Closure Compiler project, if you are using the Compiler API directly, you</em>
-<a class="jxr_linenumber" name="204" href="#204">204</a> <em class="jxr_javadoccomment">         * should specify a CodingConvention. {@link <a href="http://code.google.com/p/wro4j/issues/detail?id=155" target="alexandria_uri">http://code.google.com/p/wro4j/issues/detail?id=155</a>}</em>
-<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="206" href="#206">206</a>         options.setCodingConvention(<strong class="jxr_keyword">new</strong> ClosureCodingConvention());
-<a class="jxr_linenumber" name="207" href="#207">207</a>         <em class="jxr_comment">//set it to warning, otherwise compiler will fail</em>
-<a class="jxr_linenumber" name="208" href="#208">208</a>         options.setWarningLevel(DiagnosticGroups.CHECK_VARIABLES,
-<a class="jxr_linenumber" name="209" href="#209">209</a>                 CheckLevel.WARNING);
-<a class="jxr_linenumber" name="210" href="#210">210</a>         <strong class="jxr_keyword">return</strong> options;
-<a class="jxr_linenumber" name="211" href="#211">211</a>     }
-<a class="jxr_linenumber" name="212" href="#212">212</a> 
-<a class="jxr_linenumber" name="213" href="#213">213</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * Error reporter.</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="216" href="#216">216</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a>
-<a class="jxr_linenumber" name="217" href="#217">217</a>             <strong class="jxr_keyword">implements</strong> ErrorReporter {
-<a class="jxr_linenumber" name="218" href="#218">218</a> 
-<a class="jxr_linenumber" name="219" href="#219">219</a>         <strong class="jxr_keyword">boolean</strong> errorFound = false;
-<a class="jxr_linenumber" name="220" href="#220">220</a> 
-<a class="jxr_linenumber" name="221" href="#221">221</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> warning(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line, <strong class="jxr_keyword">final</strong> String lineSource,
-<a class="jxr_linenumber" name="222" href="#222">222</a>                             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
-<a class="jxr_linenumber" name="223" href="#223">223</a>             <strong class="jxr_keyword">if</strong> (line &lt; 0) {
-<a class="jxr_linenumber" name="224" href="#224">224</a>                 getLog().warn(sourceName +  <span class="jxr_string">" -&gt; "</span> + message);
-<a class="jxr_linenumber" name="225" href="#225">225</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="226" href="#226">226</a>                 getLog().warn(sourceName + <span class="jxr_string">":"</span> + line + <span class="jxr_string">" -&gt; "</span> + message);
-<a class="jxr_linenumber" name="227" href="#227">227</a>             }
-<a class="jxr_linenumber" name="228" href="#228">228</a>         }
-<a class="jxr_linenumber" name="229" href="#229">229</a> 
-<a class="jxr_linenumber" name="230" href="#230">230</a> 
-<a class="jxr_linenumber" name="231" href="#231">231</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> error(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line, <strong class="jxr_keyword">final</strong> String lineSource,
-<a class="jxr_linenumber" name="232" href="#232">232</a>                           <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
-<a class="jxr_linenumber" name="233" href="#233">233</a>             <strong class="jxr_keyword">if</strong> (line &lt; 0) {
-<a class="jxr_linenumber" name="234" href="#234">234</a>                 getLog().error(sourceName +  <span class="jxr_string">" -&gt; "</span> + message);
-<a class="jxr_linenumber" name="235" href="#235">235</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="236" href="#236">236</a>                 getLog().error(sourceName + <span class="jxr_string">":"</span> + line + <span class="jxr_string">" -&gt; "</span> + message);
-<a class="jxr_linenumber" name="237" href="#237">237</a>             }
-<a class="jxr_linenumber" name="238" href="#238">238</a> 
-<a class="jxr_linenumber" name="239" href="#239">239</a>             errorFound = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="240" href="#240">240</a>         }
-<a class="jxr_linenumber" name="241" href="#241">241</a> 
-<a class="jxr_linenumber" name="242" href="#242">242</a> 
-<a class="jxr_linenumber" name="243" href="#243">243</a>         <strong class="jxr_keyword">public</strong> EvaluatorException runtimeError(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line,
-<a class="jxr_linenumber" name="244" href="#244">244</a>                                                <strong class="jxr_keyword">final</strong> String lineSource, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
-<a class="jxr_linenumber" name="245" href="#245">245</a>             error(message, sourceName, line, lineSource, lineOffset);
-<a class="jxr_linenumber" name="246" href="#246">246</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> EvaluatorException(message);
+<a class="jxr_linenumber" name="155" href="#155">155</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> doGoogleCompression(File file, File output) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a class="jxr_linenumber" name="156" href="#156">156</a>         getLog().info(<span class="jxr_string">"Compressing "</span> + file.getName() + <span class="jxr_string">" using Google Closure"</span>);
+<a class="jxr_linenumber" name="157" href="#157">157</a>         <strong class="jxr_keyword">final</strong> com.google.javascript.jscomp.Compiler compiler = <strong class="jxr_keyword">new</strong> Compiler();
+<a class="jxr_linenumber" name="158" href="#158">158</a>         CompilerOptions options = newCompilerOptions();
+<a class="jxr_linenumber" name="159" href="#159">159</a>         getLog().info(<span class="jxr_string">"Compilation Level set to "</span> + minifierGoogleCompilationLevel);
+<a class="jxr_linenumber" name="160" href="#160">160</a>         minifierGoogleCompilationLevel.setOptionsForCompilationLevel(options);
+<a class="jxr_linenumber" name="161" href="#161">161</a> 
+<a class="jxr_linenumber" name="162" href="#162">162</a>         <strong class="jxr_keyword">final</strong> JSSourceFile[] input = <strong class="jxr_keyword">new</strong> JSSourceFile[] {
+<a class="jxr_linenumber" name="163" href="#163">163</a>                 JSSourceFile.fromFile(file)
+<a class="jxr_linenumber" name="164" href="#164">164</a>         };
+<a class="jxr_linenumber" name="165" href="#165">165</a>         JSSourceFile[] externs = <strong class="jxr_keyword">new</strong> JSSourceFile[] {};
+<a class="jxr_linenumber" name="166" href="#166">166</a> 
+<a class="jxr_linenumber" name="167" href="#167">167</a>         compiler.initOptions(options);
+<a class="jxr_linenumber" name="168" href="#168">168</a>         <strong class="jxr_keyword">final</strong> Result result = compiler.compile(externs, input, options);
+<a class="jxr_linenumber" name="169" href="#169">169</a>         <strong class="jxr_keyword">if</strong> (result.success) {
+<a class="jxr_linenumber" name="170" href="#170">170</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="171" href="#171">171</a>                 FileUtils.write(output, compiler.toSource());
+<a class="jxr_linenumber" name="172" href="#172">172</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="173" href="#173">173</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Cannot write minified file"</span>, e);
+<a class="jxr_linenumber" name="174" href="#174">174</a>             }
+<a class="jxr_linenumber" name="175" href="#175">175</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="176" href="#176">176</a>             <strong class="jxr_keyword">for</strong> (JSError error : result.errors) {
+<a class="jxr_linenumber" name="177" href="#177">177</a>                 getLog().error(error.sourceName + <span class="jxr_string">":"</span> + error.lineNumber + <span class="jxr_string">" - "</span> + error.description);
+<a class="jxr_linenumber" name="178" href="#178">178</a>             }
+<a class="jxr_linenumber" name="179" href="#179">179</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"The minification failed - check log"</span>);
+<a class="jxr_linenumber" name="180" href="#180">180</a>         }
+<a class="jxr_linenumber" name="181" href="#181">181</a> 
+<a class="jxr_linenumber" name="182" href="#182">182</a>     }
+<a class="jxr_linenumber" name="183" href="#183">183</a> 
+<a class="jxr_linenumber" name="184" href="#184">184</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> doYUICompression(File file, File output) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a class="jxr_linenumber" name="185" href="#185">185</a>         getLog().info(<span class="jxr_string">"Compressing "</span> + file.getName() + <span class="jxr_string">" using YUI Compressor"</span>);
+<a class="jxr_linenumber" name="186" href="#186">186</a>         <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a> reporter = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a>();
+<a class="jxr_linenumber" name="187" href="#187">187</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="188" href="#188">188</a>             <strong class="jxr_keyword">final</strong> JavaScriptCompressor compressor = <strong class="jxr_keyword">new</strong> JavaScriptCompressor(<strong class="jxr_keyword">new</strong> FileReader(file),
+<a class="jxr_linenumber" name="189" href="#189">189</a>                 reporter);
+<a class="jxr_linenumber" name="190" href="#190">190</a>             FileWriter writer = <strong class="jxr_keyword">new</strong> FileWriter(output);
+<a class="jxr_linenumber" name="191" href="#191">191</a>             <strong class="jxr_keyword">int</strong> linebreakpos = -1;
+<a class="jxr_linenumber" name="192" href="#192">192</a>             compressor.compress(writer, linebreakpos, minifierYUIMunge, minifierYUIVerbose, minifierYUIPreserveSemiColumn,
+<a class="jxr_linenumber" name="193" href="#193">193</a>                     minifierYUIDisableOptimizations);
+<a class="jxr_linenumber" name="194" href="#194">194</a>             writer.close();
+<a class="jxr_linenumber" name="195" href="#195">195</a>             <strong class="jxr_keyword">if</strong> (reporter.errorFound) {
+<a class="jxr_linenumber" name="196" href="#196">196</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error during minification - Check log"</span>);
+<a class="jxr_linenumber" name="197" href="#197">197</a>             }
+<a class="jxr_linenumber" name="198" href="#198">198</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="199" href="#199">199</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error during minification"</span>, e);
+<a class="jxr_linenumber" name="200" href="#200">200</a>         }
+<a class="jxr_linenumber" name="201" href="#201">201</a>     }
+<a class="jxr_linenumber" name="202" href="#202">202</a> 
+<a class="jxr_linenumber" name="203" href="#203">203</a> 
+<a class="jxr_linenumber" name="204" href="#204">204</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_javadoccomment">     * @return default {@link CompilerOptions} object to be used by compressor.</em>
+<a class="jxr_linenumber" name="206" href="#206">206</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="207" href="#207">207</a>     <strong class="jxr_keyword">protected</strong> CompilerOptions newCompilerOptions() {
+<a class="jxr_linenumber" name="208" href="#208">208</a>         <strong class="jxr_keyword">final</strong> CompilerOptions options = <strong class="jxr_keyword">new</strong> CompilerOptions();
+<a class="jxr_linenumber" name="209" href="#209">209</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">         * According to John Lenz from the Closure Compiler project, if you are using the Compiler API directly, you</em>
+<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">         * should specify a CodingConvention. {@link <a href="http://code.google.com/p/wro4j/issues/detail?id=155" target="alexandria_uri">http://code.google.com/p/wro4j/issues/detail?id=155</a>}</em>
+<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="213" href="#213">213</a>         options.setCodingConvention(<strong class="jxr_keyword">new</strong> ClosureCodingConvention());
+<a class="jxr_linenumber" name="214" href="#214">214</a>         <em class="jxr_comment">//set it to warning, otherwise compiler will fail</em>
+<a class="jxr_linenumber" name="215" href="#215">215</a>         options.setWarningLevel(DiagnosticGroups.CHECK_VARIABLES,
+<a class="jxr_linenumber" name="216" href="#216">216</a>                 CheckLevel.WARNING);
+<a class="jxr_linenumber" name="217" href="#217">217</a>         <strong class="jxr_keyword">return</strong> options;
+<a class="jxr_linenumber" name="218" href="#218">218</a>     }
+<a class="jxr_linenumber" name="219" href="#219">219</a> 
+<a class="jxr_linenumber" name="220" href="#220">220</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_javadoccomment">     * Error reporter.</em>
+<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="223" href="#223">223</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../org/nanoko/coffee/mill/mojos/packaging/JavaScriptMinifierMojo.html">YUIErrorReporter</a>
+<a class="jxr_linenumber" name="224" href="#224">224</a>             <strong class="jxr_keyword">implements</strong> ErrorReporter {
+<a class="jxr_linenumber" name="225" href="#225">225</a> 
+<a class="jxr_linenumber" name="226" href="#226">226</a>         <strong class="jxr_keyword">boolean</strong> errorFound = false;
+<a class="jxr_linenumber" name="227" href="#227">227</a> 
+<a class="jxr_linenumber" name="228" href="#228">228</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> warning(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line, <strong class="jxr_keyword">final</strong> String lineSource,
+<a class="jxr_linenumber" name="229" href="#229">229</a>                             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
+<a class="jxr_linenumber" name="230" href="#230">230</a>             <strong class="jxr_keyword">if</strong> (line &lt; 0) {
+<a class="jxr_linenumber" name="231" href="#231">231</a>                 getLog().warn(sourceName +  <span class="jxr_string">" -&gt; "</span> + message);
+<a class="jxr_linenumber" name="232" href="#232">232</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="233" href="#233">233</a>                 getLog().warn(sourceName + <span class="jxr_string">":"</span> + line + <span class="jxr_string">" -&gt; "</span> + message);
+<a class="jxr_linenumber" name="234" href="#234">234</a>             }
+<a class="jxr_linenumber" name="235" href="#235">235</a>         }
+<a class="jxr_linenumber" name="236" href="#236">236</a> 
+<a class="jxr_linenumber" name="237" href="#237">237</a> 
+<a class="jxr_linenumber" name="238" href="#238">238</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> error(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line, <strong class="jxr_keyword">final</strong> String lineSource,
+<a class="jxr_linenumber" name="239" href="#239">239</a>                           <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
+<a class="jxr_linenumber" name="240" href="#240">240</a>             <strong class="jxr_keyword">if</strong> (line &lt; 0) {
+<a class="jxr_linenumber" name="241" href="#241">241</a>                 getLog().error(sourceName +  <span class="jxr_string">" -&gt; "</span> + message);
+<a class="jxr_linenumber" name="242" href="#242">242</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="243" href="#243">243</a>                 getLog().error(sourceName + <span class="jxr_string">":"</span> + line + <span class="jxr_string">" -&gt; "</span> + message);
+<a class="jxr_linenumber" name="244" href="#244">244</a>             }
+<a class="jxr_linenumber" name="245" href="#245">245</a> 
+<a class="jxr_linenumber" name="246" href="#246">246</a>             errorFound = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="247" href="#247">247</a>         }
-<a class="jxr_linenumber" name="248" href="#248">248</a>     }
+<a class="jxr_linenumber" name="248" href="#248">248</a> 
 <a class="jxr_linenumber" name="249" href="#249">249</a> 
-<a class="jxr_linenumber" name="250" href="#250">250</a> 
-<a class="jxr_linenumber" name="251" href="#251">251</a> }
+<a class="jxr_linenumber" name="250" href="#250">250</a>         <strong class="jxr_keyword">public</strong> EvaluatorException runtimeError(<strong class="jxr_keyword">final</strong> String message, <strong class="jxr_keyword">final</strong> String sourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> line,
+<a class="jxr_linenumber" name="251" href="#251">251</a>                                                <strong class="jxr_keyword">final</strong> String lineSource, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> lineOffset) {
+<a class="jxr_linenumber" name="252" href="#252">252</a>             error(message, sourceName, line, lineSource, lineOffset);
+<a class="jxr_linenumber" name="253" href="#253">253</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> EvaluatorException(message);
+<a class="jxr_linenumber" name="254" href="#254">254</a>         }
+<a class="jxr_linenumber" name="255" href="#255">255</a>     }
+<a class="jxr_linenumber" name="256" href="#256">256</a> 
+<a class="jxr_linenumber" name="257" href="#257">257</a> 
+<a class="jxr_linenumber" name="258" href="#258">258</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
