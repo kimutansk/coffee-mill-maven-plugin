@@ -126,8 +126,7 @@ public class JavaScriptMinifierMojo extends AbstractCoffeeMillMojo {
             return;
         }
 
-
-        File output = new File(getTarget(), project.getBuild().getFinalName() + "-min.js");
+        File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + "-min.js");
 
         if (Minifier.GOOGLE_CLOSURE.equals(minifier)) {
             doGoogleCompression(project.getArtifact().getFile(), output);
@@ -140,8 +139,16 @@ public class JavaScriptMinifierMojo extends AbstractCoffeeMillMojo {
                     "log.");
         }
 
+        File minArtifact = new File(getTarget(), project.getBuild().getFinalName() + "-min.js");
+        getLog().info("Copying " + output.getAbsolutePath() + " to the " + minArtifact.getAbsolutePath());
+        try {
+			FileUtils.copyFile(output, minArtifact);
+		} catch (IOException e) {
+            throw new MojoExecutionException("Cannot copy the minified file to the target folder", e);
+		}
+
         if (attachMinifiedJavaScript) {
-            projectHelper.attachArtifact(project, output, "min");
+        	projectHelper.attachArtifact(project, minArtifact, "min");
         }
     }
 
