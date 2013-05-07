@@ -15,16 +15,18 @@
 
 package org.nanoko.coffee.mill.mojos.packaging;
 
-import com.yahoo.platform.yui.compressor.CssCompressor;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.yahoo.platform.yui.compressor.CssCompressor;
 
 /**
  * Minify CSS sources.
@@ -61,15 +63,22 @@ public class StylesheetsMinifierMojo extends AbstractCoffeeMillMojo {
             return;
         }
 
-        File output = new File(getTarget(), project.getBuild().getFinalName() + "-min.css");
+        File output = new File(getWorkDirectory(), project.getBuild().getFinalName() + "-min.css");
 
         doYUICompression(input, output);
 
-
-        if (! output.isFile()) {
+        if (!output.isFile()) {
             throw new MojoFailureException("The minified file "+ output.getAbsolutePath() + " does not exist - check " +
                     "log.");
         }
+        
+        File minArtifact = new File(getTarget(), project.getBuild().getFinalName() + "-min.css");
+        getLog().info("Copying " + output.getAbsolutePath() + " to the " + minArtifact.getAbsolutePath());
+        try {
+			FileUtils.copyFile(output, minArtifact);
+		} catch (IOException e) {
+            throw new MojoExecutionException("Cannot copy the minified file to the target folder", e);
+		}
 
         if (attachMinifiedCSS) {
             projectHelper.attachArtifact(project, "css" , "min" , output);
