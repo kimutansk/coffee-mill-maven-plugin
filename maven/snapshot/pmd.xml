@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-05-06T22:16:05.969">
+<pmd version="4.2.5" timestamp="2013-05-07T09:00:53.696">
 <file name="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="18" endline="18" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos.compile" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.apache.maven.artifact.Artifact'
