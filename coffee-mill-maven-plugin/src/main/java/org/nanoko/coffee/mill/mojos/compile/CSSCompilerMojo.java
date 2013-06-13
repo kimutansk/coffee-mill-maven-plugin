@@ -15,7 +15,6 @@
 
 package org.nanoko.coffee.mill.mojos.compile;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
@@ -23,9 +22,6 @@ import org.nanoko.coffee.mill.processors.CSSFileCopyProcessor;
 import org.nanoko.coffee.mill.processors.CSSLintProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
-
-import java.io.File;
-import java.util.Collection;
 
 /**
  * Copy CSS to the <tt>work</tt> directory and check CSS file using CSSLint.
@@ -65,13 +61,17 @@ public class CSSCompilerMojo extends AbstractCoffeeMillMojo {
         CSSLintProcessor processor = new CSSLintProcessor();
         processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
 
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
-        for (File file : files) {
-            try {
-                processor.processAll();
-            } catch (Processor.ProcessorException e) {
-                getLog().error("Cannot run the CSS Lint Processor on " + file.getAbsolutePath(), e);
-            }
+        //ProcessAll shouldn't be called for each file as it is configured with the Working Directory.
+        //If we want to throw an error message with the file we should
+        //configure the processor with each file individually or return the filename in the exception.
+        
+        //Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
+        //for (File file : files) {
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            getLog().error("Cannot run the CSS Lint Processor on directory " +  getWorkDirectory().getAbsolutePath(), e); //+ file.getAbsolutePath(), e);
         }
+        //}
     }
 }
