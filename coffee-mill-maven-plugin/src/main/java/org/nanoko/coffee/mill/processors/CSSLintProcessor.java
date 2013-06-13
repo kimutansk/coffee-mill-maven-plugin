@@ -15,18 +15,6 @@
 
 package org.nanoko.coffee.mill.processors;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.apache.commons.io.FileUtils;
-import org.mozilla.javascript.RhinoException;
-import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
-import org.nanoko.coffee.mill.utils.OptionsHelper;
-import org.nanoko.coffee.mill.utils.RhinoLauncher;
-import ro.isdc.wro.extensions.processor.support.csslint.CssLint;
-import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
-import ro.isdc.wro.extensions.script.RhinoUtils;
-import ro.isdc.wro.util.WroUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +24,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.mozilla.javascript.RhinoException;
+import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
+import org.nanoko.coffee.mill.utils.OptionsHelper;
+import org.nanoko.coffee.mill.utils.SlimedRhinoLauncher;
+
+import ro.isdc.wro.extensions.processor.support.csslint.CssLint;
+import ro.isdc.wro.extensions.processor.support.csslint.CssLintError;
+import ro.isdc.wro.extensions.script.RhinoUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 /**
  * Processor validating CSS files using jslint.
  */
@@ -44,26 +45,22 @@ public class CSSLintProcessor extends DefaultProcessor {
     private static final String DEFAULT_CSSLINT_JS = "csslint.min.js";
     private File source;
 
-
     public List<ProcessorWarning> validate(File file) throws ProcessorException {
-        List warnings = new ArrayList<ProcessorWarning>();
+        List<ProcessorWarning> warnings = new ArrayList<ProcessorWarning>();
         try {
             String data = FileUtils.readFileToString(file);
-            data = WroUtil.toJSMultiLineString(data);
-            final RhinoLauncher builder = initScriptBuilder();
-            String script = String.format("var result = CSSLint.verify(%s,%s)", data,
-                    "CSSLint.getRules()"); // All rules.
+            data = SlimedRhinoLauncher.toJSMultiLineString(data);
+            final SlimedRhinoLauncher builder = initScriptBuilder();
+            String script = String.format("var result = CSSLint.verify(%s,%s)", data, "CSSLint.getRules()"); // All rules.
             builder.evaluate(script, "CSSLint.verify").toString();
-
             final boolean valid = Boolean.parseBoolean(builder.evaluate("result.messages.length == 0",
                     "checkNoErrors").toString());
             if (!valid) {
-                final String json = builder.addJSON().evaluate("JSON.stringify(result.messages)",
+                final String json = builder.evaluate("JSON.stringify(result.messages);",
                         "CssLint messages").toString();
                 final Type type = new TypeToken<List<CssLintError>>() {
                 }.getType();
                 final List<CssLintError> errors = new Gson().fromJson(json, type);
-                getLog().debug("Errors: " + errors);
                 for (CssLintError error : errors) {
                     warnings.add(new ProcessorWarning(file, error.getLine(), error.getCol(), error.getEvidence(),
                             error.getType() + " : " + error.getMessage()));
@@ -133,12 +130,7 @@ public class CSSLintProcessor extends DefaultProcessor {
     /**
      * Initialize script builder for evaluation.
      */
-    private RhinoLauncher initScriptBuilder() {
-        try {
-            return RhinoLauncher.newChain().evaluateChain(getScriptAsStream(),
-                    DEFAULT_CSSLINT_JS);
-        } catch (final IOException ex) {
-            throw new IllegalStateException("Failed reading init script", ex);
-        }
+    private SlimedRhinoLauncher initScriptBuilder() {
+    	return SlimedRhinoLauncher.getDaBeast();
     }
 }
