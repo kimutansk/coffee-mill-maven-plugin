@@ -163,6 +163,10 @@
                     <groupId>me.n4u.sass</groupId>
                     <artifactId>sass-gems</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.mozilla</groupId>
+                    <artifactId>rhino</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -252,6 +256,12 @@
             <classifier>min</classifier>
             <type>js</type>
         </dependency>
+        
+		<dependency>
+		    <groupId>ro.isdc.wro4j</groupId>
+		    <artifactId>rhino</artifactId>
+		    <version>1.7R5-20130223-1</version>
+		</dependency>
 
         <dependency>
             <groupId>org.lesscss</groupId>
@@ -431,7 +441,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-invoker-plugin</artifactId>
                 <version>1.8</version>
@@ -453,7 +462,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>         
         </plugins>
     </build>
 
