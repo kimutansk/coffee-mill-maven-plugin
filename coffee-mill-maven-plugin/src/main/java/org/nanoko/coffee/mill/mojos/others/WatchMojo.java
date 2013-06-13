@@ -15,7 +15,19 @@
 
 package org.nanoko.coffee.mill.mojos.others;
 
-import org.apache.commons.vfs2.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.vfs2.FileChangeEvent;
+import org.apache.commons.vfs2.FileListener;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.VFS;
 import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -27,16 +39,24 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.mojos.compile.CoffeeScriptCompilerMojo;
 import org.nanoko.coffee.mill.mojos.compile.SassCompilerMojo;
-import org.nanoko.coffee.mill.processors.*;
+import org.nanoko.coffee.mill.processors.CSSAggregator;
+import org.nanoko.coffee.mill.processors.CSSFileCopyProcessor;
+import org.nanoko.coffee.mill.processors.CSSLintProcessor;
+import org.nanoko.coffee.mill.processors.CoffeeScriptCompilationProcessor;
+import org.nanoko.coffee.mill.processors.CopyAssetProcessor;
+import org.nanoko.coffee.mill.processors.DefaultProcessor;
+import org.nanoko.coffee.mill.processors.DustJSProcessor;
+import org.nanoko.coffee.mill.processors.HTMLCompressorProcessor;
+import org.nanoko.coffee.mill.processors.JSHintProcessor;
+import org.nanoko.coffee.mill.processors.JavaScriptAggregator;
+import org.nanoko.coffee.mill.processors.JavaScriptFileCopyProcessor;
+import org.nanoko.coffee.mill.processors.JpegTranProcessor;
+import org.nanoko.coffee.mill.processors.LessCompilationProcessor;
+import org.nanoko.coffee.mill.processors.OptiPNGProcessor;
+import org.nanoko.coffee.mill.processors.Processor;
+import org.nanoko.coffee.mill.processors.SassCompilationProcessor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 import org.nanoko.coffee.mill.utils.ReactorUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This mojo watches the file change in the source directories and process them automatically.

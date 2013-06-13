@@ -15,18 +15,17 @@
 
 package org.nanoko.coffee.mill.processors;
 
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.io.File;
+import java.util.ArrayList;
+
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.junit.Test;
 import org.nanoko.coffee.mill.mojos.compile.CoffeeScriptCompilerMojo;
 import org.nanoko.coffee.mill.mojos.compile.CoffeeScriptTestCompilerMojo;
-
-import java.io.File;
-import java.util.ArrayList;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Test the coffeescript compilation.

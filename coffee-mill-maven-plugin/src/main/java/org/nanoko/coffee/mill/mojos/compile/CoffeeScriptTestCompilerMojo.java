@@ -15,15 +15,14 @@
 
 package org.nanoko.coffee.mill.mojos.compile;
 
-import org.apache.maven.artifact.Artifact;
+import java.io.File;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.CoffeeScriptCompilationProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
-
-import java.io.File;
 
 /**
  * Compiles CoffeeScript files.

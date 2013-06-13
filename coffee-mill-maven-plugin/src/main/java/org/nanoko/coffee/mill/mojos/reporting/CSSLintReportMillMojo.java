@@ -15,15 +15,19 @@
 
 package org.nanoko.coffee.mill.mojos.reporting;
 
+import java.io.File;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.nanoko.coffee.mill.mojos.AbstractReportingCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.CSSLintProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * Builds the CSSLint Report.

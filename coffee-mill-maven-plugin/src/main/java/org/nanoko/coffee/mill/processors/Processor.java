@@ -38,7 +38,10 @@ public interface Processor {
     public void fileDeleted(File file) throws ProcessorException;
 
     class ProcessorException extends Exception {
-        public ProcessorException(String message) {
+
+		private static final long serialVersionUID = 1421637223171144784L;
+		
+		public ProcessorException(String message) {
             super(message);
         }
         public ProcessorException(String message, Throwable cause) {
