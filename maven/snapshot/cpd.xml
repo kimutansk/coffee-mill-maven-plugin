@@ -37,6 +37,36 @@
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="22" tokens="151">
+<file line="247" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/RhinoLauncher.java"/>
+<file line="96" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java"/>
+<codefragment>
+<![CDATA[
+    public static String toJSMultiLineString(String data){
+        final String[] lines = data.split("\n");
+        final StringBuffer result = new StringBuffer("[");
+        if (lines.length == 0) {
+            result.append("\"\"");
+        }
+        for (int i = 0; i < lines.length; i++) {
+            final String line = lines[i];
+            result.append("\"");
+            result.append(line.replace("\\", "\\\\").replace("\"", "\\\"").replaceAll("\\r|\\n", ""));
+            // this is used to force a single line to have at least one new line (otherwise cssLint fails).
+            if (lines.length == 1) {
+                result.append("\\n");
+            }
+            result.append("\"");
+            if (i < lines.length - 1) {
+                result.append(",");
+            }
+        }
+        result.append("].join(\"\\n\")");
+        return result.toString();
+    }
+]]>
+</codefragment>
+</duplication>
 <duplication lines="15" tokens="141">
 <file line="71" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
 <file line="119" path="/Users/jenkins/jobs/coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
