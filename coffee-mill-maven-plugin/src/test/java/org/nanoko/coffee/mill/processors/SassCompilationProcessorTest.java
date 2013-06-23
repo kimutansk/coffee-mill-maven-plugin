@@ -28,7 +28,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * This tests are checking the Sass / Compass compilation.
- * It contains a hack to retrive the compass-gems from the local maven repository.
+ * It contains a hack to retrieve the compass-gems from the local maven repository.
  * {@code org.nanoko.libs:compass-gems:0.12.2}
  */
 public class SassCompilationProcessorTest {
@@ -65,7 +65,7 @@ public class SassCompilationProcessorTest {
                 new FakeArtifact("org.nanoko.libs", "coffeescript", "1.6.2",
                 new File("src/test/resources/jslibs/coffee-script.js")));
         mojo.pluginDependencies.add(
-                new FakeArtifact("org.nanoko.libs", "compass", "0.12.2", "frameworks",
+                new FakeArtifact("org.nanoko.libs", "compass-gems", "0.12.2", "frameworks",
                         new File(System.getProperty("user.home"), ".m2/repository/org/nanoko/libs/compass-gems/0.12" +
                                 ".2/compass-gems-0.12.2-frameworks.zip")));
         mojo.execute();
