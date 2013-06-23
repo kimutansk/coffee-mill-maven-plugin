@@ -132,7 +132,10 @@ public class JsDocMojo extends AbstractMavenReport {
 
         // Destination
         cmdLine.addArgument("--destination");
-        cmdLine.addArgument(out.getAbsolutePath());
+        String destPath = out.getAbsolutePath();
+        // Escapes spaces with a \
+        //destPath = destPath.replace(" ", "\\ ");
+        cmdLine.addArgument(destPath, false);
 
         if (jsdocIncludePrivate) {
             cmdLine.addArgument("--private");
@@ -142,14 +145,19 @@ public class JsDocMojo extends AbstractMavenReport {
         if (! input.exists()) {
             throw new MavenReportException("Cannot find the project's artifact : " + input.getAbsolutePath());
         }
-        cmdLine.addArgument(input.getAbsolutePath());
-
+        String inputPath = input.getAbsolutePath();
+        // Escapes spaces with a \
+        //inputPath = inputPath.replace(" ", "\\ ");
+        cmdLine.addArgument(inputPath, false);
 
         DefaultExecutor executor = new DefaultExecutor();
 
         executor.setWorkingDirectory(project.getBasedir());
         executor.setExitValue(0);
         try {
+            for (String s : cmdLine.toStrings()) {
+                System.out.println(s);
+            }
             getLog().info("Executing " + cmdLine.toString());
             executor.execute(cmdLine);
         } catch (IOException e) {
