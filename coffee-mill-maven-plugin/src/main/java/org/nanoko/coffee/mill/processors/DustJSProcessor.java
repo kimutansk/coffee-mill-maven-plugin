@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class DustJSProcessor extends DefaultProcessor {
 
-    public static final String DUST_SCRIPT = "/dust/dust-full-1.0.0.js";
+    public static final String DUST_SCRIPT = "/dust/dust-full-1.2.5.js";
 
     private File source;
     private File destination;
