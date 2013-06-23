@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-06-23T13:43:48.436">
+<pmd version="4.2.5" timestamp="2013-06-23T14:15:43.179">
 <file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="37" endline="37" begincolumn="33" endcolumn="56" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="CoffeeScriptTestCompilerMojo" variable="COFFEE_SCRIPT_ARTIFACTID" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'COFFEE_SCRIPT_ARTIFACTID'.

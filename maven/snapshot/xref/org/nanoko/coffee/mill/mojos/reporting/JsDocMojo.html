@@ -142,45 +142,53 @@
 <a class="jxr_linenumber" name="132" href="#132">132</a> 
 <a class="jxr_linenumber" name="133" href="#133">133</a>         <em class="jxr_comment">// Destination</em>
 <a class="jxr_linenumber" name="134" href="#134">134</a>         cmdLine.addArgument(<span class="jxr_string">"--destination"</span>);
-<a class="jxr_linenumber" name="135" href="#135">135</a>         cmdLine.addArgument(out.getAbsolutePath());
-<a class="jxr_linenumber" name="136" href="#136">136</a> 
-<a class="jxr_linenumber" name="137" href="#137">137</a>         <strong class="jxr_keyword">if</strong> (jsdocIncludePrivate) {
-<a class="jxr_linenumber" name="138" href="#138">138</a>             cmdLine.addArgument(<span class="jxr_string">"--private"</span>);
-<a class="jxr_linenumber" name="139" href="#139">139</a>         }
-<a class="jxr_linenumber" name="140" href="#140">140</a> 
-<a class="jxr_linenumber" name="141" href="#141">141</a>         File input = <strong class="jxr_keyword">new</strong> File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + <span class="jxr_string">".js"</span>);
-<a class="jxr_linenumber" name="142" href="#142">142</a>         <strong class="jxr_keyword">if</strong> (! input.exists()) {
-<a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(<span class="jxr_string">"Cannot find the project's artifact : "</span> + input.getAbsolutePath());
-<a class="jxr_linenumber" name="144" href="#144">144</a>         }
-<a class="jxr_linenumber" name="145" href="#145">145</a>         cmdLine.addArgument(input.getAbsolutePath());
-<a class="jxr_linenumber" name="146" href="#146">146</a> 
-<a class="jxr_linenumber" name="147" href="#147">147</a> 
-<a class="jxr_linenumber" name="148" href="#148">148</a>         DefaultExecutor executor = <strong class="jxr_keyword">new</strong> DefaultExecutor();
-<a class="jxr_linenumber" name="149" href="#149">149</a> 
-<a class="jxr_linenumber" name="150" href="#150">150</a>         executor.setWorkingDirectory(project.getBasedir());
-<a class="jxr_linenumber" name="151" href="#151">151</a>         executor.setExitValue(0);
-<a class="jxr_linenumber" name="152" href="#152">152</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="153" href="#153">153</a>             getLog().info(<span class="jxr_string">"Executing "</span> + cmdLine.toString());
-<a class="jxr_linenumber" name="154" href="#154">154</a>             executor.execute(cmdLine);
-<a class="jxr_linenumber" name="155" href="#155">155</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="156" href="#156">156</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(<span class="jxr_string">"Error during jsdoc report generation"</span>, e);
-<a class="jxr_linenumber" name="157" href="#157">157</a>         }
-<a class="jxr_linenumber" name="158" href="#158">158</a> 
-<a class="jxr_linenumber" name="159" href="#159">159</a> 
-<a class="jxr_linenumber" name="160" href="#160">160</a>     }
-<a class="jxr_linenumber" name="161" href="#161">161</a> 
-<a class="jxr_linenumber" name="162" href="#162">162</a>     <strong class="jxr_keyword">public</strong> String getOutputName() {
-<a class="jxr_linenumber" name="163" href="#163">163</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"jsdoc"</span> + <span class="jxr_string">"/index"</span>;
-<a class="jxr_linenumber" name="164" href="#164">164</a>     }
-<a class="jxr_linenumber" name="165" href="#165">165</a> 
-<a class="jxr_linenumber" name="166" href="#166">166</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="167" href="#167">167</a> <em class="jxr_javadoccomment">     * @see org.apache.maven.reporting.AbstractMavenReport#isExternalReport()</em>
-<a class="jxr_linenumber" name="168" href="#168">168</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="169" href="#169">169</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isExternalReport() {
-<a class="jxr_linenumber" name="170" href="#170">170</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="171" href="#171">171</a>     }
-<a class="jxr_linenumber" name="172" href="#172">172</a> 
-<a class="jxr_linenumber" name="173" href="#173">173</a> }
+<a class="jxr_linenumber" name="135" href="#135">135</a>         String destPath = out.getAbsolutePath();
+<a class="jxr_linenumber" name="136" href="#136">136</a>         <em class="jxr_comment">// Escapes spaces with a \</em>
+<a class="jxr_linenumber" name="137" href="#137">137</a>         <em class="jxr_comment">//destPath = destPath.replace(" ", "&#92;&#92; ");</em>
+<a class="jxr_linenumber" name="138" href="#138">138</a>         cmdLine.addArgument(destPath, false);
+<a class="jxr_linenumber" name="139" href="#139">139</a> 
+<a class="jxr_linenumber" name="140" href="#140">140</a>         <strong class="jxr_keyword">if</strong> (jsdocIncludePrivate) {
+<a class="jxr_linenumber" name="141" href="#141">141</a>             cmdLine.addArgument(<span class="jxr_string">"--private"</span>);
+<a class="jxr_linenumber" name="142" href="#142">142</a>         }
+<a class="jxr_linenumber" name="143" href="#143">143</a> 
+<a class="jxr_linenumber" name="144" href="#144">144</a>         File input = <strong class="jxr_keyword">new</strong> File(project.getBuild().getDirectory(), project.getBuild().getFinalName() + <span class="jxr_string">".js"</span>);
+<a class="jxr_linenumber" name="145" href="#145">145</a>         <strong class="jxr_keyword">if</strong> (! input.exists()) {
+<a class="jxr_linenumber" name="146" href="#146">146</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(<span class="jxr_string">"Cannot find the project's artifact : "</span> + input.getAbsolutePath());
+<a class="jxr_linenumber" name="147" href="#147">147</a>         }
+<a class="jxr_linenumber" name="148" href="#148">148</a>         String inputPath = input.getAbsolutePath();
+<a class="jxr_linenumber" name="149" href="#149">149</a>         <em class="jxr_comment">// Escapes spaces with a \</em>
+<a class="jxr_linenumber" name="150" href="#150">150</a>         <em class="jxr_comment">//inputPath = inputPath.replace(" ", "&#92;&#92; ");</em>
+<a class="jxr_linenumber" name="151" href="#151">151</a>         cmdLine.addArgument(inputPath, false);
+<a class="jxr_linenumber" name="152" href="#152">152</a> 
+<a class="jxr_linenumber" name="153" href="#153">153</a>         DefaultExecutor executor = <strong class="jxr_keyword">new</strong> DefaultExecutor();
+<a class="jxr_linenumber" name="154" href="#154">154</a> 
+<a class="jxr_linenumber" name="155" href="#155">155</a>         executor.setWorkingDirectory(project.getBasedir());
+<a class="jxr_linenumber" name="156" href="#156">156</a>         executor.setExitValue(0);
+<a class="jxr_linenumber" name="157" href="#157">157</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="158" href="#158">158</a>             <strong class="jxr_keyword">for</strong> (String s : cmdLine.toStrings()) {
+<a class="jxr_linenumber" name="159" href="#159">159</a>                 System.out.println(s);
+<a class="jxr_linenumber" name="160" href="#160">160</a>             }
+<a class="jxr_linenumber" name="161" href="#161">161</a>             getLog().info(<span class="jxr_string">"Executing "</span> + cmdLine.toString());
+<a class="jxr_linenumber" name="162" href="#162">162</a>             executor.execute(cmdLine);
+<a class="jxr_linenumber" name="163" href="#163">163</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="164" href="#164">164</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(<span class="jxr_string">"Error during jsdoc report generation"</span>, e);
+<a class="jxr_linenumber" name="165" href="#165">165</a>         }
+<a class="jxr_linenumber" name="166" href="#166">166</a> 
+<a class="jxr_linenumber" name="167" href="#167">167</a> 
+<a class="jxr_linenumber" name="168" href="#168">168</a>     }
+<a class="jxr_linenumber" name="169" href="#169">169</a> 
+<a class="jxr_linenumber" name="170" href="#170">170</a>     <strong class="jxr_keyword">public</strong> String getOutputName() {
+<a class="jxr_linenumber" name="171" href="#171">171</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"jsdoc"</span> + <span class="jxr_string">"/index"</span>;
+<a class="jxr_linenumber" name="172" href="#172">172</a>     }
+<a class="jxr_linenumber" name="173" href="#173">173</a> 
+<a class="jxr_linenumber" name="174" href="#174">174</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * @see org.apache.maven.reporting.AbstractMavenReport#isExternalReport()</em>
+<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="177" href="#177">177</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isExternalReport() {
+<a class="jxr_linenumber" name="178" href="#178">178</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="179" href="#179">179</a>     }
+<a class="jxr_linenumber" name="180" href="#180">180</a> 
+<a class="jxr_linenumber" name="181" href="#181">181</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
