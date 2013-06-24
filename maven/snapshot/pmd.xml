@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-06-23T14:15:43.179">
-<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
+<pmd version="4.2.5" timestamp="2013-06-24T18:34:33.358">
+<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/target/checkout/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="37" endline="37" begincolumn="33" endcolumn="56" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="CoffeeScriptTestCompilerMojo" variable="COFFEE_SCRIPT_ARTIFACTID" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'COFFEE_SCRIPT_ARTIFACTID'.
 </violation>
 </file>
-<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java">
+<file name="/Users/clement/Projects/nano/coffee-mill-maven-plugin/target/checkout/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java">
 <violation beginline="28" endline="28" begincolumn="33" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.utils" class="SlimedRhinoLauncher" variable="LOG" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'LOG'.
 </violation>
