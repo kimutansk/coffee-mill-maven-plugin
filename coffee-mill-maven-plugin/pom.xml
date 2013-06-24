@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.nanoko.coffee-mill</groupId>
         <artifactId>coffee-mill-project</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>coffee-mill-maven-plugin</artifactId>
