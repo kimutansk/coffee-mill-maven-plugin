@@ -24,7 +24,7 @@
 
     <groupId>org.nanoko.coffee-mill</groupId>
     <artifactId>coffee-mill-project</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OW2 Nanoko - Coffee Mill ~ Project</name>
 
