@@ -28,6 +28,7 @@
                         org.apache.maven.plugins:maven-clean-plugin:clean
                     </clean>
                     <process-resources>
+                        org.nanoko.coffee-mill:coffee-mill-maven-plugin:install-node,
                         org.apache.maven.plugins:maven-resources-plugin:resources,
                         org.nanoko.coffee-mill:coffee-mill-maven-plugin:resolve-dependencies,
                         org.nanoko.coffee-mill:coffee-mill-maven-plugin:copy-assets
