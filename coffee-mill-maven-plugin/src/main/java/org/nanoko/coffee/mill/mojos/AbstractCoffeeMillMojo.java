@@ -20,6 +20,7 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
+import org.nanoko.coffee.mill.utils.node.NodeManager;
 
 import java.io.File;
 
@@ -123,6 +124,40 @@ public abstract class AbstractCoffeeMillMojo extends AbstractMojo {
      * @parameter default-value="target/libs"
      */
     public File libDir;
+
+    /**
+     * Sets the node version to use
+     *
+     * @parameter default-value="0.10.13"
+     */
+    public String nodeVersion;
+
+    /**
+     * Sets the node version to use
+     *
+     * @parameter default-value="1.3.6"
+     */
+    public String npmVersion;
+
+    /**
+     * The access to node.
+     */
+    public NodeManager node = new NodeManager(this);
+
+
+    public String getNodeVersion() {
+        if (nodeVersion == null) {
+            return "0.10.13"; // For testing purpose
+        }
+        return nodeVersion;
+    }
+
+    public String getNPMVersion() {
+        if (npmVersion == null) {
+            return "1.3.6"; // For testing purpose
+        }
+        return npmVersion;
+    }
 
 
     public File getTarget() {
