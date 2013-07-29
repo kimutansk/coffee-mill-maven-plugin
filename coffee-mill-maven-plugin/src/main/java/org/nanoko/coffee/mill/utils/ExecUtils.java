@@ -58,4 +58,32 @@ public class ExecUtils {
         return null;
     }
 
+    /**
+     * Checks whether the current operating system is Windows.
+     * This check use the <tt>os.name</tt> system property.
+     *
+     * @return <code>true</code> if the os is windows, <code>false</code> otherwise.
+     */
+    public static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
+
+    public static boolean isMac() {
+        return System.getProperty("os.name").toLowerCase().contains("mac");
+    }
+
+    public static boolean isLinux() {
+        String os = System.getProperty("os.name");
+        return os.contains("nix") || os.contains("nux")  || os.contains("aix");
+    }
+
+    public static boolean is64bit() {
+        String arch = System.getProperty("sun.arch.data.model");
+        if (arch == null) {
+            arch = System.getProperty("os.arch");
+        }
+        return arch != null && arch.contains("64");
+    }
+
+
 }
