@@ -32,6 +32,8 @@ public class LessCompilationProcessorTest {
     @Test
     public void testLessCompilation() throws MojoExecutionException, MojoFailureException {
         LessCompilerMojo mojo = new LessCompilerMojo();
+        mojo.nodeVersion = "0.10.13";
+        mojo.npmVersion = "1.3.6";
         mojo.stylesheetsDir = new File("src/test/resources/stylesheets");
         mojo.workDir = new File("target/test/testLessCompilation-www");
         mojo.execute();
@@ -50,6 +52,8 @@ public class LessCompilationProcessorTest {
         LessCompilerMojo mojo = new LessCompilerMojo();
         mojo.stylesheetsDir = new File("src/test/resources/stylesheets");
         mojo.workDir = new File("target/test/testLessCompilation-www2");
+        mojo.nodeVersion = "0.10.13";
+        mojo.npmVersion = "1.3.6";
         mojo.execute();
 
         assertThat(new File(mojo.workDir, "forum.css").isFile()).isTrue();
@@ -63,6 +67,8 @@ public class LessCompilationProcessorTest {
         LessCompilerMojo mojo = new LessCompilerMojo();
         mojo.stylesheetsDir = new File("target/test/junk");
         mojo.workDir = new File("target/test/testLessCompilation-www");
+        mojo.nodeVersion = "0.10.13";
+        mojo.npmVersion = "1.3.6";
 
         File error = new File(mojo.stylesheetsDir, "error.less");
         FileUtils.write(error, "this is not less");
@@ -72,7 +78,7 @@ public class LessCompilationProcessorTest {
             processor.compile(error);
             fail("Less compilation should have failed");
         } catch (Processor.ProcessorException e) {
-            System.out.println(e.getMessage() + " " + e.getCause().getMessage());
+            System.out.println(e.getMessage());
             // OK.
         }
     }

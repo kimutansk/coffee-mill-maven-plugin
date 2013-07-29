@@ -16,13 +16,10 @@
 package org.nanoko.coffee.mill.processors;
 
 import org.apache.commons.io.FileUtils;
-import org.lesscss.LessCompiler;
-import org.lesscss.LessException;
-import org.lesscss.LessSource;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
+import org.nanoko.coffee.mill.utils.node.NPM;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -35,7 +32,7 @@ public class LessCompilationProcessor extends DefaultProcessor {
 
     private File source;
     private File destination;
-    private LessCompiler lessCompiler;
+    //private LessCompiler lessCompiler;
 
     public void tearDown() {
         // Do nothing.
@@ -46,8 +43,6 @@ public class LessCompilationProcessor extends DefaultProcessor {
         super.configure(mojo, options);
         this.source = mojo.stylesheetsDir;
         this.destination = mojo.getWorkDirectory();
-
-        this.lessCompiler = new LessCompiler();
     }
 
     public boolean accept(File file) {
@@ -74,23 +69,35 @@ public class LessCompilationProcessor extends DefaultProcessor {
         return new File(destination, path + "/" + cssFileName);
     }
 
+//    public void compile(File file) throws ProcessorException {
+//        File out = getOutputCSSFile(file);
+//        getLog().info("Compiling " + file.getAbsolutePath() + " to " + out.getAbsolutePath());
+//        try {
+//            LessSource lessSource = new LessSource(file);
+//            if (out.lastModified() < lessSource.getLastModifiedIncludingImports()) {
+//                getLog().info("Compiling LESS source: " + file + "...");
+//                lessCompiler.compile(lessSource, out, false);
+//            } else {
+//                getLog().info("Bypassing LESS source: " + file + " (not modified)");
+//            }
+//        } catch (IOException e) {
+//            throw new ProcessorException("Cannot initialize Less compilation", e);
+//        } catch (LessException e) {
+//            throw new ProcessorException("Compilation error in " + file, e);
+//        }
+//    }
+
     public void compile(File file) throws ProcessorException {
+        new NPM.Install(mojo).install("less");
         File out = getOutputCSSFile(file);
         getLog().info("Compiling " + file.getAbsolutePath() + " to " + out.getAbsolutePath());
-        try {
-            LessSource lessSource = new LessSource(file);
-            if (out.lastModified() < lessSource.getLastModifiedIncludingImports()) {
-                getLog().info("Compiling LESS source: " + file + "...");
-                lessCompiler.compile(lessSource, out, false);
-            } else {
-                getLog().info("Bypassing LESS source: " + file + " (not modified)");
-            }
-        } catch (IOException e) {
-            throw new ProcessorException("Cannot initialize Less compilation", e);
-        } catch (LessException e) {
-            throw new ProcessorException("Compilation error in " + file, e);
+        new NPM.Execution(mojo).npm("less").command("lessc").args(file.getAbsolutePath(), out.getAbsolutePath()).execute();
+
+        if (! out.isFile()) {
+            throw new ProcessorException("Error during the compilation of " + file.getAbsoluteFile() + " check log");
         }
     }
+
 
     @Override
     public void fileCreated(File file) throws ProcessorException {
