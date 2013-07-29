@@ -20,6 +20,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.nanoko.coffee.mill.mojos.AbstractCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.CoffeeScriptCompilationProcessor;
+import org.nanoko.coffee.mill.processors.NodeBasedCoffeeScriptCompilationProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 
@@ -53,15 +54,9 @@ public class CoffeeScriptCompilerMojo extends AbstractCoffeeMillMojo {
             return;
         }
 
-        File coffee = getCoffeeScript(this);
-        if (coffee == null) {
-            throw new MojoExecutionException("Cannot configure the coffeescript compiler without coffeescript");
-        }
-
-        CoffeeScriptCompilationProcessor processor = new CoffeeScriptCompilationProcessor();
+        NodeBasedCoffeeScriptCompilationProcessor processor = new NodeBasedCoffeeScriptCompilationProcessor();
         processor.configure(this, new OptionsHelper.OptionsBuilder()
                 .set("test", false)
-                .set("coffeescript", coffee)
                 .build());
 
         try {
