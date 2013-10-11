@@ -13,12 +13,13 @@
  * limitations under the License.
  */
 
-package org.nanoko.coffee.mill.mojos.reporting;
+package org.nanoko.coffee.mill.mojos.compile;
 
 import java.util.*;
 
 /**
- * Configuration Object for JSHintReportMillMojo.
+ * Configuration Object for JavaScriptCompilerMojo.
+ * Idem as {@link org.nanoko.coffee.mill.mojos.reporting.JSHintOptions}.
  */
 public class JSHintOptions {
     //String format options

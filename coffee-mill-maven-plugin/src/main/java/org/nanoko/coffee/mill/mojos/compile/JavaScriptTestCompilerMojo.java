@@ -24,6 +24,8 @@ import org.nanoko.coffee.mill.processors.JavaScriptFileCopyProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
 import org.nanoko.coffee.mill.utils.OptionsHelper;
 
+import java.util.Map;
+
 /**
  * Copy JavaScript sources to the <tt>work</tt> directory and check JavaScript sources with
  * <ul>
@@ -50,6 +52,12 @@ public class JavaScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
      * @parameter default-value="true"
      */
     protected boolean skipJsHint;
+
+    /**
+     * JSHint configuration options.
+     * @parameter
+     */
+    private JSHintOptions jshintOptions;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -83,7 +91,11 @@ public class JavaScriptTestCompilerMojo extends AbstractCoffeeMillMojo {
     private void doJsLint() throws MojoExecutionException {
         getLog().info("Checking sources with JsLint");
         JSLintProcessor processor = new JSLintProcessor();
-        processor.configure(this, null);
+        Map<String,Object> options = null;
+        if(jshintOptions != null){
+            options = new OptionsHelper.OptionsBuilder().set(JSHintProcessor.JSHINT_OPTIONS_KEY, jshintOptions.format()).build();
+        }
+        processor.configure(this, options);
         try {
             processor.processAll();
         } catch (Processor.ProcessorException e) {
