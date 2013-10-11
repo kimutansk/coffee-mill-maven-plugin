@@ -30,6 +30,7 @@ import java.util.List;
  * Validates a JS file using JSHint
  */
 public class JSHintProcessor extends DefaultProcessor {
+    public static final String JSHINT_OPTIONS_KEY = "options";
 
     @Override
     public void processAll() throws ProcessorException {
@@ -63,6 +64,9 @@ public class JSHintProcessor extends DefaultProcessor {
     public List<ProcessorWarning> validate(File file) {
         List<ProcessorWarning> warnings = new ArrayList<ProcessorWarning>();
         JsHint jshint = new JsHint();
+        if(this.options.containsKey(JSHINT_OPTIONS_KEY)){
+            jshint.setOptions((String[])this.options.get(JSHINT_OPTIONS_KEY));
+        }
         getLog().debug("JSHint-ing " + file.getAbsolutePath());
         try {
             jshint.validate(FileUtils.readFileToString(file));

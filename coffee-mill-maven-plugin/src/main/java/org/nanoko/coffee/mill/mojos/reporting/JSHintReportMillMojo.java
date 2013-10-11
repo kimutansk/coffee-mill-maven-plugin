@@ -20,6 +20,7 @@ import org.apache.maven.doxia.sink.Sink;
 import org.nanoko.coffee.mill.mojos.AbstractReportingCoffeeMillMojo;
 import org.nanoko.coffee.mill.processors.JSHintProcessor;
 import org.nanoko.coffee.mill.processors.Processor;
+import org.nanoko.coffee.mill.utils.OptionsHelper;
 
 import java.io.File;
 import java.util.*;
@@ -31,6 +32,11 @@ import java.util.*;
  * @phase site
  */
 public class JSHintReportMillMojo extends AbstractReportingCoffeeMillMojo {
+
+    /**
+     * @parameter
+     */
+    private JSHintOptions jshintOptions;
 
     @Override
     public void writeIntroduction() {
@@ -56,7 +62,14 @@ public class JSHintReportMillMojo extends AbstractReportingCoffeeMillMojo {
         Map<File, List<Processor.ProcessorWarning>> results = new TreeMap<File, List<Processor.ProcessorWarning>>();
         Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"js"}, true);
         JSHintProcessor processor = new JSHintProcessor();
-        processor.configure(this, null);
+        Map<String,Object> options = null;
+
+        if(jshintOptions != null){
+            options = new OptionsHelper.OptionsBuilder().set(JSHintProcessor.JSHINT_OPTIONS_KEY, jshintOptions.format()).build();
+        }
+
+        processor.configure(this, options);
+
         for (File file : files) {
             results.put(file, processor.validate(file));
         }
