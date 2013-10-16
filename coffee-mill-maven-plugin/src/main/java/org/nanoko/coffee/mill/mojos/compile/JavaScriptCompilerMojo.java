@@ -58,6 +58,13 @@ public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
     protected boolean skipDustCompilation;
 
     /**
+     * Enables / disables ractive parsing
+     *
+     * @parameter default-value="false"
+     */
+    protected boolean skipRactive;
+
+    /**
      * JSHint configuration options.
      * @parameter
      */
@@ -96,6 +103,12 @@ public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
             getLog().debug("Dust Compilation skipped");
         }
 
+        if ( ! skipRactive) {
+            doRactive();
+        }  else {
+            getLog().debug("Ractive Parsing skipped");
+        }
+
     }
 
     private void doJsLint() throws MojoExecutionException {
@@ -126,6 +139,16 @@ public class JavaScriptCompilerMojo extends AbstractCoffeeMillMojo {
 
     private void doDust() throws MojoExecutionException {
         DustJSProcessor processor = new DustJSProcessor();
+        processor.configure(this, null);
+        try {
+            processor.processAll();
+        } catch (Processor.ProcessorException e) {
+            throw new MojoExecutionException("", e);
+        }
+    }
+
+    private void doRactive() throws MojoExecutionException {
+        RactiveJSProcessor processor = new RactiveJSProcessor();
         processor.configure(this, null);
         try {
             processor.processAll();
