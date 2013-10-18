@@ -1,8 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
+<duplication lines="143" tokens="665">
+<file line="24" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JSHintOptions.java"/>
+<file line="23" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/reporting/JSHintOptions.java"/>
+<codefragment>
+<![CDATA[
+public class JSHintOptions {
+    //String format options
+    private String options;
+
+    private Boolean bitwise;
+    private Boolean camelcase;
+    private Boolean curly;
+    private Boolean eqeqeq;
+    private Boolean es3;
+    private Boolean forin;
+    private Boolean immed;
+    private Boolean indent;
+    private Boolean latedef;
+    private Boolean newcap;
+    private Boolean noarg;
+    private Boolean noempty;
+    private Boolean nonew;
+    private Boolean plusplus;
+    private String  quotmark; //single, double or true
+    private Boolean undef;
+    private Boolean unused;
+    private Boolean strict;
+    private Boolean trailing;
+    private Integer maxparams;
+    private Integer maxdepth;
+    private Integer maxstatements;
+    private Integer maxcomplexity;
+    private Integer maxlen;
+
+    public String[] format(){
+        Set<String> formatOpts = new HashSet<String>();
+
+        //Parse the string
+        if(options !=null && !options.isEmpty()){
+            options=options.replaceAll(" ",""); //remove space
+
+            //must match ^\w+(=(\w+))?(,\w+(=(\w+))?)*$
+            if(!options.matches("^\\w+(=(\\w+))?(,\\w+(=(\\w+))?)*$")){
+                throw new IllegalArgumentException("The jshintOptions options is not formated correctly," +
+                    "the format support String such as: <key>,<key>=<value>");
+            }
+
+            Collections.addAll(formatOpts, options.split(","));
+        }
+
+        if(bitwise != null){
+            formatOpts.add("bitwise=" + bitwise.toString());
+        }
+
+        if(camelcase != null){
+            formatOpts.add("camelcase=" +camelcase.toString());
+        }
+
+        if(curly != null){
+            formatOpts.add("curly=" +curly.toString());
+        }
+
+        if(es3 != null){
+            formatOpts.add("es3=" +es3.toString());
+        }
+
+        if(forin != null){
+            formatOpts.add("forin=" +forin.toString());
+        }
+
+        if(immed != null){
+            formatOpts.add("immed=" +immed.toString());
+        }
+
+        if(indent != null){
+            formatOpts.add("indent=" +indent.toString());
+        }
+
+        if(latedef != null){
+            formatOpts.add("latedef=" +latedef.toString());
+        }
+
+        if(newcap != null){
+            formatOpts.add("newcap=" +newcap.toString());
+        }
+
+        if(noarg != null){
+            formatOpts.add("noarg=" +noarg.toString());
+        }
+
+        if(noempty != null){
+            formatOpts.add("noempty=" +noempty.toString());
+        }
+
+        if(nonew != null){
+            formatOpts.add("nonew=" +nonew.toString());
+        }
+
+        if(plusplus != null){
+            formatOpts.add("plusplus=" +plusplus.toString());
+        }
+
+        if(quotmark != null){
+            if(!(quotmark.equals("single") || quotmark.equals("double") || quotmark.equals("true"))){
+                throw new IllegalArgumentException("The jshintOptions quotmark must have the value single,double or true");
+            }
+            formatOpts.add("quotmark=" +quotmark);
+        }
+
+        if(undef != null){
+            formatOpts.add("undef=" + undef.toString());
+        }
+
+        if(unused != null){
+            formatOpts.add("unused=" + unused.toString());
+        }
+
+        if(strict != null){
+            formatOpts.add("strict=" + strict.toString());
+        }
+
+        if(trailing != null){
+            formatOpts.add("trailing=" + trailing.toString());
+        }
+
+        if(maxparams != null){
+            formatOpts.add("maxparams=" + maxparams.toString());
+        }
+
+        if(maxdepth != null){
+            formatOpts.add("maxdepth=" + maxdepth.toString());
+        }
+
+        if(maxstatements != null){
+            formatOpts.add("maxstatements=" + maxstatements.toString());
+        }
+
+        if(maxcomplexity != null){
+            formatOpts.add("maxcomplexity=" + maxcomplexity.toString());
+        }
+
+        if(maxlen != null){
+            formatOpts.add("maxlen=" + maxlen.toString());
+        }
+
+        return formatOpts.toArray(new String[formatOpts.size()]);
+    }
+}
+]]>
+</codefragment>
+</duplication>
 <duplication lines="29" tokens="204">
-<file line="36" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
-<file line="36" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
+<file line="37" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSHintProcessor.java"/>
+<file line="36" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JSLintProcessor.java"/>
 <codefragment>
 <![CDATA[
         getLog().info("Checking sources with JsLint");
@@ -38,8 +189,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="151">
-<file line="247" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/RhinoLauncher.java"/>
-<file line="96" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java"/>
+<file line="247" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/RhinoLauncher.java"/>
+<file line="96" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java"/>
 <codefragment>
 <![CDATA[
     public static String toJSMultiLineString(String data){
@@ -68,8 +219,8 @@
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="141">
-<file line="71" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
-<file line="119" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="71" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
+<file line="119" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/JasmineUtils.java"/>
 <codefragment>
 <![CDATA[
         for (Dependency dep : (Collection<Dependency>) mill.project.getDependencies()) {
@@ -91,8 +242,8 @@
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="134">
-<file line="73" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
-<file line="79" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
+<file line="73" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/CSSFileCopyProcessor.java"/>
+<file line="79" path="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/processors/JavaScriptFileCopyProcessor.java"/>
 <codefragment>
 <![CDATA[
         return isFileContainedInDirectory(file, source)  && file.isFile()  &&  file.getName().endsWith(".js");
@@ -117,40 +268,6 @@
     }
 
 }
-]]>
-</codefragment>
-</duplication>
-<duplication lines="26" tokens="117">
-<file line="88" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptCompilerMojo.java"/>
-<file line="78" path="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JavaScriptTestCompilerMojo.java"/>
-<codefragment>
-<![CDATA[
-            getLog().debug("JS Hint skipped");
-        }
-
-    }
-
-    private void doJsLint() throws MojoExecutionException {
-        getLog().info("Checking sources with JsLint");
-        JSLintProcessor processor = new JSLintProcessor();
-        processor.configure(this, null);
-        try {
-            processor.processAll();
-        } catch (Processor.ProcessorException e) {
-            throw new MojoExecutionException("", e);
-        }
-    }
-
-    private void doJsHint() throws MojoExecutionException {
-        getLog().info("Checking sources with JsHint");
-        JSHintProcessor processor = new JSHintProcessor();
-        processor.configure(this, null);
-        try {
-            processor.processAll();
-        } catch (Processor.ProcessorException e) {
-            throw new MojoExecutionException("", e);
-        }
-    }
 ]]>
 </codefragment>
 </duplication>

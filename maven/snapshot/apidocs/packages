@@ -1,10 +1,10 @@
-org.nanoko.coffee.mill.utils
 org.nanoko.coffee.mill
-org.nanoko.coffee.mill.mojos.packaging
-org.nanoko.coffee.mill.mojos.test
-org.nanoko.coffee.mill.mojos.reporting
+org.nanoko.coffee.mill.mojos
 org.nanoko.coffee.mill.mojos.compile
 org.nanoko.coffee.mill.mojos.others
+org.nanoko.coffee.mill.mojos.packaging
 org.nanoko.coffee.mill.mojos.processResources
-org.nanoko.coffee.mill.mojos
+org.nanoko.coffee.mill.mojos.reporting
+org.nanoko.coffee.mill.mojos.test
 org.nanoko.coffee.mill.processors
+org.nanoko.coffee.mill.utils
