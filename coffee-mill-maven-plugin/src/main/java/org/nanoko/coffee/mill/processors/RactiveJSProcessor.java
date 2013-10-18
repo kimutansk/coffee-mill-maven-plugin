@@ -62,7 +62,7 @@ public class RactiveJSProcessor extends DefaultProcessor {
             RhinoLauncher launcher = initScriptBuilder();
             String content = FileUtils.readFileToString(input);
             String compileScript = String.format("(%s(%s)).toSource();", "Ractive.parse", RhinoLauncher.toJSMultiLineString(content));
-            String result = String.format("var %s=%s;",
+            String result = String.format("(function(){Ractive.templates['%s']=%s;})();",
                 input.getName().substring(0, input.getName().length() - ".rk".length()),
                 (String)launcher.evaluate(compileScript, "Ractive.parse"));
             FileUtils.write(output, result);

@@ -42,7 +42,7 @@ public class RactiveTemplateCompilationProcessorTest {
         //i.e mytemplate is this test
         try {
             assertThat(FileUtils.readFileToString(result)
-                    .startsWith("var rktemplate=")).isTrue();
+                    .startsWith("(function(){Ractive.templates['rktemplate']=")).isTrue();
         } catch (IOException e) {
             //we already have check that the file does exist
         }
