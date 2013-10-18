@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-10-18T08:07:55.687">
-<file name="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
+<pmd version="4.2.5" timestamp="2013-10-18T02:46:23.408">
+<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="37" endline="37" begincolumn="33" endcolumn="56" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="CoffeeScriptTestCompilerMojo" variable="COFFEE_SCRIPT_ARTIFACTID" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'COFFEE_SCRIPT_ARTIFACTID'.
 </violation>
 </file>
-<file name="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JSHintOptions.java">
+<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/JSHintOptions.java">
 <violation beginline="31" endline="31" begincolumn="21" endcolumn="26" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="JSHintOptions" variable="eqeqeq" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'eqeqeq'.
 </violation>
 </file>
-<file name="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/reporting/JSHintOptions.java">
+<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/reporting/JSHintOptions.java">
 <violation beginline="30" endline="30" begincolumn="21" endcolumn="26" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.reporting" class="JSHintOptions" variable="eqeqeq" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'eqeqeq'.
 </violation>
 </file>
-<file name="/Users/clement/Projects/nanoko/coffee-mill-maven-plugin/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java">
+<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/utils/SlimedRhinoLauncher.java">
 <violation beginline="28" endline="28" begincolumn="33" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.utils" class="SlimedRhinoLauncher" variable="LOG" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'LOG'.
 </violation>
