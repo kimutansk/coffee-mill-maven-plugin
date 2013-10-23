@@ -60,7 +60,7 @@ public class JSHintReportMillMojo extends AbstractReportingCoffeeMillMojo {
     @Override
     public Map<File, List<Processor.ProcessorWarning>> validate() {
         Map<File, List<Processor.ProcessorWarning>> results = new TreeMap<File, List<Processor.ProcessorWarning>>();
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"js"}, true);
+        Collection<File> files = FileUtils.listFiles(getJavaScriptDir(), new String[]{"js"}, true);
         JSHintProcessor processor = new JSHintProcessor();
         Map<String,Object> options = null;
 
