@@ -63,7 +63,7 @@ public class JSLintReportMillMojo extends AbstractReportingCoffeeMillMojo {
     @Override
     public Map<File, List<Processor.ProcessorWarning>> validate() {
         Map<File, List<Processor.ProcessorWarning>> results = new TreeMap<File, List<Processor.ProcessorWarning>>();
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"js"}, true);
+        Collection<File> files = FileUtils.listFiles(getJavaScriptDir(), new String[]{"js"}, true);
         JSLintProcessor processor = new JSLintProcessor();
         processor.configure(this, null);
         for (File file : files) {

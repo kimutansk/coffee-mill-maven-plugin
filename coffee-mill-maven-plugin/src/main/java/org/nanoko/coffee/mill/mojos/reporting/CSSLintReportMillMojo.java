@@ -59,9 +59,9 @@ public class CSSLintReportMillMojo extends AbstractReportingCoffeeMillMojo {
     @Override
     public Map<File, List<Processor.ProcessorWarning>> validate() throws Processor.ProcessorException {
         Map<File, List<Processor.ProcessorWarning>> results = new TreeMap<File, List<Processor.ProcessorWarning>>();
-        Collection<File> files = FileUtils.listFiles(getWorkDirectory(), new String[]{"css"}, true);
+        Collection<File> files = FileUtils.listFiles(getStylesheetsDir(), new String[]{"css"}, true);
         CSSLintProcessor processor = new CSSLintProcessor();
-        processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getWorkDirectory()).build());
+        processor.configure(this, new OptionsHelper.OptionsBuilder().set("directory", getStylesheetsDir()).build());
         for (File file : files) {
             results.put(file, processor.validate(file));
         }

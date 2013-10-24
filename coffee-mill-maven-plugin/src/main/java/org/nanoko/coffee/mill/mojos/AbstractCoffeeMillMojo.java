@@ -142,4 +142,12 @@ public abstract class AbstractCoffeeMillMojo extends AbstractMojo {
     public File getLibDirectory() {
         return libDir;
     }
+
+    public File getJavaScriptDir() {
+        return javaScriptDir;
+    }
+
+    public File getStylesheetsDir() {
+        return stylesheetsDir;
+    }
 }
