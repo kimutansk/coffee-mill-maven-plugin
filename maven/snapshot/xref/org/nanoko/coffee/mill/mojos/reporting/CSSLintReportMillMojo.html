@@ -69,9 +69,9 @@
 <a class="jxr_linenumber" name="59" href="#59">59</a>      @Override
 <a class="jxr_linenumber" name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> Map&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt; validate() <strong class="jxr_keyword">throws</strong> Processor.ProcessorException {
 <a class="jxr_linenumber" name="61" href="#61">61</a>          Map&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt; results = <strong class="jxr_keyword">new</strong> TreeMap&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt;();
-<a class="jxr_linenumber" name="62" href="#62">62</a>          Collection&lt;File&gt; files = FileUtils.listFiles(getWorkDirectory(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"css"</span>}, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="62" href="#62">62</a>          Collection&lt;File&gt; files = FileUtils.listFiles(getStylesheetsDir(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"css"</span>}, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="63" href="#63">63</a>          <a href="../../../../../../org/nanoko/coffee/mill/processors/CSSLintProcessor.html">CSSLintProcessor</a> processor = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/nanoko/coffee/mill/processors/CSSLintProcessor.html">CSSLintProcessor</a>();
-<a class="jxr_linenumber" name="64" href="#64">64</a>          processor.configure(<strong class="jxr_keyword">this</strong>, <strong class="jxr_keyword">new</strong> OptionsHelper.OptionsBuilder().set(<span class="jxr_string">"directory"</span>, getWorkDirectory()).build());
+<a class="jxr_linenumber" name="64" href="#64">64</a>          processor.configure(<strong class="jxr_keyword">this</strong>, <strong class="jxr_keyword">new</strong> OptionsHelper.OptionsBuilder().set(<span class="jxr_string">"directory"</span>, getStylesheetsDir()).build());
 <a class="jxr_linenumber" name="65" href="#65">65</a>          <strong class="jxr_keyword">for</strong> (File file : files) {
 <a class="jxr_linenumber" name="66" href="#66">66</a>              results.put(file, processor.validate(file));
 <a class="jxr_linenumber" name="67" href="#67">67</a>          }

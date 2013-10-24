@@ -73,7 +73,7 @@
 <a class="jxr_linenumber" name="63" href="#63">63</a>      @Override
 <a class="jxr_linenumber" name="64" href="#64">64</a>      <strong class="jxr_keyword">public</strong> Map&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt; validate() {
 <a class="jxr_linenumber" name="65" href="#65">65</a>          Map&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt; results = <strong class="jxr_keyword">new</strong> TreeMap&lt;File, List&lt;Processor.ProcessorWarning&gt;&gt;();
-<a class="jxr_linenumber" name="66" href="#66">66</a>          Collection&lt;File&gt; files = FileUtils.listFiles(getWorkDirectory(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"js"</span>}, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="66" href="#66">66</a>          Collection&lt;File&gt; files = FileUtils.listFiles(getJavaScriptDir(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"js"</span>}, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="67" href="#67">67</a>          <a href="../../../../../../org/nanoko/coffee/mill/processors/JSLintProcessor.html">JSLintProcessor</a> processor = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/nanoko/coffee/mill/processors/JSLintProcessor.html">JSLintProcessor</a>();
 <a class="jxr_linenumber" name="68" href="#68">68</a>          processor.configure(<strong class="jxr_keyword">this</strong>, <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="69" href="#69">69</a>          <strong class="jxr_keyword">for</strong> (File file : files) {

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2013-10-18T02:46:23.408">
+<pmd version="4.2.5" timestamp="2013-10-24T02:46:06.156">
+<file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/AbstractReportingCoffeeMillMojo.java">
+<violation beginline="27" endline="27" begincolumn="1" endcolumn="51" rule="UnusedImports" ruleset="Import Statement Rules" package="org.nanoko.coffee.mill.mojos" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.apache.maven.project.MavenProjectHelper'
+</violation>
+</file>
 <file name="/var/lib/jenkins/jobs/Nanoko - coffee-mill-maven-plugin/workspace/coffee-mill-maven-plugin/src/main/java/org/nanoko/coffee/mill/mojos/compile/CoffeeScriptTestCompilerMojo.java">
 <violation beginline="37" endline="37" begincolumn="33" endcolumn="56" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.nanoko.coffee.mill.mojos.compile" class="CoffeeScriptTestCompilerMojo" variable="COFFEE_SCRIPT_ARTIFACTID" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'COFFEE_SCRIPT_ARTIFACTID'.
