@@ -16,6 +16,8 @@
 package org.nanoko.coffee.mill.processors;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.plexus.util.StringUtils;
+
 import ro.isdc.wro.extensions.processor.support.linter.JsHint;
 import ro.isdc.wro.extensions.processor.support.linter.LinterError;
 import ro.isdc.wro.extensions.processor.support.linter.LinterException;
@@ -67,9 +69,13 @@ public class JSHintProcessor extends DefaultProcessor {
         if(this.options.containsKey(JSHINT_OPTIONS_KEY)){
             jshint.setOptions((String[])this.options.get(JSHINT_OPTIONS_KEY));
         }
-        getLog().debug("JSHint-ing " + file.getAbsolutePath());
+        getLog().debug("JSHint-ing " + file.getAbsolutePath() + ", Encoding " + this.mojo.javaScriptEncoding);
         try {
-            jshint.validate(FileUtils.readFileToString(file));
+        	if(StringUtils.isNotBlank(this.mojo.javaScriptEncoding)) {
+        		jshint.validate(FileUtils.readFileToString(file, this.mojo.javaScriptEncoding));
+        	} else {
+        		jshint.validate(FileUtils.readFileToString(file));
+        	}
         } catch (IOException e) {
             getLog().error("Can't analyze " + file.getAbsolutePath() + " with JSHint", e);
         } catch (LinterException e) {

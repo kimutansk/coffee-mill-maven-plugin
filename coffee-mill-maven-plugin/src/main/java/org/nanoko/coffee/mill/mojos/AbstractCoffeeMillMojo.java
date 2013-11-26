@@ -123,6 +123,13 @@ public abstract class AbstractCoffeeMillMojo extends AbstractMojo {
      * @parameter default-value="target/libs"
      */
     public File libDir;
+    
+    /**
+     * JavaScript encoding. If not configured, use system default encoding.
+     * 
+     * @parameter default-value=""
+     */
+    public String javaScriptEncoding;
 
 
     public File getTarget() {
