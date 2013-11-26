@@ -127,7 +127,7 @@ public abstract class AbstractCoffeeMillMojo extends AbstractMojo {
     /**
      * JavaScript encoding. If not configured, use system default encoding.
      * 
-     * @parameter default-value=null
+     * @parameter default-value=""
      */
     public String javaScriptEncoding;
 

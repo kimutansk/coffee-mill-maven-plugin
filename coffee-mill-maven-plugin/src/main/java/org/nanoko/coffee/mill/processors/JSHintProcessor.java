@@ -69,7 +69,7 @@ public class JSHintProcessor extends DefaultProcessor {
         if(this.options.containsKey(JSHINT_OPTIONS_KEY)){
             jshint.setOptions((String[])this.options.get(JSHINT_OPTIONS_KEY));
         }
-        getLog().debug("JSHint-ing " + file.getAbsolutePath());
+        getLog().debug("JSHint-ing " + file.getAbsolutePath() + ", Encoding " + this.mojo.javaScriptEncoding);
         try {
         	if(StringUtils.isNotBlank(this.mojo.javaScriptEncoding)) {
         		jshint.validate(FileUtils.readFileToString(file, this.mojo.javaScriptEncoding));

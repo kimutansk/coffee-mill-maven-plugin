@@ -16,6 +16,8 @@
 package org.nanoko.coffee.mill.processors;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.plexus.util.StringUtils;
+
 import ro.isdc.wro.extensions.processor.support.linter.JsLint;
 import ro.isdc.wro.extensions.processor.support.linter.LinterError;
 import ro.isdc.wro.extensions.processor.support.linter.LinterException;
@@ -63,9 +65,13 @@ public class JSLintProcessor extends DefaultProcessor {
     public List<ProcessorWarning> validate(File file) {
         List<ProcessorWarning> warnings = new ArrayList<ProcessorWarning>();
         JsLint jslint = new JsLint();
-        getLog().debug("JSLint-ing " + file.getAbsolutePath());
+        getLog().debug("JSLint-ing " + file.getAbsolutePath() + ", Encoding " + this.mojo.javaScriptEncoding);
         try {
-            jslint.validate(FileUtils.readFileToString(file));
+        	if(StringUtils.isNotBlank(this.mojo.javaScriptEncoding)) {
+        		jslint.validate(FileUtils.readFileToString(file, this.mojo.javaScriptEncoding));
+        	} else {
+        		jslint.validate(FileUtils.readFileToString(file));
+        	}
         } catch (IOException e) {
             getLog().error("Can't analyze " + file.getAbsolutePath() + " with JSLint", e);
         } catch (LinterException e) {
